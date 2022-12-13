@@ -2,6 +2,8 @@ package pl.krzysztof;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Scanner;
 
 public class Main {
@@ -9,6 +11,15 @@ public class Main {
     public static void main(String[] args) {
         JFrame jFrame = new JFrame();
         jFrame.setBounds(10, 10, 512, 540);
+        for(int i = 0; i<8;i++){
+            for(int j=0; j<8;j++){
+                if(((i==0||i==2)&&j%2==1)||(i==1&&j%2==0)){
+                    Pionek pionek = new Pionek(true, j, i);
+                }else if(((i==7||i==5)&&j%2==0)||(i==6&&j%2==1)){
+                    Pionek pionek = new Pionek(false, j, i);
+                }
+            }
+        }
         JPanel jPanel = new JPanel(){
             public void paint(Graphics g){
                 for(int y=0; y<8;y++){
@@ -22,9 +33,62 @@ public class Main {
                         g.fillRect(x*64, y*64, 64, 64);
                     }
                 }
+                for(Pionek pion : Pionek.getPionki() ){
+                    if(pion.isActive()){
+                        g.setColor(Color.YELLOW);
+                        g.fillRect(pion.getX()*64, pion.getY()*64, 64, 64);
+                    }
+                    if(pion.isWhite()){
+                        g.setColor(Color.WHITE);
+                    }else{
+                        g.setColor(Color.BLACK);
+                    }
+                    g.fillOval(pion.getX()*64, pion.getY()*64, 64, 64);
+                }
             }
         };
+        jPanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for(Pionek pion:Pionek.getPionki()){
+                    if(pion.isActive()){
+                        pion.przesun(e.getX()/64,e.getY()/64);
+                        pion.setActive(false);
+                        jFrame.repaint();
+                        return;
+                    }
+                }
+                if(Pionek.getPionekByMouse(e.getX(),e.getY())!=null){
+                    for(Pionek pion:Pionek.getPionki()){
+                        pion.setActive(false);
+                    }
+                    Pionek.getPionekByMouse(e.getX(),e.getY()).setActive(true);
+                    jFrame.repaint();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         jFrame.add(jPanel);
+
         jFrame.setDefaultCloseOperation(3);
         jFrame.setVisible(true);
     }
