@@ -43,16 +43,30 @@ public class Main {
                     }
                 }
                 for(Pionek pion : Pionek.getPionki() ){
-                    if(pion.isActive()){
-                        g.setColor(Color.YELLOW);
-                        g.fillRect(pion.getX()* windowW[0], pion.getY()* windowH[0], windowW[0], windowH[0]);
-                    }
                     if(pion.isWhite()){
                         g.setColor(Color.WHITE);
                     }else{
                         g.setColor(Color.BLACK);
                     }
-                    g.fillOval(pion.getX()* windowW[0], pion.getY()* windowH[0], windowW[0], windowH[0]);
+                    g.fillOval(pion.getX()* windowW[0], pion.getY()* windowW[0],  windowW[0], windowW[0]);
+                }
+                if(Pionek.getActivePionek()!=null){
+                    g.setColor(Color.YELLOW);
+                    g.fillRect(Pionek.getActivePionek().getX()* windowW[0],
+                            Pionek.getActivePionek().getY()* windowH[0],
+                            windowW[0], windowH[0]);
+                    if(Pionek.getActivePionek().isWhite()){
+                        g.setColor(Color.WHITE);
+                    }else{
+                        g.setColor(Color.BLACK);
+                    }
+                    g.fillOval(Pionek.getActivePionek().getX()* windowW[0],
+                            Pionek.getActivePionek().getY()* windowH[0],
+                            windowW[0], windowH[0]);
+                    for(int i=0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
+                        g.setColor(Color.green);
+                        g.fillRect(Pionek.getActivePionek().legalneKafelki().get(i)*windowW[0], Pionek.getActivePionek().legalneKafelki().get(i+1)* windowW[0],  windowW[0],  windowW[0]);
+                    }
                 }
             }
         };
@@ -76,7 +90,6 @@ public class Main {
                     }
 
                     Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).setActive(true);
-                    System.out.println(Pionek.legalneKafelki(Pionek.getActivePionek()));
                     jFrame.repaint();
                 }
             }

@@ -42,6 +42,14 @@ public class Pionek {
         this.y = y;
     }
 
+    public void zbij(int x, int y){
+        if(this.x<x){
+            if(this.y<y){
+
+            }
+        }
+    }
+
     public static List<Pionek> getPionki() {
         return pionki;
     }
@@ -100,8 +108,8 @@ public class Pionek {
         return pion;
     }
 
-    public static List<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
-        List<Integer> xandy = new ArrayList();
+    public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
+        ArrayList<Integer> xandy = new ArrayList();
         if (!isQueen) {
             int i;
             if (isWhite) {
@@ -138,36 +146,36 @@ public class Pionek {
         return xandy;
     }
 
-    public static List<Integer> legalneKafelki(Pionek pionek){
-        List<Integer> legalneKafelki = new ArrayList<>();
-        if(Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen()).isEmpty()){
-            if (pionek.isQueen()){
+    public ArrayList<Integer> legalneKafelki(){
+        ArrayList<Integer> legalneKafelki = new ArrayList<>();
+        if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()){
+            if (this.isQueen()){
 
             }else{
-                if(pionek.isWhite()){
-                    if((getPionekByCords(pionek.getX()+1, pionek.getY()+1)==null)&&(pionek.getX()+1<8&&pionek.getY()+1<8)){
-                        legalneKafelki.add(pionek.getX()+1);
-                        legalneKafelki.add(pionek.getY()+1);
+                if(this.isWhite()){
+                    if((getPionekByCords(this.getX()+1, this.getY()+1)==null)&&(this.getX()+1<8&&this.getY()+1<8)){
+                        legalneKafelki.add(this.getX()+1);
+                        legalneKafelki.add(this.getY()+1);
                     }
-                    if((getPionekByCords(pionek.getX()-1, pionek.getY()+1)==null)&&(pionek.getX()-1>-1&&pionek.getY()+1<8)){
-                        legalneKafelki.add(pionek.getX()-1);
-                        legalneKafelki.add(pionek.getY()+1);
+                    if((getPionekByCords(this.getX()-1, this.getY()+1)==null)&&(this.getX()-1>-1&&this.getY()+1<8)){
+                        legalneKafelki.add(this.getX()-1);
+                        legalneKafelki.add(this.getY()+1);
                     }
-                }else if(!pionek.isWhite()){
-                    if((getPionekByCords(pionek.getX()+1, pionek.getY()-1)==null)&&(pionek.getX()+1<8&&pionek.getY()-1>-1)){
-                        legalneKafelki.add(pionek.getX()+1);
-                        legalneKafelki.add(pionek.getY()-1);
+                }else if(!this.isWhite()){
+                    if((getPionekByCords(this.getX()+1, this.getY()-1)==null)&&(this.getX()+1<8&&this.getY()-1>-1)){
+                        legalneKafelki.add(this.getX()+1);
+                        legalneKafelki.add(this.getY()-1);
                     }
-                    if((getPionekByCords(pionek.getX()-1, pionek.getY()-1)==null)&&(pionek.getX()-1>-1&&pionek.getY()-1>-1)){
-                        legalneKafelki.add(pionek.getX()-1);
-                        legalneKafelki.add(pionek.getY()-1);
+                    if((getPionekByCords(this.getX()-1, this.getY()-1)==null)&&(this.getX()-1>-1&&this.getY()-1>-1)){
+                        legalneKafelki.add(this.getX()-1);
+                        legalneKafelki.add(this.getY()-1);
                     }
                 }
             }
         }else{
-            return Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen());
+            return Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen());
         }
-
         return legalneKafelki;
     }
+
 }
