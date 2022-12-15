@@ -77,10 +77,7 @@ public class Main {
 
                     Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).setActive(true);
 
-                    System.out.println(Pionek.bicia(Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).getX(),
-                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).getY(),
-                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).isWhite(),
-                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).isQueen()));
+                    System.out.println(Pionek.legalneKafelki(Pionek.getActivePionek()));
                     jFrame.repaint();
                 }
             }

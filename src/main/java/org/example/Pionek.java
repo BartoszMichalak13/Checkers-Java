@@ -100,8 +100,8 @@ public class Pionek {
         return pion;
     }
 
-    public static List<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
-        List<Integer> xandy = new ArrayList();
+    public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
+        ArrayList<Integer> xandy = new ArrayList();
         if (!isQueen) {
             int i;
             if (isWhite) {
@@ -138,10 +138,36 @@ public class Pionek {
         return xandy;
     }
 
-    public static int[][] legalneKafelki() {
-        if (!getActivePionek().isQueen() && bicia(getActivePionek().getX(), getActivePionek().getY(), getActivePionek().isWhite(), getActivePionek().isQueen()).isEmpty()) {
+    public static ArrayList<Integer> legalneKafelki(Pionek pionek){
+        ArrayList<Integer> legalneKafelki = new ArrayList<>();
+        if(Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen()).isEmpty()){
+            if (pionek.isQueen()){
+
+            }else{
+                if(pionek.isWhite()){
+                    if((getPionekByCords(pionek.getX()+1, pionek.getY()+1)==null)&&(pionek.getX()+1<8&&pionek.getY()+1<8)){
+                        legalneKafelki.add(pionek.getX()+1);
+                        legalneKafelki.add(pionek.getY()+1);
+                    }
+                    if((getPionekByCords(pionek.getX()-1, pionek.getY()+1)==null)&&(pionek.getX()-1>-1&&pionek.getY()+1<8)){
+                        legalneKafelki.add(pionek.getX()-1);
+                        legalneKafelki.add(pionek.getY()+1);
+                    }
+                }else if(!pionek.isWhite()){
+                    if((getPionekByCords(pionek.getX()+1, pionek.getY()-1)==null)&&(pionek.getX()+1<8&&pionek.getY()-1>-1)){
+                        legalneKafelki.add(pionek.getX()+1);
+                        legalneKafelki.add(pionek.getY()-1);
+                    }
+                    if((getPionekByCords(pionek.getX()-1, pionek.getY()-1)==null)&&(pionek.getX()-1>-1&&pionek.getY()-1>-1)){
+                        legalneKafelki.add(pionek.getX()-1);
+                        legalneKafelki.add(pionek.getY()-1);
+                    }
+                }
+            }
+        }else{
+            return Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen());
         }
 
-        return null;
+        return legalneKafelki;
     }
 }
