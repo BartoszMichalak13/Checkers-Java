@@ -1,9 +1,10 @@
 package org.example;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,8 +27,8 @@ public class Main {
         }
         //tworzę szachownice, myśle że to wszystko trzeba będzie dać do osobnych klas, ale narazie
         //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
-        JPanel jPanel = new JPanel(){
-            public void paint(Graphics g){
+        JPanel jPanel = new JPanel() {
+            public void paint(Graphics g) {
                 size_of_window[0] = jFrame.getContentPane().getSize();
                 windowH[0] = (int) (size_of_window[0].getHeight() / 8);
                 windowW[0] = (int) (size_of_window[0].getWidth() / 8);
@@ -105,6 +106,96 @@ public class Main {
 
             }
         });
+
+        class ActionHandler implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(e.getActionCommand());
+            }
+        }
+
+        JMenuBar menuBar;
+        JMenu menu;
+        JRadioButtonMenuItem rbMenuItem;
+
+
+//Create the menu bar.
+        menuBar = new JMenuBar();
+
+//Build the first menu.
+        menu = new JMenu("Checkers");
+        menu.setMnemonic(KeyEvent.VK_A);
+        menuBar.add(menu);
+
+//a group of radio button menu items
+
+        
+        ButtonGroup group = new ButtonGroup();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby angielskie");
+        rbMenuItem.setSelected(true);
+        rbMenuItem.setMnemonic(KeyEvent.VK_R);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby włoskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby hiszpańskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby niemieckie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby rosyjskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby polskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby kanadyjskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby tureckie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
+        menu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
+            }
+        });
+        jFrame.setJMenuBar(menuBar);
         jFrame.add(jPanel);
 
         jFrame.setDefaultCloseOperation(3);

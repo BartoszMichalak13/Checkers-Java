@@ -1,7 +1,6 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Pionek {
@@ -10,52 +9,54 @@ public class Pionek {
     boolean isActive;
     int x;
     int y;
-    static List<Pionek> pionki = new ArrayList();
+    //statyczna lista, by można było się dobrać do wsyzstkich pionków.
+    // do uzgodnienia czy to dać do osobnej klasy
+    static List<Pionek> pionki = new ArrayList<>();
 
     public boolean isWhite() {
-        return this.isWhite;
+        return isWhite;
     }
 
     public void setWhite(boolean white) {
-        this.isWhite = white;
+        isWhite = white;
     }
 
     public boolean isActive() {
-        return this.isActive;
+        return isActive;
     }
 
     public void setActive(boolean active) {
-        this.isActive = active;
+        isActive = active;
     }
 
+    //automatycznie dodaje pionek do statycznej listy podczas jego tworzenia
     public Pionek(boolean isWhite, int x, int y) {
         this.isWhite = isWhite;
         this.x = x;
         this.y = y;
         pionki.add(this);
-        this.isQueen = false;
-        this.isActive = false;
+        this.isQueen=false;
+        this.isActive=false;
     }
 
-    public void przesun(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void przesun(int x, int y){
+        this.x=x;
+        this.y=y;
     }
-
-    public static List<Pionek> getPionki() {
+    public static List<Pionek> getPionki(){
         return pionki;
     }
 
     public boolean isQueen() {
-        return this.isQueen;
+        return isQueen;
     }
 
     public void setQueen(boolean queen) {
-        this.isQueen = queen;
+        isQueen = queen;
     }
 
     public int getX() {
-        return this.x;
+        return x;
     }
 
     public void setX(int x) {
@@ -63,85 +64,114 @@ public class Pionek {
     }
 
     public int getY() {
-        return this.y;
+        return y;
     }
 
     public void setY(int y) {
         this.y = y;
     }
 
-    public static Pionek getPionekByCords(int x, int y) {
-        Iterator var2 = pionki.iterator();
 
-        Pionek pion;
-        do {
-            if (!var2.hasNext()) {
-                return null;
+    public static Pionek getPionekByCords(int x, int y){
+        for(Pionek pion : pionki){
+            if(pion.x==x&&pion.y==y){
+                return pion;
             }
-
-            pion = (Pionek)var2.next();
-        } while(pion.x != x || pion.y != y);
-
-        return pion;
+        }
+        return null;
     }
 
-    public static Pionek getActivePionek() {
-        Iterator var0 = pionki.iterator();
-
-        Pionek pion;
-        do {
-            if (!var0.hasNext()) {
-                return null;
+    public static Pionek getActivePionek(){
+        for(Pionek pion:pionki){
+            if(pion.isActive()){
+                return pion;
             }
-
-            pion = (Pionek)var0.next();
-        } while(!pion.isActive());
-
-        return pion;
+        }
+        return null;
     }
 
-    public static List<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
-        List<Integer> xandy = new ArrayList();
-        if (!isQueen) {
-            int i;
-            if (isWhite) {
-                for(i = 0; i < pionki.size(); ++i) {
-                    if (!((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y + 1) {
-                        if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y + 2) == null && x + 2 < 8 && y + 2 < 8) {
-                                xandy.add(x + 2);
-                                xandy.add(y + 2);
+    //zwracam koordynaty bić, x są na indeksach nieparzystych, y na parzystych.
+    //elegancko by bylo gdyby zwracalo liste zlozona z (x,y), ale mysle ze tak sie tez da i bedzie git.
+    public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen){
+        ArrayList<Integer> xandy = new ArrayList<>();
+        if(isQueen){
+
+        }
+        else{
+            if(isWhite){
+                for(int i=0;i<pionki.size();i++){
+                    if(!pionki.get(i).isWhite){
+                        if(pionki.get(i).getY()==y+1){
+                            if(pionki.get(i).getX()==x+1){
+                                if(getPionekByCords(x+2, y+2)==null&&x+2<8&&y+2<8){
+                                    xandy.add(x+2);
+                                    xandy.add(y+2);
+                                }
+                            }else if(pionki.get(i).getX()==x-1){
+                                if(getPionekByCords(x-2, y+2)==null&&x-2>=0&&y+2<8){
+                                    xandy.add(x-2);
+                                    xandy.add(y+2);
+                                }
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y + 2) == null && x - 2 >= 0 && y + 2 < 8) {
-                            xandy.add(x - 2);
-                            xandy.add(y + 2);
                         }
                     }
                 }
-            } else if (!isWhite) {
-                for(i = 0; i < pionki.size(); ++i) {
-                    if (((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y - 1) {
-                        if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y + 2 < 8) {
-                                xandy.add(x + 2);
-                                xandy.add(y - 2);
+            }
+            else if(!isWhite){
+                for(int i=0;i<pionki.size();i++){
+                    if(pionki.get(i).isWhite){
+                        if(pionki.get(i).getY()==y-1){
+                            if(pionki.get(i).getX()==x+1){
+                                if(getPionekByCords(x+2, y-2)==null&&x+2<8&&y-2>=0){
+                                    xandy.add(x+2);
+                                    xandy.add(y-2);
+                                }
+                            }else if(pionki.get(i).getX()==x-1){
+                                if(getPionekByCords(x-2, y-2)==null&&x-2>=0&&y-2>=0){
+                                    xandy.add(x-2);
+                                    xandy.add(y-2);
+                                }
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y + 2 < 8) {
-                            xandy.add(x - 2);
-                            xandy.add(y - 2);
                         }
                     }
                 }
             }
         }
-
         return xandy;
     }
 
-    public static int[][] legalneKafelki() {
-        if (!getActivePionek().isQueen() && bicia(getActivePionek().getX(), getActivePionek().getY(), getActivePionek().isWhite(), getActivePionek().isQueen()).isEmpty()) {
+
+    //tu chce zrobic zeby funckja zwracala x,y kafelek, na ktore mozna wykonac ruch.
+    public static ArrayList<Integer> legalneKafelki(Pionek pionek){
+        ArrayList<Integer> legalneKafelki = new ArrayList<>();
+        if(Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen()).isEmpty()){
+            if (pionek.isQueen()){
+
+            }else{
+                if(pionek.isWhite()){
+                    if((getPionekByCords(pionek.getX()+1, pionek.getY()+1)==null)&&(pionek.getX()+1<8&&pionek.getY()+1<8)){
+                        legalneKafelki.add(pionek.getX()+1);
+                        legalneKafelki.add(pionek.getY()+1);
+                    }
+                    if((getPionekByCords(pionek.getX()-1, pionek.getY()+1)==null)&&(pionek.getX()-1>-1&&pionek.getY()+1<8)){
+                        legalneKafelki.add(pionek.getX()-1);
+                        legalneKafelki.add(pionek.getY()+1);
+                    }
+                }else if(!pionek.isWhite()){
+                    if((getPionekByCords(pionek.getX()+1, pionek.getY()-1)==null)&&(pionek.getX()+1<8&&pionek.getY()-1>-1)){
+                        legalneKafelki.add(pionek.getX()+1);
+                        legalneKafelki.add(pionek.getY()-1);
+                    }
+                    if((getPionekByCords(pionek.getX()-1, pionek.getY()-1)==null)&&(pionek.getX()-1>-1&&pionek.getY()-1>-1)){
+                        legalneKafelki.add(pionek.getX()-1);
+                        legalneKafelki.add(pionek.getY()-1);
+                    }
+                }
+            }
+        }else{
+            return Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen());
         }
 
-        return null;
+        return legalneKafelki;
     }
 }
