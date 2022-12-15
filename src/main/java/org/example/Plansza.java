@@ -8,22 +8,24 @@ import java.awt.event.MouseListener;
 
 public class Plansza {
     JFrame jFrame = new JFrame();
+    int windowH;
+    int windowW;
+    Dimension size_of_window;
     public Plansza() {
     }
     public JFrame getFrame()
     {
-        return jFrame;
+        return this.jFrame;
     }
-    public Dimension rozmiar(JFrame jFrame)
-    {
-        return jFrame.getContentPane().getSize();
-    }
+    public Dimension rozmiar() {return this.jFrame.getContentPane().getSize();}
+    public int getwindowW(){return this.windowW;}
+    public int getwindowH(){return this.windowH;}
     public void boardbuilder() {
 
         jFrame.setBounds(10, 10, 1024, 720);
-        Dimension size_of_window;
-        int windowH;
-        int windowW;
+        size_of_window = jFrame.getContentPane().getSize();
+        windowH = (int) (size_of_window.getHeight() / 8);
+        windowW = (int) (size_of_window.getWidth() / 8);
         //Ustawiam pionki
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -43,7 +45,7 @@ public class Plansza {
         jFrame.setPreferredSize(new Dimension(1024, 720));
         jFrame.pack();
         //jFrame.setLayout(gridLayout);
-        //jFrame.add(jPanel);
+        jFrame.add(new Pole());
         jFrame.setDefaultCloseOperation(3);
         jFrame.setVisible(true);
     }

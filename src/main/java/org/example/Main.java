@@ -7,9 +7,13 @@ import java.awt.event.MouseListener;
 
 public class Main {
     public static void main(String[] args) {
+        //new Plansza().boardbuilder();
+    //}
         JFrame jFrame = new JFrame();
         jFrame.setBounds(10, 10, 512, 540);
-
+        final Dimension[] size_of_window = new Dimension[1];
+        final int[] windowH = new int[1];
+        final int[] windowW = new int[1];
         //Ustawiam pionki
         for(int i = 0; i<8;i++){
             for(int j=0; j<8;j++){
@@ -24,6 +28,9 @@ public class Main {
         //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
         JPanel jPanel = new JPanel(){
             public void paint(Graphics g){
+                size_of_window[0] = jFrame.getContentPane().getSize();
+                windowH[0] = (int) (size_of_window[0].getHeight() / 8);
+                windowW[0] = (int) (size_of_window[0].getWidth() / 8);
                 for(int y=0; y<8;y++){
                     for(int x=0; x<8; x++){
                         if((x%2==0&&y%2==1)||(y%2==0&&x%2==1)){
@@ -32,46 +39,48 @@ public class Main {
                         else{
                             g.setColor(Color.lightGray);
                         }
-                        g.fillRect(x*64, y*64, 64, 64);
+                        g.fillRect(x* windowW[0], y* windowH[0], windowW[0], windowH[0]);
                     }
                 }
                 for(Pionek pion : Pionek.getPionki() ){
                     if(pion.isActive()){
                         g.setColor(Color.YELLOW);
-                        g.fillRect(pion.getX()*64, pion.getY()*64, 64, 64);
+                        g.fillRect(pion.getX()* windowW[0], pion.getY()* windowH[0], windowW[0], windowH[0]);
                     }
                     if(pion.isWhite()){
                         g.setColor(Color.WHITE);
                     }else{
                         g.setColor(Color.BLACK);
                     }
-                    g.fillOval(pion.getX()*64, pion.getY()*64, 64, 64);
+                    g.fillOval(pion.getX()* windowW[0], pion.getY()* windowH[0], windowW[0], windowH[0]);
                 }
             }
         };
         jPanel.addMouseListener(new MouseListener() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 for(Pionek pion:Pionek.getPionki()){
                     if(pion.isActive()){
-                        pion.przesun(e.getX()/64,e.getY()/64);
+                        pion.przesun(e.getX()/windowW[0],e.getY()/windowH[0]);
                         pion.setActive(false);
                         jFrame.repaint();
                         return;
                     }
                 }
-                if(Pionek.getPionekByCords(e.getX()/64,e.getY()/64)!=null){
+                if(Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0])!=null){
 
                     for(Pionek pion:Pionek.getPionki()){
                         pion.setActive(false);
                     }
 
-                    Pionek.getPionekByCords(e.getX()/64,e.getY()/64).setActive(true);
+                    Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).setActive(true);
 
-                    System.out.println(Pionek.bicia(Pionek.getPionekByCords(e.getX()/64,e.getY()/64).getX(),
-                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).getY(),
-                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).isWhite(),
-                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).isQueen()));
+                    System.out.println(Pionek.bicia(Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).getX(),
+                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).getY(),
+                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).isWhite(),
+                            Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).isQueen()));
                     jFrame.repaint();
                 }
             }
