@@ -130,11 +130,11 @@ public class Pionek {
                 for(i = 0; i < pionki.size(); ++i) {
                     if (((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y - 1) {
                         if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y + 2 < 8) {
+                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y - 2 >=0) {
                                 xandy.add(x + 2);
                                 xandy.add(y - 2);
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y + 2 < 8) {
+                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y -2>= 0) {
                             xandy.add(x - 2);
                             xandy.add(y - 2);
                         }
@@ -157,16 +157,16 @@ public class Pionek {
                         legalneKafelki.add(this.getX()+1);
                         legalneKafelki.add(this.getY()+1);
                     }
-                    if((getPionekByCords(this.getX()-1, this.getY()+1)==null)&&(this.getX()-1>-1&&this.getY()+1<8)){
+                    if((getPionekByCords(this.getX()-1, this.getY()+1)==null)&&(this.getX()-1>=0&&this.getY()+1<8)){
                         legalneKafelki.add(this.getX()-1);
                         legalneKafelki.add(this.getY()+1);
                     }
                 }else if(!this.isWhite()){
-                    if((getPionekByCords(this.getX()+1, this.getY()-1)==null)&&(this.getX()+1<8&&this.getY()-1>-1)){
+                    if((getPionekByCords(this.getX()+1, this.getY()-1)==null)&&(this.getX()+1<8&&this.getY()-1>=0)){
                         legalneKafelki.add(this.getX()+1);
                         legalneKafelki.add(this.getY()-1);
                     }
-                    if((getPionekByCords(this.getX()-1, this.getY()-1)==null)&&(this.getX()-1>-1&&this.getY()-1>-1)){
+                    if((getPionekByCords(this.getX()-1, this.getY()-1)==null)&&(this.getX()-1>=0&&this.getY()-1>=0)){
                         legalneKafelki.add(this.getX()-1);
                         legalneKafelki.add(this.getY()-1);
                     }
