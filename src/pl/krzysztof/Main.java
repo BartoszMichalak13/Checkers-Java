@@ -22,6 +22,8 @@ public class Main {
         }
         //tworzę szachownice, myśle że to wszystko trzeba będzie dać do osobnych klas, ale narazie
         //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
+
+        //testu
         JPanel jPanel = new JPanel(){
             public void paint(Graphics g){
                 for(int y=0; y<8;y++){
