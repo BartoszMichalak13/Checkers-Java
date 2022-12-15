@@ -9,7 +9,8 @@ public class Pionek {
     boolean isActive;
     int x;
     int y;
-    //int id;
+    //statyczna lista, by można było się dobrać do wsyzstkich pionków.
+    // do uzgodnienia czy to dać do osobnej klasy
     static List<Pionek> pionki = new ArrayList<>();
 
     public boolean isWhite() {
@@ -28,6 +29,7 @@ public class Pionek {
         isActive = active;
     }
 
+    //automatycznie dodaje pionek do statycznej listy podczas jego tworzenia
     public Pionek(boolean isWhite, int x, int y) {
         this.isWhite = isWhite;
         this.x = x;
@@ -35,7 +37,6 @@ public class Pionek {
         pionki.add(this);
         this.isQueen=false;
         this.isActive=false;
-       // this.id=pionki.size();
     }
 
     public void przesun(int x, int y){
@@ -70,23 +71,84 @@ public class Pionek {
         this.y = y;
     }
 
-    public static void setPionki(List<Pionek> pionki) {
-        Pionek.pionki = pionki;
-    }
-    public static Pionek getPionekByMouse(int x, int y){
+
+    public static Pionek getPionekByCords(int x, int y){
         for(Pionek pion : pionki){
-            if(pion.x==x/64&&pion.y==y/64){
+            if(pion.x==x&&pion.y==y){
                 return pion;
             }
         }
         return null;
     }
 
-//    public int getId() {
-//        return id;
-//    }
-//    public static Pionek getPionekByID(int id){
-//
-//    }
+    public static Pionek getActivePionek(){
+        for(Pionek pion:pionki){
+            if(pion.isActive()){
+                return pion;
+            }
+        }
+        return null;
+    }
 
+    //zwracam koordynaty bić, x są na indeksach nieparzystych, y na parzystych.
+    //elegancko by bylo gdyby zwracalo liste zlozona z (x,y), ale mysle ze tak sie tez da i bedzie git.
+    public static List<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen){
+        List<Integer> xandy = new ArrayList<>();
+        if(isQueen){
+
+        }
+        else{
+            if(isWhite){
+                for(int i=0;i<pionki.size();i++){
+                    if(!pionki.get(i).isWhite){
+                        if(pionki.get(i).getY()==y+1){
+                            if(pionki.get(i).getX()==x+1){
+                                if(getPionekByCords(x+2, y+2)==null&&x+2<8&&y+2<8){
+                                    xandy.add(x+2);
+                                    xandy.add(y+2);
+                                }
+                            }else if(pionki.get(i).getX()==x-1){
+                                if(getPionekByCords(x-2, y+2)==null&&x-2>=0&&y+2<8){
+                                    xandy.add(x-2);
+                                    xandy.add(y+2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if(!isWhite){
+                for(int i=0;i<pionki.size();i++){
+                    if(pionki.get(i).isWhite){
+                        if(pionki.get(i).getY()==y-1){
+                            if(pionki.get(i).getX()==x+1){
+                                if(getPionekByCords(x+2, y-2)==null&&x+2<8&&y+2<8){
+                                    xandy.add(x+2);
+                                    xandy.add(y-2);
+                                }
+                            }else if(pionki.get(i).getX()==x-1){
+                                if(getPionekByCords(x-2, y-2)==null&&x-2>=0&&y+2<8){
+                                    xandy.add(x-2);
+                                    xandy.add(y-2);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return xandy;
+    }
+
+
+    //tu chce zrobic zeby funckja zwracala x,y kafelek, na ktore mozna wykonac ruch.
+    public int[][] legalneKafelki(Pionek pionek){
+        int[][] legalneKafelki;
+        if (pionek.isQueen()){
+
+        }else{
+
+        }
+        return null;
+    }
 }

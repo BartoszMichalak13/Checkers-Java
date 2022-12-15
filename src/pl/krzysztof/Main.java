@@ -4,22 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
         JFrame jFrame = new JFrame();
         jFrame.setBounds(10, 10, 512, 540);
+
+        //Ustawiam pionki
         for(int i = 0; i<8;i++){
             for(int j=0; j<8;j++){
                 if(((i==0||i==2)&&j%2==1)||(i==1&&j%2==0)){
-                    Pionek pionek = new Pionek(true, j, i);
+                    new Pionek(true, j, i);
                 }else if(((i==7||i==5)&&j%2==0)||(i==6&&j%2==1)){
-                    Pionek pionek = new Pionek(false, j, i);
+                    new Pionek(false, j, i);
                 }
             }
         }
+        //tworzę szachownice, myśle że to wszystko trzeba będzie dać do osobnych klas, ale narazie
+        //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
         JPanel jPanel = new JPanel(){
             public void paint(Graphics g){
                 for(int y=0; y<8;y++){
@@ -58,11 +60,18 @@ public class Main {
                         return;
                     }
                 }
-                if(Pionek.getPionekByMouse(e.getX(),e.getY())!=null){
+                if(Pionek.getPionekByCords(e.getX()/64,e.getY()/64)!=null){
+
                     for(Pionek pion:Pionek.getPionki()){
                         pion.setActive(false);
                     }
-                    Pionek.getPionekByMouse(e.getX(),e.getY()).setActive(true);
+
+                    Pionek.getPionekByCords(e.getX()/64,e.getY()/64).setActive(true);
+
+                    System.out.println(Pionek.bicia(Pionek.getPionekByCords(e.getX()/64,e.getY()/64).getX(),
+                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).getY(),
+                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).isWhite(),
+                            Pionek.getPionekByCords(e.getX()/64,e.getY()/64).isQueen()));
                     jFrame.repaint();
                 }
             }
@@ -92,4 +101,5 @@ public class Main {
         jFrame.setDefaultCloseOperation(3);
         jFrame.setVisible(true);
     }
+
 }
