@@ -1,61 +1,30 @@
 package org.example;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Pionek {
-    boolean isWhite;
-    boolean isQueen;
-    boolean isActive;
-    int x;
-    int y;
-    static List<Pionek> pionki = new ArrayList();
+public abstract class Pionek extends MouseListener {
+    private int x;
+    prvate int y;
+    private boolean isWhite;
+    private boolean isQueen;
+    private boolean isActive;
+    private static ArrayList<Pionek> pionki = new ArrayList<>();
 
-    public boolean isWhite() {
-        return this.isWhite;
-    }
-
-    public void setWhite(boolean white) {
-        this.isWhite = white;
-    }
-
-    public boolean isActive() {
-        return this.isActive;
-    }
-
-    public void setActive(boolean active) {
-        this.isActive = active;
-    }
-
-    public Pionek(boolean isWhite, int x, int y) {
-        this.isWhite = isWhite;
+    public Pionek(int x, int y, boolean isWhite) {
         this.x = x;
         this.y = y;
-        pionki.add(this);
+        this.isWhite = isWhite;
         this.isQueen = false;
         this.isActive = false;
-    }
-
-    public void przesun(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public static List<Pionek> getPionki() {
-        return pionki;
-    }
-
-    public boolean isQueen() {
-        return this.isQueen;
-    }
-
-    public void setQueen(boolean queen) {
-        this.isQueen = queen;
+        pionki.add(this);
     }
 
     public int getX() {
-        return this.x;
+        return x;
     }
 
     public void setX(int x) {
@@ -63,11 +32,44 @@ public class Pionek {
     }
 
     public int getY() {
-        return this.y;
+        return y;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isWhite() {
+        return isWhite;
+    }
+
+    public void setWhite(boolean white) {
+        isWhite = white;
+    }
+
+    public boolean isQueen() {
+        return isQueen;
+    }
+
+    public void setQueen(boolean queen) {
+        isQueen = queen;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public static ArrayList<Pionek> getPionki() {
+        return pionki;
+    }
+
+    public void przesun(int x, int y){
+        this.x=x;
+        this.y=y;
     }
 
     public static Pionek getPionekByCords(int x, int y) {
@@ -103,7 +105,7 @@ public class Pionek {
     public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
         ArrayList<Integer> xandy = new ArrayList();
         if (!isQueen) {
-            int i;
+            int i
             if (isWhite) {
                 for(i = 0; i < pionki.size(); ++i) {
                     if (!((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y + 1) {
@@ -122,52 +124,24 @@ public class Pionek {
                 for(i = 0; i < pionki.size(); ++i) {
                     if (((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y - 1) {
                         if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y + 2 < 8) {
+                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y - 2 >=0) {
                                 xandy.add(x + 2);
                                 xandy.add(y - 2);
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y + 2 < 8) {
+                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y -2>= 0) {
                             xandy.add(x - 2);
                             xandy.add(y - 2);
                         }
                     }
                 }
             }
+        }else{
+            return biciaDamka();
         }
-
         return xandy;
     }
 
-    public static ArrayList<Integer> legalneKafelki(Pionek pionek){
-        ArrayList<Integer> legalneKafelki = new ArrayList<>();
-        if(Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen()).isEmpty()){
-            if (pionek.isQueen()){
+    private ArrayList<Integer> biciaDamka(){
 
-            }else{
-                if(pionek.isWhite()){
-                    if((getPionekByCords(pionek.getX()+1, pionek.getY()+1)==null)&&(pionek.getX()+1<8&&pionek.getY()+1<8)){
-                        legalneKafelki.add(pionek.getX()+1);
-                        legalneKafelki.add(pionek.getY()+1);
-                    }
-                    if((getPionekByCords(pionek.getX()-1, pionek.getY()+1)==null)&&(pionek.getX()-1>-1&&pionek.getY()+1<8)){
-                        legalneKafelki.add(pionek.getX()-1);
-                        legalneKafelki.add(pionek.getY()+1);
-                    }
-                }else if(!pionek.isWhite()){
-                    if((getPionekByCords(pionek.getX()+1, pionek.getY()-1)==null)&&(pionek.getX()+1<8&&pionek.getY()-1>-1)){
-                        legalneKafelki.add(pionek.getX()+1);
-                        legalneKafelki.add(pionek.getY()-1);
-                    }
-                    if((getPionekByCords(pionek.getX()-1, pionek.getY()-1)==null)&&(pionek.getX()-1>-1&&pionek.getY()-1>-1)){
-                        legalneKafelki.add(pionek.getX()-1);
-                        legalneKafelki.add(pionek.getY()-1);
-                    }
-                }
-            }
-        }else{
-            return Pionek.bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen());
-        }
-
-        return legalneKafelki;
     }
 }
