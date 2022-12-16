@@ -39,9 +39,7 @@ public class Plansza implements MouseListener{
 
     JPanel jPanel = new JPanel(){
         public void paint(){
-            size_of_window[0] = jFrame.getContentPane().getSize();
-            windowH[0] = (int) (size_of_window[0].getHeight() / 8);
-            windowW[0] = (int) (size_of_window[0].getWidth() / 8);
+            
         }
     }
 
