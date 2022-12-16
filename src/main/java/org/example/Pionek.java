@@ -37,9 +37,22 @@ public class Pionek {
         this.isActive = false;
     }
 
+    //zbijanie dziala narazie tylko dla pionkow i damek angielskich. dla damek polskich trzeba pokombinowac
     public void przesun(int x, int y) {
+        if(getPionekByCords((this.x+x)/2,(this.y+y)/2)!=null&&getPionekByCords((this.x+x)/2,(this.y+y)/2).isWhite()!=this.isWhite()){
+            pionki.remove(getPionekByCords((this.x+x)/2,(this.y+y)/2));
+        }
+
         this.x = x;
         this.y = y;
+
+        if(this.isWhite()&&y==8){
+            this.setQueen(true);
+        }else if((!this.isWhite())&&y==0){
+            this.setQueen(true);
+        }
+
+
     }
 
     public void zbij(int x, int y){
