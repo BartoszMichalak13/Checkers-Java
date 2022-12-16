@@ -37,10 +37,30 @@ public class Pionek {
         this.isActive = false;
     }
 
-    //zbijanie dziala narazie tylko dla pionkow i damek angielskich. dla damek polskich trzeba pokombinowac
+    //ta metoda działa i dla polskich damek i angielskich
+    //w polskich damka porusza się po przekątnej i gdy znajdzie pionek przeciwnika, za którym na tej przekątnej jest pusto
+    //to go zbije, i wyląduje za nim.
     public void przesun(int x, int y) {
-        if(getPionekByCords((this.x+x)/2,(this.y+y)/2)!=null&&getPionekByCords((this.x+x)/2,(this.y+y)/2).isWhite()!=this.isWhite()){
-            pionki.remove(getPionekByCords((this.x+x)/2,(this.y+y)/2));
+        if(x>this.x){
+            if(y>this.y){
+                if(getPionekByCords(x-1, y-1)!=null&&getPionekByCords(x-1, y-1).isWhite()!=this.isWhite()){
+                    pionki.remove(getPionekByCords(x-1, y-1));
+                }
+            }else if(y<this.y){
+                if(getPionekByCords(x-1, y+1)!=null&&getPionekByCords(x-1, y+1).isWhite()!=this.isWhite()){
+                    pionki.remove(getPionekByCords(x-1, y+1));
+                }
+            }
+        }else if(x<this.x){
+            if(y>this.y){
+                if(getPionekByCords(x+1, y-1)!=null&&getPionekByCords(x+1, y-1).isWhite()!=this.isWhite()){
+                    pionki.remove(getPionekByCords(x+1, y-1));
+                }
+            }else if(y<this.y){
+                if(getPionekByCords(x+1, y+1)!=null&&getPionekByCords(x+1, y+1).isWhite()!=this.isWhite()){
+                    pionki.remove(getPionekByCords(x+1, y+1));
+                }
+            }
         }
 
         this.x = x;
