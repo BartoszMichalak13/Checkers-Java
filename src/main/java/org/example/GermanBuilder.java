@@ -1,12 +1,13 @@
 package org.example;
-public class PolishBuilder{
+
+public class GermanBuilder {
     boolean candamabekilled = true;
     boolean manyfieldsdama = true;
     boolean bestkill = true;
     boolean canpawnkillbackwards = true;
 
-    int size = 10;
-    boolean bottomleftcorner = false;//false == czarne chyba
+    int size = 8;
+    boolean bottomleftcorner = true;//false == czarne chyba
     public void build(){
         Plansza pl =new Plansza(size,bottomleftcorner);
         pl.boardbuilder();

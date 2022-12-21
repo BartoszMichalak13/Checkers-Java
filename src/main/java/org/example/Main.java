@@ -6,122 +6,78 @@ import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.*;
 
+
 public class Main {
+    static JFrame jFrame;
+    static JLabel beforethegame;
+    public JFrame getFrame() {return this.jFrame;}
+    static class CheckerBoardHandler implements MouseListener {
+        Plansza pl= new Plansza();
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+            for (Pionek pion : Pionek.getPionki()) {
+                if (pion.isActive()) {
+                    pion.przesun(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH());
+                    pion.setActive(false);
+                    jFrame.repaint();
+                    return;
+                }
+            }
+            if (Pionek.getPionekByCords(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH()) != null) {
+
+                for (Pionek pion : Pionek.getPionki()) {
+                    pion.setActive(false);
+                }
+
+                Pionek.getPionekByCords(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH()).setActive(true);
+                jFrame.repaint();
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+
     public static void main(String[] args) {
         //new Plansza().boardbuilder();
     //}
-        JFrame jFrame = new JFrame();
-        jFrame.setBounds(10, 10, 512, 540);
-        final Dimension[] size_of_window = new Dimension[1];
-        final int[] windowH = new int[1];
-        final int[] windowW = new int[1];
-        //Ustawiam pionki
-        for(int i = 0; i<8;i++){
-            for(int j=0; j<8;j++){
-                if(((i==0||i==2)&&j%2==1)||(i==1&&j%2==0)){
-                    new Pionek(true, j, i);
-                }else if(((i==7||i==5)&&j%2==0)||(i==6&&j%2==1)){
-                    new Pionek(false, j, i);
-                }
-            }
-        }
-        //tworzę szachownice, myśle że to wszystko trzeba będzie dać do osobnych klas, ale narazie
-        //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
-        JPanel jPanel = new JPanel() {
-            public void paint(Graphics g) {
-                size_of_window[0] = jFrame.getContentPane().getSize();
-                windowH[0] = (int) (size_of_window[0].getHeight() / 8);
-                windowW[0] = (int) (size_of_window[0].getWidth() / 8);
-                for(int y=0; y<8;y++){
-                    for(int x=0; x<8; x++){
-                        if((x%2==0&&y%2==1)||(y%2==0&&x%2==1)){
-                            g.setColor(Color.DARK_GRAY);
-                        }
-                        else{
-                            g.setColor(Color.lightGray);
-                        }
-                        g.fillRect(x* windowW[0], y* windowH[0], windowW[0], windowH[0]);
-                    }
-                }
-                for(Pionek pion : Pionek.getPionki() ){
-                    if(pion.isWhite()){
-                        g.setColor(Color.WHITE);
-                    }else{
-                        g.setColor(Color.BLACK);
-                    }
-                    g.fillOval(pion.getX()* windowW[0], pion.getY()* windowH[0],  windowW[0], windowH[0]);
-                }
-                if(Pionek.getActivePionek()!=null){
-                    g.setColor(Color.YELLOW);
-                    g.fillRect(Pionek.getActivePionek().getX()* windowW[0],
-                            Pionek.getActivePionek().getY()* windowH[0],
-                            windowW[0], windowH[0]);
-                    if(Pionek.getActivePionek().isWhite()){
-                        g.setColor(Color.WHITE);
-                    }else{
-                        g.setColor(Color.BLACK);
-                    }
-                    g.fillOval(Pionek.getActivePionek().getX()* windowW[0],
-                            Pionek.getActivePionek().getY()* windowH[0],
-                            windowW[0], windowH[0]);
-                    for(int i=0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
-                        g.setColor(Color.green);
-                        g.fillRect(Pionek.getActivePionek().legalneKafelki().get(i)*windowW[0], Pionek.getActivePionek().legalneKafelki().get(i+1)* windowH[0],  windowW[0],  windowH[0]);
-                    }
-                }
-            }
-        };
-        jPanel.addMouseListener(new MouseListener() {
+        jFrame = new JFrame();
+        jFrame.setBounds(10, 10, 800, 800);
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
+        //PLAN:
+        /* DUŻY NAPIS WYBIERZ TRYB
+        *  PO WYBRANIU TRYBU Z MENU ODPALA SIE ODPOWIEDNI BUILDER
+        *  PRZESYLA DANE DO PLANSZY GDZIE TWORZY SIE PLANSZA I PIONKI
+        *  I DO PIONKA ZEBY WIADOMO BYLO JAKIE SA ZASADY (jak bic, co
+        *  moze damka itd.)
+        *
+        * */
+        beforethegame = new JLabel(
+                "WYBIERZ TRYB GRY",
+                SwingConstants.CENTER
+        );
+        beforethegame.setFont(beforethegame.getFont().deriveFont(50.0F));
 
-                for(Pionek pion:Pionek.getPionki()){
-                    if(pion.isActive()){
-                        pion.przesun(e.getX()/windowW[0],e.getY()/windowH[0]);
-                        pion.setActive(false);
-                        jFrame.repaint();
-                        return;
-                    }
-                }
-                if(Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0])!=null){
 
-                    for(Pionek pion:Pionek.getPionki()){
-                        pion.setActive(false);
-                    }
-
-                    Pionek.getPionekByCords(e.getX()/windowW[0],e.getY()/windowH[0]).setActive(true);
-                    jFrame.repaint();
-                }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-
-        class ActionHandler implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(e.getActionCommand());
-            }
-        }
 
         JMenuBar menuBar;
         JMenu menu;
@@ -132,13 +88,39 @@ public class Main {
         menuBar = new JMenuBar();
 
 //Build the first menu.
-        menu = new JMenu("Checkers");
+        menu = new JMenu("Game Modes");
         menu.setMnemonic(KeyEvent.VK_A);
         menuBar.add(menu);
 
 //a group of radio button menu items
 
-        
+        class ActionHandler implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s= e.getActionCommand();
+                System.out.println(s);
+                jFrame.remove(beforethegame);
+                if(s.equals("warcaby angielskie"))
+                    new EnglishBuilder().build();
+                else if(s.equals("warcaby włoskie"))
+                    new ItalianBuilder().build();
+                else if(s.equals("warcaby hiszpańskie"))
+                    new SpanishBuilder().build();
+                else if(s.equals("warcaby niemieckie"))
+                    new GermanBuilder().build();
+                else if(s.equals("warcaby rosyjskie"))
+                    new RussianBuilder().build();
+                else if(s.equals("warcaby polskie"))
+                    new PolishBuilder().build();
+                else if(s.equals("warcaby kanadyjskie"))
+                    new CanadianBuilder().build();
+                else if(s.equals("warcaby tureckie"))
+                    new TurkishBuilder().build();
+                else if(s.equals("warcaby brazylijskie"))
+                    new BrazilianBuilder().build();
+
+            }
+        }
         ButtonGroup group = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem("warcaby angielskie");
         rbMenuItem.setSelected(true);
@@ -188,24 +170,17 @@ public class Main {
         group.add(rbMenuItem);
         menu.add(rbMenuItem);
         rbMenuItem.addActionListener(new ActionHandler());
-        menu.addMenuListener(new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent e) {
+        menu.addSeparator();
+        rbMenuItem = new JRadioButtonMenuItem("warcaby brazylijskie");
+        rbMenuItem.setMnemonic(KeyEvent.VK_O);
+        group.add(rbMenuItem);
+        menu.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionHandler());
 
-            }
-
-            @Override
-            public void menuDeselected(MenuEvent e) {
-
-            }
-
-            @Override
-            public void menuCanceled(MenuEvent e) {
-
-            }
-        });
         jFrame.setJMenuBar(menuBar);
-        jFrame.add(jPanel);
+        jFrame.setLayout(new BorderLayout());
+        jFrame.add(beforethegame, BorderLayout.CENTER);
+        //jFrame.add(jPanel);
 
         jFrame.setDefaultCloseOperation(3);
         jFrame.setVisible(true);
