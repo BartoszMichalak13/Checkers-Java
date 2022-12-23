@@ -7,10 +7,11 @@ public class TurkishBuilder {
     boolean bestkill = true;
     boolean canpawnkillbackwards = false;
 
+    boolean turkishflag=true;
     int size = 8;
     boolean bottomleftcorner = false;//false == czarne chyba
     public void build(){
-        Plansza pl =new Plansza(size,bottomleftcorner);
+        Plansza pl =new Plansza(size,bottomleftcorner, turkishflag);
         pl.boardbuilder();
     }
 }

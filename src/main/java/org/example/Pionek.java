@@ -27,6 +27,8 @@ public class Pionek {
     public void setActive(boolean active) {
         this.isActive = active;
     }
+    //jezeli biale sa na dole (na odwrot), podswitlanie/logika nie dziala
+    //trzeba zmienic construktor zeby logika dzialala dla roznych trybow
 
     public Pionek(boolean isWhite, int x, int y) {
         this.isWhite = isWhite;
@@ -66,6 +68,7 @@ public class Pionek {
         this.x = x;
         this.y = y;
 
+        //change 8 to size,
         if(this.isWhite()&&y==8){
             this.setQueen(true);
         }else if((!this.isWhite())&&y==0){
