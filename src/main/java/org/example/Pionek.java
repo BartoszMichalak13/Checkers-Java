@@ -94,9 +94,7 @@ public class Pionek {
         return this.isQueen;
     }
 
-    public void setQueen(boolean queen) {
-        this.isQueen = queen;
-    }
+    public void setQueen(boolean queen) {this.isQueen = queen;}
 
     public int getX() {
         return this.x;

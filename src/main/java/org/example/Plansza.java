@@ -64,7 +64,8 @@ public class Plansza {
         }
     }
     public void boardbuilder() {
-        Main main =  new Main();
+        //ew swithc to main
+        Gamev2 main =  new Gamev2();
         jFrame = main.getFrame();
 
 
@@ -107,6 +108,7 @@ public class Plansza {
                     }
                 }
                 for(Pionek pion : Pionek.getPionki() ){
+                    //System.out.println(pion);
                     if(pion.isWhite()){
                         g.setColor(Color.WHITE);
                     }else{
@@ -149,7 +151,9 @@ public class Plansza {
                 }
             }
         };
-        Main.CheckerBoardHandler CBH= new Main.CheckerBoardHandler();
+        //ew swithc to main
+        //Gamemain gamemain = new Gamemain.CheckerBoardHandler();
+        Gamev2.CheckerBoardHandler CBH= new Gamev2().new CheckerBoardHandler();
         jPanel.addMouseListener(CBH);
         //jFrame.setPreferredSize(new Dimension(1024, 720));
         ///jFrame.pack();
