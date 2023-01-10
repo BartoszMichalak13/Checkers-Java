@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 //MAIN + CLIENT OD MACYNY
 //APLIKACJA KLIENCKA PLAN: BRAC FRAME Z GAMEV2, DAC TU LISTENER,
 //bez extends jFrame?
-public class Client implements ActionListener, Runnable{
+public class Client  implements ActionListener, Runnable {
     Label msg;
     Label output;
     Button send;//ZAMIAST TEGO MAMY NASZA PLANSZE
@@ -140,9 +140,9 @@ public class Client implements ActionListener, Runnable{
         });
         jFrame.pack();
         jFrame.setVisible(true);
-        jFrame.listenSocket();
-        jFrame.receiveInitFromServer();
-        jFrame.startThread();
+//        jFrame.listenSocket();
+//        jFrame.receiveInitFromServer();
+//        jFrame.startThread();
     }
 
     private void startThread() {
