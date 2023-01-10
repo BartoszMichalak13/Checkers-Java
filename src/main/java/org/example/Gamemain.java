@@ -24,7 +24,7 @@ public class Gamemain extends JFrame implements Runnable{
     static JLabel beforethegame;
     static JMenuBar menuBar;
 
-    public JFrame getFrame() {return this.jFrame;}
+    //public JFrame getFrame() {return this.jFrame;}
 
     JLabel msg;
 
@@ -48,7 +48,10 @@ public class Gamemain extends JFrame implements Runnable{
     public Gamemain getGamemain(){
         return this.gamemain;
     }
-    private void send(Pionek pion){
+    public void removebeforethegame(){
+        gamemain.remove(beforethegame);
+    }
+    void send(String s){
         // Wysylanie do serwera
         /*
         out.println(input.getText());
@@ -57,7 +60,7 @@ public class Gamemain extends JFrame implements Runnable{
         input.setText("");
         input.requestFocus();
         */
-        out.println(pion);
+        out.println(s);
         //gamemain.repaint();
         showing = ACTIVE;
         actualPlayer = player;
@@ -206,7 +209,7 @@ public class Gamemain extends JFrame implements Runnable{
                     out.flush();
                     // Okey przesunelismy wiec generalnie to wyslalem pionki i
                     // robimy repainta u innego gracza
-                    send(pion);
+                    send("pion");
                     return;
                 }
             }
@@ -243,108 +246,11 @@ public class Gamemain extends JFrame implements Runnable{
                 SwingConstants.CENTER
         );
         beforethegame.setFont(beforethegame.getFont().deriveFont(50.0F));
+        MenuCreator menuCreator = new MenuCreator();
+        menuCreator.createmenu();
+        menuBar=menuCreator.getMenuBar();
 
 
-
-        JMenu menu;
-
-        JRadioButtonMenuItem rbMenuItem;
-
-
-//Create the menu bar.
-        menuBar = new JMenuBar();
-
-//Build the first menu.
-        menu = new JMenu("Game Modes");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menuBar.add(menu);
-
-
-//a group of radio button menu items
-
-        class ActionHandler implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String s= e.getActionCommand();
-                System.out.println(s);
-                gamemain.remove(beforethegame);
-                if(s.equals("warcaby angielskie"))
-                    new EnglishBuilder().build();
-                else if(s.equals("warcaby włoskie"))
-                    new ItalianBuilder().build();
-                else if(s.equals("warcaby hiszpańskie"))
-                    new SpanishBuilder().build();
-                else if(s.equals("warcaby niemieckie"))
-                    new GermanBuilder().build();
-                else if(s.equals("warcaby rosyjskie"))
-                    new RussianBuilder().build();
-                else if(s.equals("warcaby polskie"))
-                    new PolishBuilder().build();
-                else if(s.equals("warcaby kanadyjskie"))
-                    new CanadianBuilder().build();
-                else if(s.equals("warcaby tureckie"))
-                    new TurkishBuilder().build();
-                else if(s.equals("warcaby brazylijskie"))
-                    new BrazilianBuilder().build();
-                menu.setEnabled(false);
-
-            }
-        }
-        ButtonGroup group = new ButtonGroup();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby angielskie");
-        rbMenuItem.setSelected(true);
-        rbMenuItem.setMnemonic(KeyEvent.VK_R);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby włoskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby hiszpańskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby niemieckie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby rosyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby polskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby kanadyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby tureckie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby brazylijskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
 
         gamemain.setJMenuBar(menuBar);
         gamemain.setLayout(new BorderLayout());

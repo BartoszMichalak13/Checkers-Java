@@ -7,8 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
-//KOMUNIKACJA MIEDZY GRACZAMI: BAZOWO TU MA BYC MAIN A NIE U GRACZA,
-
+//ZROB TWORZENIE PIONKOW NA SERWERZE, DASZ RADE
 
 public class Gamev2 implements Runnable {
 
@@ -95,6 +94,9 @@ public class Gamev2 implements Runnable {
             //FUNKCJA WERYFIKUJE RUCHU
             //WYSYLA KLIENTOWI
 
+            //TO WRZUCIMY DO OSOBNEJ FUNKCJI/NA DOL, ALE MUSI BYC ZALEZNE OD WYBORU MENU
+//            for(int i =0; i<size/2-1; ++i)
+//            gamev2.fillrow(i,turkishflag,bottomleftcorner,size);
             String line;
             do {
                 //no dobra trzeba tu wrzucic wysylanie listy pionkow a nie wiadomosci
@@ -111,8 +113,10 @@ public class Gamev2 implements Runnable {
                     outF.println("-> (" + line + ")");
                     //Gamemain main = new Gamemain();
                     //Gamemain.jFrame.repaint();
-                    outS.println("STOP");
-                    outF.println("RUN");
+                    // NIE ROBIMY WIELU AUTOW BO APKA PRZYJMUJE TYLKO JEDEN,MOZNA INFO DO
+                    // STRINGA DODAC KTORY PRZESLEMY W ODP MOM
+//                    outS.println("STOP");
+//                    outF.println("RUN");
                     turn = FIRST;
                 }
 
@@ -125,8 +129,8 @@ public class Gamev2 implements Runnable {
                     // Wysylanie do socketa
                     outS.println("-> (" + line + ")");
                     //Gamemain.jFrame.repaint();
-                    outF.println("STOP");
-                    outS.println("RUN");
+                    //outF.println("STOP");
+                    //outS.println("RUN");
                     turn = SECOND;
                 }
             } while (true);
@@ -139,5 +143,38 @@ public class Gamev2 implements Runnable {
     private void sendMove(DataOutputStream out, String text) throws IOException {
         out.writeChars(text);
 
+    }
+    public void fillrow(int i,boolean turkishflag, boolean bottomleftcorner, int size){
+        if(!turkishflag)
+            for(int j=0; j<size;j++){
+
+                if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
+                    if(bottomleftcorner){
+                        if(j+1==size)
+                            new Pionek(true, 0, i);
+                        new Pionek(true, j+1, i);
+                    }
+                    else
+                        new Pionek(true, j, i);
+                }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
+                    if(bottomleftcorner) {
+                        if(j+1==size)
+                            new Pionek(false, 0, size - 1 - i);
+                        new Pionek(false, j + 1, size - 1 - i);
+
+                    }
+                    else
+                        new Pionek(false, j, size-1-i);
+                }
+            }
+        else if(i!=2){
+            for(int j=0; j<size;j++){
+                new Pionek(true, j, i+1);
+                //new Pionek(true, j, 2);
+
+                new Pionek(false, j, size-(i+2));
+                //new Pionek(false, j, 6);
+            }
+        }
     }
 }

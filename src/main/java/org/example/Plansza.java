@@ -31,39 +31,8 @@ public class Plansza {
     public int getwindowW(){return this.windowW[0];}
     public int getwindowH(){return this.windowH[0];}
     //Fils rows with pawns
-    public void fillrow(int i){
-        if(!turkishflag)
-            for(int j=0; j<size;j++){
+    //TO BE MOVED TO SERVER
 
-                if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
-                    if(bottomleftcorner){
-                        if(j+1==size)
-                            new Pionek(true, 0, i);
-                        new Pionek(true, j+1, i);
-                    }
-                    else
-                        new Pionek(true, j, i);
-                }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
-                    if(bottomleftcorner) {
-                        if(j+1==size)
-                            new Pionek(false, 0, size - 1 - i);
-                        new Pionek(false, j + 1, size - 1 - i);
-
-                    }
-                    else
-                        new Pionek(false, j, size-1-i);
-                }
-            }
-        else if(i!=2){
-            for(int j=0; j<size;j++){
-                new Pionek(true, j, i+1);
-                //new Pionek(true, j, 2);
-
-                new Pionek(false, j, size-(i+2));
-                //new Pionek(false, j, 6);
-            }
-        }
-    }
     public void boardbuilder() {
         //ew swithc to main
         Gamemain main =  new Gamemain();
@@ -76,9 +45,11 @@ public class Plansza {
         //windowH = (int) (size_of_window.getHeight() / 8);
         //windowW = (int) (size_of_window.getWidth() / 8);
         //number of rows = siza/2 -1
-        //Ustawiam pionki
-        for(int i =0; i<size/2-1; ++i)
-            fillrow(i);
+//        //HALO HALO PIONKI USTAWIAMY NA SERWIE NIE NA KLIENCIE?
+//        Gamev2 gamev2 = new Gamev2();
+//        //Ustawiam pionki
+//        for(int i =0; i<size/2-1; ++i)
+//            gamev2.fillrow(i,turkishflag,bottomleftcorner,size);
 
         JPanel jPanel = new JPanel() {
             public void paint(Graphics g) {
@@ -108,6 +79,7 @@ public class Plansza {
                         );
                     }
                 }
+                //TO BE MOVED TO SERVER or not?
                 for(Pionek pion : Pionek.getPionki() ){
                     //System.out.println(pion);
                     if(pion.isWhite()){
@@ -121,6 +93,7 @@ public class Plansza {
                             windowW[0], windowH[0]
                     );
                 }
+                //TO BE MOVED TO SERVER or not
                 if(Pionek.getActivePionek()!=null){
                     g.setColor(Color.YELLOW);
                     g.fillRect(
