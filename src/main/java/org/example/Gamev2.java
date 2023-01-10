@@ -8,29 +8,66 @@ import java.net.Socket;
 //KOMUNIKACJA MIEDZY GRACZAMI: BAZOWO TU MA BYC MAIN A NIE U GRACZA,
 
 
-public class Gamev2 implements Runnable{
+public class Gamev2 implements Runnable {
 
     private Socket firstPlayer;
     private Socket secondPlayer;
 
+    public static JFrame jFrame;
 
-    private final static int FIRST=1;
-    private final static int SECOND=2;
-    private static int turn=FIRST;
-    public Gamev2(){
+    private final static int FIRST = 1;
+    private final static int SECOND = 2;
+    private static int turn = FIRST;
+
+    public Gamev2() {
 
     }
 
-    public Gamev2(Socket firstPlayer, Socket secondPlayer){
+    public Gamev2(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
-        this.secondPlayer= secondPlayer;
+        this.secondPlayer = secondPlayer;
 
 
     }
+
+
+//        public void fillrow(int i){
+//            if(!turkishflag)
+//                for(int j=0; j<size;j++){
+//
+//                    if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
+//                        if(bottomleftcorner){
+//                            if(j+1==size)
+//                                new Pionek(true, 0, i);
+//                            new Pionek(true, j+1, i);
+//                        }
+//                        else
+//                            new Pionek(true, j, i);
+//                    }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
+//                        if(bottomleftcorner) {
+//                            if(j+1==size)
+//                                new Pionek(false, 0, size - 1 - i);
+//                            new Pionek(false, j + 1, size - 1 - i);
+//
+//                        }
+//                        else
+//                            new Pionek(false, j, size-1-i);
+//                    }
+//                }
+//            else if(i!=2){
+//                for(int j=0; j<size;j++){
+//                    new Pionek(true, j, i+1);
+//                    //new Pionek(true, j, 2);
+//
+//                    new Pionek(false, j, size-(i+2));
+//                    //new Pionek(false, j, 6);
+//                }
+//            }
+//        }
     @Override
     public void run() {
 
-        try{
+        try {
             //Inicjalizacja pobieranie od socketa dla player1
             InputStream inputF = firstPlayer.getInputStream();
             BufferedReader inF = new BufferedReader(new InputStreamReader(inputF));
@@ -53,15 +90,14 @@ public class Gamev2 implements Runnable{
             //GRACZ WYSWIETLA I DODAJE LISTENER, JAK AKCJA TO REAKCJA
 
 
-
             //FUNKCJA WERYFIKUJE RUCHU
             //WYSYLA KLIENTOWI
-            setjFrame();
+
             String line;
             do {
                 //no dobra trzeba tu wrzucic wysylanie listy pionkow a nie wiadomosci
 
-                if (turn==SECOND) {
+                if (turn == SECOND) {
                     // Odbieranie od socketa
                     //pionki
                     //repaint
@@ -73,10 +109,12 @@ public class Gamev2 implements Runnable{
                     outF.println("-> (" + line + ")");
                     //Gamemain main = new Gamemain();
                     //Gamemain.jFrame.repaint();
-                    turn=FIRST;
+                    outS.println("STOP");
+                    outF.println("RUN");
+                    turn = FIRST;
                 }
 
-                if (turn==FIRST) {
+                if (turn == FIRST) {
                     // IDEA: Client samsobie wyświetla
                     // Odbieranie od socketa
                     line = inF.readLine();
@@ -85,8 +123,9 @@ public class Gamev2 implements Runnable{
                     // Wysylanie do socketa
                     outS.println("-> (" + line + ")");
                     //Gamemain.jFrame.repaint();
-
-                    turn=SECOND;
+                    outF.println("STOP");
+                    outS.println("RUN");
+                    turn = SECOND;
                 }
             } while (true);
 
@@ -99,156 +138,4 @@ public class Gamev2 implements Runnable{
         out.writeChars(text);
 
     }
-    static JFrame jFrame;
-    static JLabel beforethegame;
-    public JFrame getFrame() {return this.jFrame;}
-    class CheckerBoardHandler implements MouseListener {
-        Plansza pl= new Plansza();
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            //Z tego co rozumiem, wykonalismy ruch == zmiana tury
-            for (Pionek pion : Pionek.getPionki()) {
-                if (pion.isActive()) {
-                    pion.przesun(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH());
-                    pion.setActive(false);
-                    jFrame.repaint();
-                    return;
-                }
-            }
-            if (Pionek.getPionekByCords(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH()) != null) {
-                for (Pionek pion : Pionek.getPionki()) {
-                    pion.setActive(false);
-                }
-                Pionek.getPionekByCords(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH()).setActive(true);
-                jFrame.repaint();
-            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {}
-        @Override
-        public void mouseReleased(MouseEvent e) {}
-        @Override
-        public void mouseEntered(MouseEvent e) {}
-        @Override
-        public void mouseExited(MouseEvent e) {}
-    }
-    public JFrame sendFrame(){
-        return this.jFrame;
-    }
-
-    //public static void main(String[] args) {
-    public void setjFrame(){
-        jFrame = new JFrame();
-        jFrame.setBounds(10, 10, 800, 800);
-        beforethegame = new JLabel(
-                "WYBIERZ TRYB GRY",
-                SwingConstants.CENTER
-        );
-        beforethegame.setFont(beforethegame.getFont().deriveFont(50.0F));
-
-        JMenuBar menuBar;
-        JMenu menu;
-        JRadioButtonMenuItem rbMenuItem;
-//Create the menu bar.
-        menuBar = new JMenuBar();
-//Build the first menu.
-        menu = new JMenu("Game Modes");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menuBar.add(menu);
-//a group of radio button menu items
-        class ActionHandler implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String s= e.getActionCommand();
-                System.out.println(s);
-                jFrame.remove(beforethegame);
-                if(s.equals("warcaby angielskie"))
-                    new EnglishBuilder().build();
-                else if(s.equals("warcaby włoskie"))
-                    new ItalianBuilder().build();
-                else if(s.equals("warcaby hiszpańskie"))
-                    new SpanishBuilder().build();
-                else if(s.equals("warcaby niemieckie"))
-                    new GermanBuilder().build();
-                else if(s.equals("warcaby rosyjskie"))
-                    new RussianBuilder().build();
-                else if(s.equals("warcaby polskie"))
-                    new PolishBuilder().build();
-                else if(s.equals("warcaby kanadyjskie"))
-                    new CanadianBuilder().build();
-                else if(s.equals("warcaby tureckie"))
-                    new TurkishBuilder().build();
-                else if(s.equals("warcaby brazylijskie"))
-                    new BrazilianBuilder().build();
-                menu.setEnabled(false);
-            }
-        }
-        ButtonGroup group = new ButtonGroup();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby angielskie");
-        rbMenuItem.setSelected(true);
-        rbMenuItem.setMnemonic(KeyEvent.VK_R);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby włoskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby hiszpańskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby niemieckie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby rosyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby polskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby kanadyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby tureckie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby brazylijskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-
-        jFrame.setJMenuBar(menuBar);
-        jFrame.setLayout(new BorderLayout());
-        jFrame.add(beforethegame, BorderLayout.CENTER);
-        //jFrame.add(jPanel);
-
-        jFrame.setDefaultCloseOperation(3);
-        //jFrame.setVisible(true);
-    }
-
 }
-
-

@@ -16,6 +16,7 @@ public class Plansza {
     private boolean turkishflag;
 
     JFrame jFrame;
+    Gamemain gamemain;
     final Dimension[] size_of_window = new Dimension[1];
     final static int[] windowH = new int[1];
     final static int[] windowW = new int[1];
@@ -55,21 +56,22 @@ public class Plansza {
             }
         else if(i!=2){
             for(int j=0; j<size;j++){
-                    new Pionek(true, j, i+1);
-                    //new Pionek(true, j, 2);
+                new Pionek(true, j, i+1);
+                //new Pionek(true, j, 2);
 
-                    new Pionek(false, j, size-(i+2));
-                    //new Pionek(false, j, 6);
+                new Pionek(false, j, size-(i+2));
+                //new Pionek(false, j, 6);
             }
         }
     }
     public void boardbuilder() {
         //ew swithc to main
-        Gamev2 main =  new Gamev2();
-        jFrame = main.getFrame();
+        Gamemain main =  new Gamemain();
+        //jFrame = main.getFrame();
+        gamemain=main.getGamemain();
 
 
-        jFrame.setBounds(10, 10, 1024, 720);
+        gamemain.setBounds(10, 10, 1024, 720);
         //size_of_window = jFrame.getContentPane().getSize();
         //windowH = (int) (size_of_window.getHeight() / 8);
         //windowW = (int) (size_of_window.getWidth() / 8);
@@ -77,11 +79,10 @@ public class Plansza {
         //Ustawiam pionki
         for(int i =0; i<size/2-1; ++i)
             fillrow(i);
-        //tworzę szachownice, myśle że to wszystko trzeba będzie dać do osobnych klas, ale narazie
-        //jestem w programistycznym cugu i robie cokolwiek byle działało, potem to sie ogarnie.
+
         JPanel jPanel = new JPanel() {
             public void paint(Graphics g) {
-                size_of_window[0] = jFrame.getContentPane().getSize();
+                size_of_window[0] = gamemain.getContentPane().getSize();
                 windowH[0] = (int) (size_of_window[0].getHeight() / size);
                 windowW[0] = (int) (size_of_window[0].getWidth() / size);
                 for(int y=0; y<size;y++){
@@ -153,15 +154,15 @@ public class Plansza {
         };
         //ew swithc to main
         //Gamemain gamemain = new Gamemain.CheckerBoardHandler();
-        Gamev2.CheckerBoardHandler CBH= new Gamev2().new CheckerBoardHandler();
+        Gamemain.CheckerBoardHandler CBH= gamemain.new CheckerBoardHandler();
         jPanel.addMouseListener(CBH);
         //jFrame.setPreferredSize(new Dimension(1024, 720));
         ///jFrame.pack();
         //jFrame.setLayout(gridLayout);
         //jFrame.setDefaultCloseOperation(3);
         //jFrame.setVisible(true);
-        jFrame.add(jPanel);
-        jFrame.repaint();
-        jFrame.setVisible(true);
+        gamemain.add(jPanel);
+        gamemain.repaint();
+        gamemain.setVisible(true);
     }
 }
