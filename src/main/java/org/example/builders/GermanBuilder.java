@@ -1,14 +1,16 @@
-package org.example;
+package org.example.builders;
 
-public class RussianBuilder {
+import org.example.Plansza;
+
+public class GermanBuilder {
     boolean candamabekilled = true;
     boolean manyfieldsdama = true;
-    boolean bestkill = false;
+    boolean bestkill = true;
     boolean canpawnkillbackwards = true;
     boolean turkishflag=false;
 
     int size = 8;
-    boolean bottomleftcorner = false;//false == czarne chyba
+    boolean bottomleftcorner = true;//false == czarne chyba
     public void build(){
         Plansza pl =new Plansza(size,bottomleftcorner,turkishflag);
         pl.boardbuilder();

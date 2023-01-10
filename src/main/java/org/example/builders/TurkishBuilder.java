@@ -1,4 +1,6 @@
-package org.example;
+package org.example.builders;
+
+import org.example.Plansza;
 
 public class TurkishBuilder {
 
