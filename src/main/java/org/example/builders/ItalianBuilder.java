@@ -1,10 +1,12 @@
-package org.example;
+package org.example.builders;
 
-public class GermanBuilder {
-    boolean candamabekilled = true;
-    boolean manyfieldsdama = true;
+import org.example.Plansza;
+
+public class ItalianBuilder {
+    boolean candamabekilled = false;
+    boolean manyfieldsdama = false;
     boolean bestkill = true;
-    boolean canpawnkillbackwards = true;
+    boolean canpawnkillbackwards = false;
     boolean turkishflag=false;
 
     int size = 8;

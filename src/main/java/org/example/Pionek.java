@@ -144,45 +144,55 @@ public class Pionek {
 
     public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
         ArrayList<Integer> xandy = new ArrayList();
-        if (!isQueen) {
-            int i;
-            if (isWhite) {
-                for(i = 0; i < pionki.size(); ++i) {
-                    if (!((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y + 1) {
-                        if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y + 2) == null && x + 2 < 8 && y + 2 < 8) {
-                                xandy.add(x + 2);
+            if (!isQueen) {
+                int i;
+
+
+                if (isWhite) {
+                    for (i = 0; i < pionki.size(); ++i) {
+                        if (!((Pionek) pionki.get(i)).isWhite && ((Pionek) pionki.get(i)).getY() == y + 1) {
+                            if (((Pionek) pionki.get(i)).getX() == x + 1) {
+                                if (getPionekByCords(x + 2, y + 2) == null && x + 2 < 8 && y + 2 < 8) {
+                                    xandy.add(x + 2);
+                                    xandy.add(y + 2);
+                                }
+                            } else if (((Pionek) pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y + 2) == null && x - 2 >= 0 && y + 2 < 8) {
+                                xandy.add(x - 2);
                                 xandy.add(y + 2);
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y + 2) == null && x - 2 >= 0 && y + 2 < 8) {
-                            xandy.add(x - 2);
-                            xandy.add(y + 2);
                         }
                     }
-                }
-            } else if (!isWhite) {
-                for(i = 0; i < pionki.size(); ++i) {
-                    if (((Pionek)pionki.get(i)).isWhite && ((Pionek)pionki.get(i)).getY() == y - 1) {
-                        if (((Pionek)pionki.get(i)).getX() == x + 1) {
-                            if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y - 2 >=0) {
-                                xandy.add(x + 2);
+                } else if (!isWhite) {
+                    for (i = 0; i < pionki.size(); ++i) {
+                        if (((Pionek) pionki.get(i)).isWhite && ((Pionek) pionki.get(i)).getY() == y - 1) {
+                            if (((Pionek) pionki.get(i)).getX() == x + 1) {
+                                if (getPionekByCords(x + 2, y - 2) == null && x + 2 < 8 && y - 2 >= 0) {
+                                    xandy.add(x + 2);
+                                    xandy.add(y - 2);
+                                }
+                            } else if (((Pionek) pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y - 2 >= 0) {
+                                xandy.add(x - 2);
                                 xandy.add(y - 2);
                             }
-                        } else if (((Pionek)pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y - 2) == null && x - 2 >= 0 && y -2>= 0) {
-                            xandy.add(x - 2);
-                            xandy.add(y - 2);
                         }
                     }
                 }
             }
+
+            return xandy;
         }
 
-        return xandy;
-    }
-
     public ArrayList<Integer> legalneKafelki(){
+        boolean isBicie=false;
+        for(Pionek pionek:pionki){
+            if(pionek.isWhite()==isWhite){
+                if(!bicia(pionek.getX(), pionek.getY(), pionek.isWhite(), pionek.isQueen()).isEmpty()){
+                    isBicie=true;
+                }
+            }
+        }
         ArrayList<Integer> legalneKafelki = new ArrayList<>();
-        if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()){
+        if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()&&isBicie==false){
             if (this.isQueen()){
 
             }else{
@@ -206,10 +216,10 @@ public class Pionek {
                     }
                 }
             }
-        }else{
+        }else if(!Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()){
             return Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen());
         }
-        return legalneKafelki;
+            return legalneKafelki;
     }
 
 }
