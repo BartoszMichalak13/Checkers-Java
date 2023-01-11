@@ -10,6 +10,7 @@ import java.net.Socket;
 //ZROB TWORZENIE PIONKOW NA SERWERZE, DASZ RADE
 
 public class Gamev2 implements Runnable {
+     static Gamev2 gamev2 = new Gamev2();
     Boolean werecreated;
 
     public void setWerecreated(Boolean wc){
@@ -27,30 +28,17 @@ public class Gamev2 implements Runnable {
     private final static int FIRST = 1;
     private final static int SECOND = 2;
     private static int turn = FIRST;
-    boolean turkishflag1=false;
-    boolean bottomleftcorner1=false;
-    boolean isPolish;
     int size1=0;
-
     public Gamev2() {
-
     }
-
     public Gamev2(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-
-
     }
-
-    public void assignvalues(boolean turkishflag, boolean bottomleftcorner, int size, boolean isPolish){
-        this.turkishflag1=turkishflag;
-        this.bottomleftcorner1=bottomleftcorner;
+    //DOEST WORK
+    public void assignvalues( int size){
         this.size1=size;
-        this.isPolish = isPolish
     }
-
-
     @Override
     public void run() {
         //int i,
@@ -75,74 +63,78 @@ public class Gamev2 implements Runnable {
 
             outF.println("1");
             outS.println("2");
-            //IDEA: TWORZYMY PLANSZE ALE JEJ NIE WYSWIETLAMY
-            //GRACZ WYSWIETLA I DODAJE LISTENER, JAK AKCJA TO REAKCJA
-
-
-            //FUNKCJA WERYFIKUJE RUCHU
-            //WYSYLA KLIENTOWI
-
-            //TO WRZUCIMY DO OSOBNEJ FUNKCJI/NA DOL, ALE MUSI BYC ZALEZNE OD WYBORU MENU
-//            for(int i =0; i<size/2-1; ++i)
-//            gamev2.fillrow(i,turkishflag,bottomleftcorner,size);
-            //boardstatus();
             String line;
             do {
-                //no dobra trzeba tu wrzucic wysylanie listy pionkow a nie wiadomosci
 
                 if (turn == SECOND) {
-                    System.out.println("Jest5");
+                    System.out.println("Jest DUZO");
 
-                    // Odbieranie od socketa
-                    //pionki
-                    //repaint
                     line = inS.readLine();
-                    System.out.println("Jest6");
+                    System.out.println("Jest B DUZO");
 
-                    // Wypisywanie na serwerze
+
                     System.out.println(line);
-                    // Wysylanie do socketa
-                    // pionki
-                    //outF.println("-> (" + line + ")");
+
                     outF.println(line);
-                    //Gamemain main = new Gamemain();
-                    //Gamemain.jFrame.repaint();
-                    // NIE ROBIMY WIELU AUTOW BO APKA PRZYJMUJE TYLKO JEDEN,MOZNA INFO DO
-                    // STRINGA DODAC KTORY PRZESLEMY W ODP MOM
-//                    outS.println("STOP");
-//                    outF.println("RUN");
+
                     turn = FIRST;
                 }
 //DODAC DO KONSTRUKTORA SIZE I IS POLISH
                 if (turn == FIRST) {
-                    // IDEA: Client samsobie wyświetla
-                    // Odbieranie od socketa
-                    line = inF.readLine();
-                    if(line.contains("warcaby")) {
-                        werecreated = true;
-                        System.out.println("Jest1");
-                        if (line.contains("Stworz Pionki")) {
-                            for (int i = 0; i < size1 / 2 - 1; ++i)
-                                fillrow(i, turkishflag1, bottomleftcorner1, size1, isPolish);
-                            System.out.println("Jest2");
-                        }
-                    }
-                    else{}
-                        //werecreated=true;
+//ZAGLEBIMY SIE I DODAMY WIECEJ INF OUTF DLA RUCHU
+                    Boolean GO=true;
+                   // while(GO) {
+                        line = inF.readLine();
+                        System.out.println(line);
+                        if (line.contains("warcaby")) {
+                            werecreated = true;
+                            System.out.println("Jest1");
+                            if (line.contains("Stworz Pionki")) {
+                                String[] str= line.split(" ");
+                                size1=Integer.parseInt(str[4]);
+                                for (int i = 0; i < size1 / 2 - 1; ++i) {
+                                    fillrow(i, size1);
+                                    System.out.println("Halo"+i);
 
+                                }
+                                System.out.println("Jest2");
+                            }
+                        }
 
                         System.out.println("Jest3");
+                        outS.println(line);
+                        System.out.println("Jest4");
+                        //Pionek pionek = null;
+                        //pionek.getpionki();
+                        String s="Leca pionki ";
+                        int x, y;
+                        boolean isWhite;
+                        for (Pionek pionek : Pionek.getPionki()) {
+                            isWhite=pionek.isWhite();
+                            x = pionek.getX();
+                            y = pionek.getY();
+                            s += isWhite;
+                            s += " ";
+                            s += Integer.toString(x);
+                            s += " ";
+                            s += Integer.toString(y);
+                            s += " ";
+                            System.out.println("Jest5");
 
-                    outS.println(line);
-                    System.out.println("Jest4");
+                        }
+                        //SZKIC - WYSYLAM COORDYNATY PIONKOW,
+                        // MALUJE PIONKI, JAK KLIKNIE POLE WYSYLAM POLE NA SERVER
+                        //SPRAWDZAM AKTIVE ITD
+                        //O BOZZE JA UMRE
+                    System.out.println("Jest6");
 
-                    // Wypisywanie na serwerze
-                    System.out.println(line);
-                    // Wysylanie do socketa
+                        outF.println(s);
+                    System.out.println("Jest7");
 
-                    //Gamemain.jFrame.repaint();
-                    //outF.println("STOP");
-                    //outS.println("RUN");
+                        //String[] pawns = x,y,iswhite,isdamka;
+                        // Wypisywanie na serwerze
+                        System.out.println(line);
+                   // }
                     turn = SECOND;
                 }
             } while (true);
@@ -156,37 +148,15 @@ public class Gamev2 implements Runnable {
         out.writeChars(text);
 
     }
-    public void fillrow(int i,boolean turkishflag, boolean bottomleftcorner, int size, isPolsih){
-        if(!turkishflag)
+    public void fillrow(int i, int size){
+        System.out.println("Am I here?");
             for(int j=0; j<size;j++){
-
                 if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
-                    if(bottomleftcorner){
-                        if(j+1==size)
-                            new Pionek(true, 0, i, size, isPolish);
-                        new Pionek(true, j+1, i, size, isPolish);
-                    }
-                    else
-                        new Pionek(true, j, i, size, isPolish);
+                        new Pionek(true, j, i);
                 }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
-                    if(bottomleftcorner) {
-                        if(j+1==size)
-                            new Pionek(false, 0, size - 1 - i, size, isPolish);
-                        new Pionek(false, j + 1, size - 1 - i, size, isPolish);
-
-                    }
-                    else
-                        new Pionek(false, j, size-1-i, size, isPolish);
+                        new Pionek(false, j, size-1-i);
                 }
             }
-        else if(i!=2){
-            for(int j=0; j<size;j++){
-                new Pionek(true, j, i+1, size, isPolish);
-                //new Pionek(true, j, 2);
 
-                new Pionek(false, j, size-(i+2), size, isPolish);
-                //new Pionek(false, j, 6);
-            }
-        }
     }
 }

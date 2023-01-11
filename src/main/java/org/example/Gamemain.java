@@ -21,7 +21,8 @@ import java.net.UnknownHostException;
 
 public class Gamemain extends JFrame implements Runnable{
 
-    static JFrame jFrame;
+    int size;
+    int pawnnumber;
     Boolean werecreated=false;
     public Boolean setWerecreated(){
         this.werecreated= new Gamev2().getWerecreated();
@@ -52,7 +53,10 @@ public class Gamemain extends JFrame implements Runnable{
     public Gamemain(){
 
     }
-
+    public void setsize(int size){
+        this.size=size;
+        this.pawnnumber=size*(size/2-1);
+    }
     public Gamemain getGamemain(){
         return this.gamemain;
     }
@@ -70,39 +74,55 @@ public class Gamemain extends JFrame implements Runnable{
         try {
             String str = in.readLine();
             System.out.println(str);
-            if(str.equals("STOP")){
-                //gamemain.setEnabled(false);
-            }
-            if(str.equals("RUN")){
-                //gamemain.setEnabled(true);
-            }
             if(str.contains("warcaby")){
                 System.out.println("TU1");
                 gamemain.removebeforethegame();
                 System.out.println("TU2");
                 if (str.contains("warcaby angielskie"))
                     new EnglishBuilder().build(true,str);
-                else if (str.contains("warcaby włoskie"))
-                    new ItalianBuilder().build(true,str);
-                else if (str.contains("warcaby hiszpańskie"))
-                    new SpanishBuilder().build(true,str);
-                else if (str.contains("warcaby niemieckie"))
-                    new GermanBuilder().build(true,str);
-                else if (str.contains("warcaby rosyjskie"))
-                    new RussianBuilder().build(true,str);
                 else if (str.contains("warcaby polskie"))
                     new PolishBuilder().build(true,str);
-                else if (str.contains("warcaby kanadyjskie"))
-                    new CanadianBuilder().build(true,str);
-                else if (str.contains("warcaby tureckie"))
-                    new TurkishBuilder().build(true,str);
                 else if (str.contains("warcaby brazylijskie"))
                     new BrazilianBuilder().build(true,str);
-                System.out.println("TU3");
-                //new MenuCreator().getMenu().setEnabled(false);
-                System.out.println("TU4");
+                //System.out.println("TU3");
             }
-            //gamemain.repaint();
+            //System.out.println(str);
+            //System.out.println(str.contains("[a-zA-Z]+"));
+            //if(str.matches(".*\\d.*")){
+            //if(str.contains("[a-zA-Z]+")){
+            if(str.contains("Leca")){
+                //System.out.println("TU4");
+                //REPAINT JPANEL?
+                int[] x = new int[pawnnumber];
+                int[] y = new int[pawnnumber];
+                boolean[] isWhite = new boolean[pawnnumber];
+                String[]s= str.split(" ");
+               // System.out.println("TU5");
+
+                for(int i=0; i<(s.length-2)/3; i++) {
+                    //System.out.println("TU6");
+                    System.out.println(s.length);
+                    String s1 = s[(i*3)+2];
+                    System.out.println(s1);
+                    String s2 = s[(i*3)+3];
+                    System.out.println(s2);
+                    String s3 = s[(i*3)+4];
+                    System.out.println(s3);
+                    isWhite[i] = Boolean.getBoolean(s1);
+                    System.out.println("HEJ");
+                    x[i] = Integer.parseInt(s2);
+                    System.out.println("HEJ");
+                    y[i] = Integer.parseInt(s3);
+                    System.out.println("HEJ");
+                }
+
+                Plansza pl =  new Plansza(size, x,y,isWhite, pawnnumber);
+                System.out.println("TU8");
+
+                pl.boardbuilder();
+                System.out.println("TU9");
+
+            }
         }
         //catch (IOException e) {
         catch (Exception e) {

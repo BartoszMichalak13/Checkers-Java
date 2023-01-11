@@ -44,8 +44,6 @@ public class MenuCreator {
                 else if (s.equals("warcaby brazylijskie"))
                     new BrazilianBuilder().build(werecreated,s);
                 menu.setEnabled(false);
-
-                //gamemain.send(s);
                 werecreated=true;
                 new Gamev2().setWerecreated(werecreated);
             }
@@ -59,43 +57,7 @@ public class MenuCreator {
         menu.add(rbMenuItem);
         rbMenuItem.addActionListener(new ActionHandler());
         menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby włoskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby hiszpańskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby niemieckie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby rosyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
         rbMenuItem = new JRadioButtonMenuItem("warcaby polskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby kanadyjskie");
-        rbMenuItem.setMnemonic(KeyEvent.VK_O);
-        group.add(rbMenuItem);
-        menu.add(rbMenuItem);
-        rbMenuItem.addActionListener(new ActionHandler());
-        menu.addSeparator();
-        rbMenuItem = new JRadioButtonMenuItem("warcaby tureckie");
         rbMenuItem.setMnemonic(KeyEvent.VK_O);
         group.add(rbMenuItem);
         menu.add(rbMenuItem);
