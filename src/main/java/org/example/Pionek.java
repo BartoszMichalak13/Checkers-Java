@@ -217,6 +217,7 @@ public class Pionek {
                             }
                         }
                     }
+                    xk = x, yk = y;
                     while(xk<getPionekByCords(x,y).sizeOfPlansza&&yk>=0){
                         xk++;
                         yk--;
@@ -230,6 +231,7 @@ public class Pionek {
                             }
                         }
                     }
+                    xk = x, yk = y;
                     while(xk>=0&&yk<getPionekByCords(x,y).sizeOfPlansza){
                         xk--;
                         yk++;
@@ -243,6 +245,7 @@ public class Pionek {
                             }
                         }
                     }
+                    xk = x, yk = y;
                     while(xk>=0&&yk>=0){
                         xk--;
                         yk--;
@@ -296,7 +299,7 @@ public class Pionek {
         if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()&&isBicie==false) {
                 if (this.isQueen()) {
                     if(this.isPolish){
-                        ///////////////////////////////////////
+
                     } else{
                         if(getPionekByCords(this.getX()+1, this.getY()+1)==null&&this.getX()+1<this.sizeOfPlansza&&this.getY()+1<this.sizeOfPlansza){
                             legalneKafelki.add(this.getX()+1);
