@@ -179,7 +179,27 @@ public class Pionek {
                         }
                     }
                 }else{
-                    //bicie polakow
+                    if(getPionekByCords(x+1, y+1).isWhite!=isWhite&&
+                            getPionekByCords(x+2, x+2)==null&&
+                            x+2<getPionekByCords(x, y).sizeOfPlansza&&y+2<getPionekByCords(x, y).sizeOfPlansza ){
+                        xandy.add(x+2);
+                        xandy.add(y+2);
+                    }else if(getPionekByCords(x-1, y+1).isWhite!=isWhite&&
+                            getPionekByCords(x-2, x+2)==null&&
+                            x-2>=0&&y+2<getPionekByCords(x, y).sizeOfPlansza ){
+                        xandy.add(x-2);
+                        xandy.add(y+2);
+                    }else if(getPionekByCords(x+1, y-1).isWhite!=isWhite&&
+                            getPionekByCords(x+2, x-2)==null&&
+                            x+2<getPionekByCords(x, y).sizeOfPlansza&&y-2>=0 ){
+                        xandy.add(x+2);
+                        xandy.add(y-2);
+                    }else if(getPionekByCords(x-1, y-1).isWhite!=isWhite&&
+                            getPionekByCords(x-2, x-2)==null&&
+                            x-2>=0&&y-2>=0 ){
+                        xandy.add(x-2);
+                        xandy.add(x-2);
+                    }
                 }
             }else{
                 if(getPionekByCords(x,y).isPolish){
