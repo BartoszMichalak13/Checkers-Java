@@ -203,7 +203,59 @@ public class Pionek {
                 }
             }else{
                 if(getPionekByCords(x,y).isPolish){
-
+                    int xk = x, yk = y;
+                    while(xk<getPionekByCords(x,y).sizeOfPlansza&&yk<getPionekByCords(x,y).sizeOfPlansza){
+                        xk++;
+                        yk++;
+                        if(getPionekByCords(xk,yk)!=null) {
+                            if (getPionekByCords(xk, yk).isWhite == isWhite) {
+                                break;
+                            } else if(getPionekByCords(xk+1, yk+1)==null&&xk+1<getPionekByCords(x,y).sizeOfPlansza&&yk+1<getPionekByCords(x,y).sizeOfPlansza){
+                                xandy.add(xk+1);
+                                xandy.add(yk+1);
+                                break;
+                            }
+                        }
+                    }
+                    while(xk<getPionekByCords(x,y).sizeOfPlansza&&yk>=0){
+                        xk++;
+                        yk--;
+                        if(getPionekByCords(xk,yk)!=null) {
+                            if (getPionekByCords(xk, yk).isWhite == isWhite) {
+                                break;
+                            } else if(getPionekByCords(xk+1, yk-1)==null&&xk+1<getPionekByCords(x,y).sizeOfPlansza&&yk-1>=0){
+                                xandy.add(xk+1);
+                                xandy.add(yk-1);
+                                break;
+                            }
+                        }
+                    }
+                    while(xk>=0&&yk<getPionekByCords(x,y).sizeOfPlansza){
+                        xk--;
+                        yk++;
+                        if(getPionekByCords(xk,yk)!=null) {
+                            if (getPionekByCords(xk, yk).isWhite == isWhite) {
+                                break;
+                            } else if(getPionekByCords(xk-1, yk+1)==null&&xk-1>=0&&yk+1<getPionekByCords(x,y).sizeOfPlansza){
+                                xandy.add(xk-1);
+                                xandy.add(yk+1);
+                                break;
+                            }
+                        }
+                    }
+                    while(xk>=0&&yk>=0){
+                        xk--;
+                        yk--;
+                        if(getPionekByCords(xk,yk)!=null) {
+                            if (getPionekByCords(xk, yk).isWhite == isWhite) {
+                                break;
+                            } else if(getPionekByCords(xk-1, yk-1)==null&&xk-1>=0&&yk-1>=0){
+                                xandy.add(xk-1);
+                                xandy.add(yk-1);
+                                break;
+                            }
+                        }
+                    }
                 }else{
                     if(getPionekByCords(x+1, y+1).isWhite!=isWhite&&
                             getPionekByCords(x+2, x+2)==null&&
@@ -244,7 +296,7 @@ public class Pionek {
         if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()&&isBicie==false) {
                 if (this.isQueen()) {
                     if(this.isPolish){
-                        //ruchy poslkich damek
+                        ///////////////////////////////////////
                     } else{
                         if(getPionekByCords(this.getX()+1, this.getY()+1)==null&&this.getX()+1<this.sizeOfPlansza&&this.getY()+1<this.sizeOfPlansza){
                             legalneKafelki.add(this.getX()+1);
