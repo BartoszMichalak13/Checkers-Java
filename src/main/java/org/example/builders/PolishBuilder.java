@@ -10,13 +10,14 @@ public class PolishBuilder{
     boolean bestkill = true;
     boolean canpawnkillbackwards = true;
     boolean turkishflag=false;
+    boolean isPolish=true;
 
     int size = 10;
     boolean bottomleftcorner = false;//false == czarne chyba
     public void build(Boolean werecreated, String s){
         if(!werecreated) {
             System.out.println("Ile razy tu weszlismy");
-            new Gamev2().assignvalues(turkishflag,bottomleftcorner,size);
+            new Gamev2().assignvalues(turkishflag,bottomleftcorner,size,isPolish);
             ///PLAN, PRZESLIJ BOOTMLEFT ITD TUTAJ W IFIE, I WTEDY ZWYKLY SEN JEST OK
 
             Gamemain gamemain = new Gamemain().getGamemain();

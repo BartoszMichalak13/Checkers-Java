@@ -29,6 +29,7 @@ public class Gamev2 implements Runnable {
     private static int turn = FIRST;
     boolean turkishflag1=false;
     boolean bottomleftcorner1=false;
+    boolean isPolish;
     int size1=0;
 
     public Gamev2() {
@@ -42,10 +43,11 @@ public class Gamev2 implements Runnable {
 
     }
 
-    public void assignvalues(boolean turkishflag, boolean bottomleftcorner, int size){
+    public void assignvalues(boolean turkishflag, boolean bottomleftcorner, int size, boolean isPolish){
         this.turkishflag1=turkishflag;
         this.bottomleftcorner1=bottomleftcorner;
         this.size1=size;
+        this.isPolish = isPolish
     }
 
 
@@ -121,7 +123,7 @@ public class Gamev2 implements Runnable {
                         System.out.println("Jest1");
                         if (line.contains("Stworz Pionki")) {
                             for (int i = 0; i < size1 / 2 - 1; ++i)
-                                fillrow(i, turkishflag1, bottomleftcorner1, size1);
+                                fillrow(i, turkishflag1, bottomleftcorner1, size1, isPolish);
                             System.out.println("Jest2");
                         }
                     }
@@ -154,35 +156,35 @@ public class Gamev2 implements Runnable {
         out.writeChars(text);
 
     }
-    public void fillrow(int i,boolean turkishflag, boolean bottomleftcorner, int size){
+    public void fillrow(int i,boolean turkishflag, boolean bottomleftcorner, int size, isPolsih){
         if(!turkishflag)
             for(int j=0; j<size;j++){
 
                 if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
                     if(bottomleftcorner){
                         if(j+1==size)
-                            new Pionek(true, 0, i);
-                        new Pionek(true, j+1, i);
+                            new Pionek(true, 0, i, size, isPolish);
+                        new Pionek(true, j+1, i, size, isPolish);
                     }
                     else
-                        new Pionek(true, j, i);
+                        new Pionek(true, j, i, size, isPolish);
                 }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
                     if(bottomleftcorner) {
                         if(j+1==size)
-                            new Pionek(false, 0, size - 1 - i);
-                        new Pionek(false, j + 1, size - 1 - i);
+                            new Pionek(false, 0, size - 1 - i, size, isPolish);
+                        new Pionek(false, j + 1, size - 1 - i, size, isPolish);
 
                     }
                     else
-                        new Pionek(false, j, size-1-i);
+                        new Pionek(false, j, size-1-i, size, isPolish);
                 }
             }
         else if(i!=2){
             for(int j=0; j<size;j++){
-                new Pionek(true, j, i+1);
+                new Pionek(true, j, i+1, size, isPolish);
                 //new Pionek(true, j, 2);
 
-                new Pionek(false, j, size-(i+2));
+                new Pionek(false, j, size-(i+2), size, isPolish);
                 //new Pionek(false, j, 6);
             }
         }
