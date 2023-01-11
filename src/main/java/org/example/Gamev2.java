@@ -11,6 +11,7 @@ import java.net.Socket;
 
 public class Gamev2 implements Runnable {
      static Gamev2 gamev2 = new Gamev2();
+     Boolean isPolish;
     Boolean werecreated;
 
     public void setWerecreated(Boolean wc){
@@ -92,8 +93,9 @@ public class Gamev2 implements Runnable {
                             if (line.contains("Stworz Pionki")) {
                                 String[] str= line.split(" ");
                                 size1=Integer.parseInt(str[4]);
+                                isPolish=Boolean.parseBoolean(str[5]);
                                 for (int i = 0; i < size1 / 2 - 1; ++i) {
-                                    fillrow(i, size1);
+                                    fillrow(i, size1, isPolish);
                                     System.out.println("Halo"+i);
 
                                 }
@@ -148,13 +150,14 @@ public class Gamev2 implements Runnable {
         out.writeChars(text);
 
     }
-    public void fillrow(int i, int size){
+    public void fillrow(int i, int size, boolean isPolish){
         System.out.println("Am I here?");
             for(int j=0; j<size;j++){
                 if((i%2==0&&j%2==1)||(i%2==1&&j%2==0)){
-                        new Pionek(true, j, i);
+                    //(isWhite, x, y, size1, isPolish)
+                        new Pionek(true, j, i, size1, isPolish);
                 }else if(((i%2==0)&&j%2==0)||(i%2==1&&j%2==1)){
-                        new Pionek(false, j, size-1-i);
+                        new Pionek(false, j, size-1-i, size1, isPolish);
                 }
             }
 

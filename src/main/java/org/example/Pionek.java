@@ -18,9 +18,6 @@ public class Pionek {
         return this.isWhite;
     }
 
-    public void setWhite(boolean white) {
-        this.isWhite = white;
-    }
 
     public boolean isActive() {
         return this.isActive;
@@ -157,7 +154,7 @@ public class Pionek {
                                         xandy.add(x + 2);
                                         xandy.add(y + 2);
                                     }
-                                } else if (((Pionek) pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y + 2) == null && x - 2 >= 0 && y + 2 < pionki.get(i).sizeOfPlaszna) {
+                                } else if (((Pionek) pionki.get(i)).getX() == x - 1 && getPionekByCords(x - 2, y + 2) == null && x - 2 >= 0 && y + 2 < pionki.get(i).sizeOfPlansza) {
                                     xandy.add(x - 2);
                                     xandy.add(y + 2);
                                 }
@@ -217,7 +214,8 @@ public class Pionek {
                             }
                         }
                     }
-                    xk = x, yk = y;
+                    xk = x;
+                    yk = y;
                     while(xk<getPionekByCords(x,y).sizeOfPlansza&&yk>=0){
                         xk++;
                         yk--;
@@ -231,7 +229,8 @@ public class Pionek {
                             }
                         }
                     }
-                    xk = x, yk = y;
+                    xk = x;
+                    yk = y;
                     while(xk>=0&&yk<getPionekByCords(x,y).sizeOfPlansza){
                         xk--;
                         yk++;
@@ -245,7 +244,8 @@ public class Pionek {
                             }
                         }
                     }
-                    xk = x, yk = y;
+                    xk = x;
+                    yk = y;
                     while(xk>=0&&yk>=0){
                         xk--;
                         yk--;
@@ -308,7 +308,8 @@ public class Pionek {
                                 legalneKafelki.add(y);
                             }
                         }
-                        x = this.getX(), y= this.getY();
+                        x = this.getX();
+                        y= this.getY();
                         while(x>=0&&y<this.sizeOfPlansza){
                             x--;
                             y++;
@@ -317,7 +318,8 @@ public class Pionek {
                                 legalneKafelki.add(y);
                             }
                         }
-                        x = this.getX(), y= this.getY();
+                        x = this.getX();
+                        y= this.getY();
                         while(x<this.sizeOfPlansza&&y>=0){
                             x++;
                             y--;
@@ -326,7 +328,8 @@ public class Pionek {
                                 legalneKafelki.add(y);
                             }
                         }
-                        x = this.getX(), y= this.getY();
+                        x = this.getX();
+                        y= this.getY();
                         while(x>=0&&y>=0) {
                             x--;
                             y--;

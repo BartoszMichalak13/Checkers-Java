@@ -5,11 +5,8 @@ import org.example.Gamev2;
 import org.example.Plansza;
 
 public class EnglishBuilder {
+    boolean isPolish=false;
 
-    boolean candamabekilled = true;
-    boolean manyfieldsdama = false;
-    boolean bestkill = false;
-    boolean canpawnkillbackwards = false;
     int size = 8;
     public void build(Boolean werecreated, String s){
         if(!werecreated) {
@@ -20,6 +17,8 @@ public class EnglishBuilder {
                 Gamemain gamemain = new Gamemain().getGamemain();
                 s+=" Stworz Pionki ";
             s+=Integer.toString(size);
+            s+=" ";
+            s+=Boolean.toString(isPolish);
             gamemain.send(s);
         }
         Plansza pl =new Plansza(size);
