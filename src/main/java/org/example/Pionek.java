@@ -299,7 +299,42 @@ public class Pionek {
         if(Pionek.bicia(this.getX(), this.getY(), this.isWhite(), this.isQueen()).isEmpty()&&isBicie==false) {
                 if (this.isQueen()) {
                     if(this.isPolish){
-
+                        int x = this.getX(), y= this.getY();
+                        while(x<this.sizeOfPlansza&&y<this.sizeOfPlansza){
+                            x++;
+                            y++;
+                            if(getPionekByCords(x,y)==null&&x<this.sizeOfPlansza&&y<this.sizeOfPlansza){
+                                legalneKafelki.add(x);
+                                legalneKafelki.add(y);
+                            }
+                        }
+                        x = this.getX(), y= this.getY();
+                        while(x>=0&&y<this.sizeOfPlansza){
+                            x--;
+                            y++;
+                            if(getPionekByCords(x,y)==null&&x>=0&&y<this.sizeOfPlansza){
+                                legalneKafelki.add(x);
+                                legalneKafelki.add(y);
+                            }
+                        }
+                        x = this.getX(), y= this.getY();
+                        while(x<this.sizeOfPlansza&&y>=0){
+                            x++;
+                            y--;
+                            if(getPionekByCords(x,y)==null&&x<this.sizeOfPlansza&&y>=0){
+                                legalneKafelki.add(x);
+                                legalneKafelki.add(y);
+                            }
+                        }
+                        x = this.getX(), y= this.getY();
+                        while(x>=0&&y>=0) {
+                            x--;
+                            y--;
+                            if (getPionekByCords(x, y) == null && x>=0&&y>=0) {
+                                legalneKafelki.add(x);
+                                legalneKafelki.add(y);
+                            }
+                        }
                     } else{
                         if(getPionekByCords(this.getX()+1, this.getY()+1)==null&&this.getX()+1<this.sizeOfPlansza&&this.getY()+1<this.sizeOfPlansza){
                             legalneKafelki.add(this.getX()+1);
