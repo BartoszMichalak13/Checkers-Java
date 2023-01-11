@@ -12,10 +12,11 @@ public class Plansza {
     JPanel jPanel;
 
     private int size;
-    int[] x;
-    int[] y;
     int pawnnumber;
-    boolean[] isWhite;
+
+    int[] x= new int[pawnnumber];;
+    int[] y= new int[pawnnumber];;
+    boolean[] isWhite= new boolean[pawnnumber];;
 
     Gamemain gamemain;
     final Dimension[] size_of_window = new Dimension[1];
@@ -24,9 +25,9 @@ public class Plansza {
     public Plansza(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber) {
         this.size=size;
         this.pawnnumber=pawnnumber;
-        this.isWhite = new boolean[pawnnumber];
-        this.x= new int[pawnnumber];
-        this.y= new int[pawnnumber];
+        //this.isWhite = new boolean[pawnnumber];
+        //this.x= new int[pawnnumber];
+        //this.y= new int[pawnnumber];
         for(int i=0; i<x.length; i++){
             this.isWhite[i]=isWhite[i];
             this.x[i] = x[i];
@@ -39,6 +40,7 @@ public class Plansza {
     }
     public Plansza(int size) {
         this.size=size;
+        this.pawnnumber=size*(size/2-1);
         //this.x=x;
         //this.y=y;
     }
@@ -47,7 +49,7 @@ public class Plansza {
     public int getwindowH(){return this.windowH[0];}
 
     public void boardbuilder() {
-        System.out.println(x[9]);
+        //System.out.println(x[9]);
         Gamemain main =  new Gamemain();
         gamemain=main.getGamemain();
         if(gamemain.isAncestorOf(jPanel)) {

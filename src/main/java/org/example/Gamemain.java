@@ -108,7 +108,7 @@ public class Gamemain extends JFrame implements Runnable{
                     System.out.println(s2);
                     String s3 = s[(i*3)+4];
                     System.out.println(s3);
-                    isWhite[i] = Boolean.getBoolean(s1);
+                    isWhite[i] = Boolean.parseBoolean(s1);
                     System.out.println("HEJ");
                     x[i] = Integer.parseInt(s2);
                     System.out.println("HEJ");
