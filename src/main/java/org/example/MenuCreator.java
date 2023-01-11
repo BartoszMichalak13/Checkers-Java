@@ -6,17 +6,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
+//IF PIONKI WHERE CREATED, DONT DO IT AGAIN
 public class MenuCreator {
+    Boolean werecreated=false;
     Gamemain gamemain= new Gamemain().getGamemain();
     JMenu menu;
     static JMenuBar menuBar;
-
     JRadioButtonMenuItem rbMenuItem;
 
     public JMenuBar getMenuBar(){
         return this.menuBar;
     }
+    public JMenu getMenu(){return this.menu;}
     public void createmenu() {
 //Create the menu bar.
         menuBar = new JMenuBar();
@@ -37,26 +38,16 @@ public class MenuCreator {
                 System.out.println(s);
                 gamemain.removebeforethegame();
                 if (s.equals("warcaby angielskie"))
-                    new EnglishBuilder().build();
-                else if (s.equals("warcaby włoskie"))
-                    new ItalianBuilder().build();
-                else if (s.equals("warcaby hiszpańskie"))
-                    new SpanishBuilder().build();
-                else if (s.equals("warcaby niemieckie"))
-                    new GermanBuilder().build();
-                else if (s.equals("warcaby rosyjskie"))
-                    new RussianBuilder().build();
+                    new EnglishBuilder().build(werecreated,s);
                 else if (s.equals("warcaby polskie"))
-                    new PolishBuilder().build();
-                else if (s.equals("warcaby kanadyjskie"))
-                    new CanadianBuilder().build();
-                else if (s.equals("warcaby tureckie"))
-                    new TurkishBuilder().build();
+                    new PolishBuilder().build(werecreated,s);
                 else if (s.equals("warcaby brazylijskie"))
-                    new BrazilianBuilder().build();
+                    new BrazilianBuilder().build(werecreated,s);
                 menu.setEnabled(false);
 
-                gamemain.send(s);
+                //gamemain.send(s);
+                werecreated=true;
+                new Gamev2().setWerecreated(werecreated);
             }
 
         }

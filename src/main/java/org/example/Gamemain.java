@@ -16,10 +16,17 @@ import java.net.UnknownHostException;
 //SEND I RECEIVE NIE DO KONCA TAK JAKBYM CHCIAL
 //ZROB MENU W CONSTRUKTORZE + NAPRAWIC
 
+//ZAMIAST TWORZYC PIONKI W BUILDERZE ROB TO NA SERWERZE, TJ WYSLIJ WIADOMOSC NA SERWER I NIECH ON STWORZY PIONKI
+
 
 public class Gamemain extends JFrame implements Runnable{
 
     static JFrame jFrame;
+    Boolean werecreated=false;
+    public Boolean setWerecreated(){
+        this.werecreated= new Gamev2().getWerecreated();
+        return this.werecreated;
+    }
     static Gamemain gamemain = new Gamemain();
     static JLabel beforethegame;
     static JMenuBar menuBar;
@@ -42,44 +49,25 @@ public class Gamemain extends JFrame implements Runnable{
     private  static int actualPlayer = PLAYER1;
 
     private static int showing = ACTIVE;
-    Gamemain(){
+    public Gamemain(){
 
     }
+
     public Gamemain getGamemain(){
         return this.gamemain;
     }
     public void removebeforethegame(){
         gamemain.remove(beforethegame);
     }
-    void send(String s){
+
+    public void send(String s){
         // Wysylanie do serwera
-        /*
-        out.println(input.getText());
-        msg.setText("OppositeTurn");
-        send.setEnabled(false);
-        input.setText("");
-        input.requestFocus();
-        */
         out.println(s);
-        //gamemain.repaint();
         showing = ACTIVE;
         actualPlayer = player;
-
-        //we will move this below into f1/f2
-        //actualPlayer = player;
     }
     private void receive(){
         try {
-            // Odbieranie z serwera pionkow
-            /*
-
-            output.setText(str);
-            msg.setText("My turn");
-            send.setEnabled(true);
-            input.setText("");
-            input.requestFocus();
-
-             */
             String str = in.readLine();
             System.out.println(str);
             if(str.equals("STOP")){
@@ -87,6 +75,32 @@ public class Gamemain extends JFrame implements Runnable{
             }
             if(str.equals("RUN")){
                 //gamemain.setEnabled(true);
+            }
+            if(str.contains("warcaby")){
+                System.out.println("TU1");
+                gamemain.removebeforethegame();
+                System.out.println("TU2");
+                if (str.contains("warcaby angielskie"))
+                    new EnglishBuilder().build(true,str);
+                else if (str.contains("warcaby włoskie"))
+                    new ItalianBuilder().build(true,str);
+                else if (str.contains("warcaby hiszpańskie"))
+                    new SpanishBuilder().build(true,str);
+                else if (str.contains("warcaby niemieckie"))
+                    new GermanBuilder().build(true,str);
+                else if (str.contains("warcaby rosyjskie"))
+                    new RussianBuilder().build(true,str);
+                else if (str.contains("warcaby polskie"))
+                    new PolishBuilder().build(true,str);
+                else if (str.contains("warcaby kanadyjskie"))
+                    new CanadianBuilder().build(true,str);
+                else if (str.contains("warcaby tureckie"))
+                    new TurkishBuilder().build(true,str);
+                else if (str.contains("warcaby brazylijskie"))
+                    new BrazilianBuilder().build(true,str);
+                System.out.println("TU3");
+                //new MenuCreator().getMenu().setEnabled(false);
+                System.out.println("TU4");
             }
             //gamemain.repaint();
         }
@@ -236,7 +250,6 @@ public class Gamemain extends JFrame implements Runnable{
 
     public static void main(String[] args) {
         //Gamemain gamemain= new Gamemain();
-
         //jFrame = new JFrame();
         gamemain.setBounds(10, 10, 800, 800);
 
@@ -247,7 +260,12 @@ public class Gamemain extends JFrame implements Runnable{
         );
         beforethegame.setFont(beforethegame.getFont().deriveFont(50.0F));
         MenuCreator menuCreator = new MenuCreator();
+        //idk czy ok
+        //ZAMIAST TEGO SPROBUJMY MOZE KOMUNIKACJI Z SERWEREM
+        //THATSS NOT THE POINT, MENU ROIBIMY ZAWSZE, ALE NIE PIONKI, ALE Z KOLEJ KLIENT POTRZEBUJE MIEC STWORZONE KONKRETNE MENU
+
         menuCreator.createmenu();
+
         menuBar=menuCreator.getMenuBar();
 
 

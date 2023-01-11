@@ -15,7 +15,6 @@ public class Plansza {
     //turkish checkers require special positioning of pawns
     private boolean turkishflag;
 
-    JFrame jFrame;
     Gamemain gamemain;
     final Dimension[] size_of_window = new Dimension[1];
     final static int[] windowH = new int[1];
@@ -26,30 +25,14 @@ public class Plansza {
         this.turkishflag=turkishflag;
     }
     public Plansza(){}
-    //public JFrame getFrame() {return this.jFrame;}
-    //public Dimension rozmiar() {return this.jFrame.getContentPane().getSize();}
     public int getwindowW(){return this.windowW[0];}
     public int getwindowH(){return this.windowH[0];}
-    //Fils rows with pawns
-    //TO BE MOVED TO SERVER
 
     public void boardbuilder() {
-        //ew swithc to main
+
         Gamemain main =  new Gamemain();
-        //jFrame = main.getFrame();
         gamemain=main.getGamemain();
-
-
         gamemain.setBounds(10, 10, 1024, 720);
-        //size_of_window = jFrame.getContentPane().getSize();
-        //windowH = (int) (size_of_window.getHeight() / 8);
-        //windowW = (int) (size_of_window.getWidth() / 8);
-        //number of rows = siza/2 -1
-//        //HALO HALO PIONKI USTAWIAMY NA SERWIE NIE NA KLIENCIE?
-//        Gamev2 gamev2 = new Gamev2();
-//        //Ustawiam pionki
-//        for(int i =0; i<size/2-1; ++i)
-//            gamev2.fillrow(i,turkishflag,bottomleftcorner,size);
 
         JPanel jPanel = new JPanel() {
             public void paint(Graphics g) {
