@@ -203,7 +203,7 @@ public class Pionek {
                 }
             }else{
                 if(getPionekByCords(x,y).isPolish){
-                    
+
                 }else{
                     if(getPionekByCords(x+1, y+1).isWhite!=isWhite&&
                             getPionekByCords(x+2, x+2)==null&&
@@ -246,20 +246,35 @@ public class Pionek {
                     if(this.isPolish){
                         //ruchy poslkich damek
                     } else{
-                        //ruchy angielskich damek
+                        if(getPionekByCords(this.getX()+1, this.getY()+1)==null&&this.getX()+1<this.sizeOfPlansza&&this.getY()+1<this.sizeOfPlansza){
+                            legalneKafelki.add(this.getX()+1);
+                            legalneKafelki.add(this.getY()+1);
+                        }
+                        if(getPionekByCords(this.getX()-1, this.getY()+1)==null&&this.getX()-1>=0&&this.getY()+1<this.sizeOfPlansza){
+                            legalneKafelki.add(this.getX()-1);
+                            legalneKafelki.add(this.getY()+1);
+                        }
+                        if(getPionekByCords(this.getX()+1, this.getY()-1)==null&&this.getX()+1<this.sizeOfPlansza&&this.getY()-1>=0){
+                            legalneKafelki.add(this.getX()+1);
+                            legalneKafelki.add(this.getY()-1);
+                        }
+                        if(getPionekByCords(this.getX()-1, this.getY()-1)==null&&this.getX()-1>=0&&this.getY()-1>=0){
+                            legalneKafelki.add(this.getX()-1);
+                            legalneKafelki.add(this.getY()-1);
+                        }
                     }
                 } else {
                     if (this.isWhite()) {
-                        if ((getPionekByCords(this.getX() + 1, this.getY() + 1) == null) && (this.getX() + 1 < 8 && this.getY() + 1 < 8)) {
+                        if ((getPionekByCords(this.getX() + 1, this.getY() + 1) == null) && (this.getX() + 1 < this.sizeOfPlansza && this.getY() + 1 < this.sizeOfPlansza)) {
                             legalneKafelki.add(this.getX() + 1);
                             legalneKafelki.add(this.getY() + 1);
                         }
-                        if ((getPionekByCords(this.getX() - 1, this.getY() + 1) == null) && (this.getX() - 1 >= 0 && this.getY() + 1 < 8)) {
+                        if ((getPionekByCords(this.getX() - 1, this.getY() + 1) == null) && (this.getX() - 1 >= 0 && this.getY() + 1 < this.sizeOfPlansza)) {
                             legalneKafelki.add(this.getX() - 1);
                             legalneKafelki.add(this.getY() + 1);
                         }
                     } else if (!this.isWhite()) {
-                        if ((getPionekByCords(this.getX() + 1, this.getY() - 1) == null) && (this.getX() + 1 < 8 && this.getY() - 1 >= 0)) {
+                        if ((getPionekByCords(this.getX() + 1, this.getY() - 1) == null) && (this.getX() + 1 < this.sizeOfPlansza && this.getY() - 1 >= 0)) {
                             legalneKafelki.add(this.getX() + 1);
                             legalneKafelki.add(this.getY() - 1);
                         }
