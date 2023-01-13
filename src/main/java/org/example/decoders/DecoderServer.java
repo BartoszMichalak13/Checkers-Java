@@ -1,6 +1,9 @@
-package org.example;
+package org.example.decoders;
 
-public class DecoderServer implements Decoder{
+import org.example.Pionek;
+import org.example.decoders.Decoder;
+
+public class DecoderServer implements Decoder {
     boolean isWhiteTurn=true;
     boolean wasBicie=false;
 
