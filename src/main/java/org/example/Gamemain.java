@@ -1,10 +1,7 @@
 package org.example;
 
-import com.sun.tools.javac.Main;
 import org.example.builders.*;
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -237,7 +234,7 @@ public class Gamemain extends JFrame implements Runnable{
 
             for (Pionek pion : Pionek.getPionki()) {
                 if (pion.isActive()) {
-                    pion.przesun(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH());
+                    pion.move(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH());
                     pion.setActive(false);
                     gamemain.repaint();
                     out.flush();

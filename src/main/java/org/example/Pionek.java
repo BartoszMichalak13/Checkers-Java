@@ -43,7 +43,7 @@ public class Pionek {
     //ta metoda działa i dla polskich damek i angielskich
     //w polskich damka porusza się po przekątnej i gdy znajdzie pionek przeciwnika, za którym na tej przekątnej jest pusto
     //to go zbije, i wyląduje za nim.
-    public void przesun(int x, int y) {
+    public void move(int x, int y) {
         if(x>this.x){
             if(y>this.y){
                 if(getPionekByCords(x-1, y-1)!=null&&getPionekByCords(x-1, y-1).isWhite()!=this.isWhite()){
