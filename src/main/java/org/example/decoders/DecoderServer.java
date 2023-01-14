@@ -19,7 +19,7 @@ public class DecoderServer implements Decoder {
 
     /////Serwer bedzie wysylal wiadomosci wygladajace tak "W C 07 10 08 10 09 08 09 11 S" -
     ////Sprawdziłem, legalne kafelki to x07 y10 oraz x08 y10......, jesli jestes bialy to te kafelki zaznacz, stop.
-    ///"A W 01 02 W 03 02... B 10 02 B 10 02 S" - do wszystkich klientów, Bialy na x01, y02... czarny na 10 02..., stop"
+    ///"A W P 01 02 W Q 03 02... B Q 10 02 B P 10 02 S" - do wszystkich klientów, Bialy pion na x01, y02... czarna krolowa na 10 02..., stop"
     // to bedzie wysylane po kazdym wykonanym ruchu.
 
     // "I" - invalid action. Klient odbierze "W C I" znaczy - biały, nieprawidłowa akcja sprawdzania możliwych ruchów
@@ -75,6 +75,11 @@ public class DecoderServer implements Decoder {
                                 }else{
                                     response+="B ";
                                 }
+                                if(pionek.isQueen()){
+                                    response+="Q ";
+                                }else{
+                                    response+="P ";
+                                }
                                 response+=pionek.getX();
                                 response+=" ";
                                 response+=pionek.getY();
@@ -88,9 +93,9 @@ public class DecoderServer implements Decoder {
                             }
                             if(isWin){
                                 if(isWhiteTurn){
-                                    return "A W WIN";
+                                    response+="A W WIN";
                                 }else{
-                                    return "A B WIN";
+                                    response+="A B WIN";
                                 }
                             }
 
