@@ -47,6 +47,9 @@ public class Gamemain extends JFrame implements Runnable{
     private  static int actualPlayer = PLAYER1;
 
     private static int showing = ACTIVE;
+    public int getPlayer(){
+        return this.player;
+    }
     public Gamemain(){
 
     }
@@ -69,41 +72,48 @@ public class Gamemain extends JFrame implements Runnable{
     }
     private void receive(){
         try {
+            //MAYBE DEPRECATED
             String str = in.readLine();
             System.out.println(str);
             if(str.contains("warcaby")){
-                System.out.println("TU1");
                 gamemain.removebeforethegame();
-                System.out.println("TU2");
+                //IDEA: BUILDERY ZAWIERAJA INFO O GRACZU ZEBY NIE WYSYLAC DO SERWERA INFO O TWORZENIU PIONKOW DLA GRACZA 2
                 if (str.contains("warcaby angielskie"))
-                    new EnglishBuilder().build(true,str);
+                    new EnglishBuilder().build(true,str,player);
                 else if (str.contains("warcaby polskie"))
-                    new PolishBuilder().build(true,str);
+                    new PolishBuilder().build(true,str, player);
                 else if (str.contains("warcaby brazylijskie"))
-                    new BrazilianBuilder().build(true,str);
-                //System.out.println("TU3");
+                    new BrazilianBuilder().build(true,str,player);
+            }
+            String[]s= str.split(" ");
+            double v=s.length;
+            int offset;
+            if(player==2){
+                offset=8;
+                v=(v-8)/3;
+            }else{
+                offset=2;
+                v=(v-2)/3;
             }
             //System.out.println(str);
             //System.out.println(str.contains("[a-zA-Z]+"));
             //if(str.matches(".*\\d.*")){
             //if(str.contains("[a-zA-Z]+")){
             if(str.contains("Leca")){
-                //System.out.println("TU4");
                 //REPAINT JPANEL?
                 int[] x = new int[pawnnumber];
                 int[] y = new int[pawnnumber];
                 boolean[] isWhite = new boolean[pawnnumber];
-                String[]s= str.split(" ");
-               // System.out.println("TU5");
 
-                for(int i=0; i<(s.length-2)/3; i++) {
-                    //System.out.println("TU6");
+                for(int i=0; i<v; i++) {
                     System.out.println(s.length);
-                    String s1 = s[(i*3)+2];
+                    System.out.println(pawnnumber);
+                    System.out.println(v);
+                    String s1 = s[(i*3)+offset];
                     System.out.println(s1);
-                    String s2 = s[(i*3)+3];
+                    String s2 = s[(i*3)+offset+1];
                     System.out.println(s2);
-                    String s3 = s[(i*3)+4];
+                    String s3 = s[(i*3)+offset+2];
                     System.out.println(s3);
                     isWhite[i] = Boolean.parseBoolean(s1);
                     System.out.println("HEJ");
@@ -112,17 +122,12 @@ public class Gamemain extends JFrame implements Runnable{
                     y[i] = Integer.parseInt(s3);
                     System.out.println("HEJ");
                 }
-
-                Plansza pl =  new Plansza(size, x,y,isWhite, pawnnumber);
-                System.out.println("TU8");
-
+                Plansza pl = new Plansza(size, x,y,isWhite, pawnnumber);
                 pl.boardbuilder();
-                System.out.println("TU9");
-
             }
         }
         //catch (IOException e) {
-        catch (Exception e) {
+        catch (IOException e) {
             System.out.println("Read failed"); System.exit(1);
         }
     }
@@ -231,16 +236,13 @@ public class Gamemain extends JFrame implements Runnable{
         Plansza pl= new Plansza();
         @Override
         public void mouseClicked(MouseEvent e) {
-
+            System.out.println("Klik");
+            //wysylamy zapytanie czy pionek
             for (Pionek pion : Pionek.getPionki()) {
                 if (pion.isActive()) {
                     pion.move(e.getX() / pl.getwindowW(), e.getY() / pl.getwindowH());
                     pion.setActive(false);
                     gamemain.repaint();
-                    out.flush();
-                    // Okey przesunelismy wiec generalnie to wyslalem pionki i
-                    // robimy repainta u innego gracza
-                    send("pion");
                     return;
                 }
             }
@@ -297,6 +299,7 @@ public class Gamemain extends JFrame implements Runnable{
         gamemain.listenSocket();
         gamemain.receiveInitFromServer();
         gamemain.startThread();
+
 
     }
 

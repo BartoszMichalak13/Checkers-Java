@@ -63,6 +63,8 @@ public class DecoderClient implements Decoder {
         String[] commands = message.split(" ");
         if(isWhite&&commands[0]=="W"){
         }
+        //linijka nizje jest po to bo wywalalo blad
+        return message;
     }
 
     //TODO: zroic tak, zeby po wyslaniu zlego zapytania, np klikniecia w zly kafelek dezaktywowac pionek i nie podsiwtlac

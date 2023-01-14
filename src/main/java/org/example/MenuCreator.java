@@ -17,6 +17,7 @@ public class MenuCreator {
     public JMenuBar getMenuBar(){
         return this.menuBar;
     }
+
     public JMenu getMenu(){return this.menu;}
     public void createmenu() {
 //Create the menu bar.
@@ -38,11 +39,11 @@ public class MenuCreator {
                 System.out.println(s);
                 gamemain.removebeforethegame();
                 if (s.equals("warcaby angielskie"))
-                    new EnglishBuilder().build(werecreated,s);
+                    new EnglishBuilder().build(werecreated,s,gamemain.getPlayer());
                 else if (s.equals("warcaby polskie"))
-                    new PolishBuilder().build(werecreated,s);
+                    new PolishBuilder().build(werecreated,s,gamemain.getPlayer());
                 else if (s.equals("warcaby brazylijskie"))
-                    new BrazilianBuilder().build(werecreated,s);
+                    new BrazilianBuilder().build(werecreated,s,gamemain.getPlayer());
                 menu.setEnabled(false);
                 werecreated=true;
                 new Gamev2().setWerecreated(werecreated);

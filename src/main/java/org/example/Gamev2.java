@@ -104,7 +104,7 @@ public class Gamev2 implements Runnable {
                         }
 
                         System.out.println("Jest3");
-                        outS.println(line);
+                        //outS.println(line);
                         System.out.println("Jest4");
                         //Pionek pionek = null;
                         //pionek.getpionki();
@@ -131,6 +131,7 @@ public class Gamev2 implements Runnable {
                     System.out.println("Jest6");
 
                         outF.println(s);
+                        outS.println(line+s);
                     System.out.println("Jest7");
 
                         //String[] pawns = x,y,iswhite,isdamka;

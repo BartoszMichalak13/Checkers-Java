@@ -23,20 +23,33 @@ public class Plansza {
     final static int[] windowH = new int[1];
     final static int[] windowW = new int[1];
     public Plansza(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber) {
+        System.out.println("TEST1");
         this.size=size;
         this.pawnnumber=pawnnumber;
+        System.out.println("TEST2");
         //this.isWhite = new boolean[pawnnumber];
         //this.x= new int[pawnnumber];
         //this.y= new int[pawnnumber];
-        for(int i=0; i<x.length; i++){
-            this.isWhite[i]=isWhite[i];
-            this.x[i] = x[i];
-            this.y[i] = y[i];
-        }
+//        for(int i=0; i<x.length; i++){
+//            System.out.println("TEST3");
+//            this.isWhite[i]=isWhite[i];
+//            System.out.println("TEST4");
+//
+//            this.x[i] = x[i];
+//            System.out.println("TEST5");
+//
+//            this.y[i] = y[i];
+//            System.out.println("TEST6");
+//
+//        }
+        System.out.println("TEST7");
 
-//        this.isWhite=isWhite;
-//        this.x = x;
-//        this.y = y;
+        this.isWhite=isWhite;
+        System.out.println("TEST8");
+        this.x = x;
+        System.out.println("TEST9");
+        this.y = y;
+        System.out.println("TEST10");
     }
     public Plansza(int size) {
         this.size=size;
@@ -56,7 +69,7 @@ public class Plansza {
             gamemain.remove(jPanel);//IF THERE IS ANY
         }
         gamemain.setBounds(10, 10, 1024, 720);
-        gamemain.setsize(size);
+        //gamemain.setsize(size);
          jPanel = new JPanel() {
             public void paint(Graphics g) {
                 size_of_window[0] = gamemain.getContentPane().getSize();

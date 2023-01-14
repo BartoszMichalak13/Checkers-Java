@@ -50,12 +50,15 @@ public class DecoderServer implements Decoder {
                             response +=" ";
                         }
                         Pionek.getPionekByCords(x, y).setActive(true);
-                        return response+="S";
+                        response+="S";
+                        return response;
                     }else{
-                        return response+="I S";
+                        response+="I S";
+                        return response;
                     }
                 }else{
-                    return response+="I S";
+                    response+="I S";
+                    return response;
                 }
             case "M":
                 boolean validMove=false;
