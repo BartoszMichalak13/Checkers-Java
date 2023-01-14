@@ -2,15 +2,20 @@ package org.example.decoders;
 
 import org.example.decoders.Decoder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DecoderClient implements Decoder {
     boolean ask;
-
     boolean isWhite;
+    ArrayList<Integer> bicia;
 
     //gdy tworzymy klientowi dekoder, musimy okreslic czy dekoder jest do gry bialymi czy czarnymi.
     public DecoderClient(boolean isWhite) {
         this.ask=true; //domyslnie najpierw zadajemy pytanie
         this.isWhite = isWhite;
+        bicia=new ArrayList<>();
     }
 
 
@@ -35,23 +40,39 @@ public class DecoderClient implements Decoder {
 
 
     //x,y, wspolrzedne kafelkow na ktore sie kliknie
-    public String encrypt(int x, int y){
-        String encryption="";
-        if(isWhite){
-            encryption+="W ";
-            if(ask){
-                encryption=encryption+"C "+x+" "+y+" ";
-                ask=false;
-            }else{
-                encryption=encryption+"M "+x+" "+y+" ";
+    public String encrypt(int x, int y) {
+        String encryption = "";
+        if (isWhite) {
+            encryption += "W ";
+        } else {
+            encryption += "B ";
+        }
+        if (bicia.isEmpty()) {
+            if (ask) {
+                encryption = encryption + "C " + x + " " + y + " ";
+                ask = false;
+            } else {
+                encryption = encryption + "M " + x + " " + y + " ";
+            }
+
+            encryption += "B ";
+            if (ask) {
+                encryption = encryption + "C " + x + " " + y + " ";
+                ask = false;
+            } else {
+                encryption = encryption + "M " + x + " " + y + " ";
             }
         }else{
-            encryption+="B ";
-            if(ask){
-                encryption=encryption+"C "+x+" "+y+" ";
-                ask=false;
+            boolean validMoveHit=false;
+            for(int i =0; i<bicia.size(); i+=2){
+                if(bicia.get(i)==x&&bicia.get(i+1)==y){
+                    validMoveHit=true;
+                }
+            }
+            if(validMoveHit){
+                encryption = encryption + "M " + x + " " + y + " ";
             }else{
-                encryption=encryption+"M "+x+" "+y+" ";
+                return"INVALID HIT";
             }
         }
         return encryption+"S";
@@ -61,9 +82,26 @@ public class DecoderClient implements Decoder {
     @Override
     public String decode(String message) {
         String[] commands = message.split(" ");
-        if(isWhite&&commands[0]=="W"){
+        if((isWhite&&commands[0].equals("W"))||(!isWhite&&commands[0].equals("B"))) {
+            if ((commands[1] == "C" && Arrays.asList(commands).contains("I"))||commands[1]=="M") {
+                ask = true;
+            }
+
+            if (Arrays.asList(commands).contains("HIT")) {
+                int hitIndex = 0;
+                for(int i=0; i<commands.length; i++){
+                    if(commands[i].equals("HIT")){
+                        hitIndex=i+1;
+                    }
+                }
+                while(hitIndex<commands.length){
+                    if(commands[hitIndex]!="S") {
+                        bicia.add(Integer.parseInt(commands[hitIndex]));
+                        hitIndex++;
+                    }
+                }
+            }
         }
-        //linijka nizje jest po to bo wywalalo blad
         return message;
     }
 
