@@ -27,6 +27,12 @@ public class Plansza {
     final Dimension[] size_of_window = new Dimension[1];
     final static int[] windowH = new int[1];
     final static int[] windowW = new int[1];
+    int xActive=-1;
+    int yActive=-1;
+    public void getActive(int xActive, int yActive){
+        this.xActive=xActive;
+        this.yActive=yActive;
+    }
     public void getLegalKaf(int[] xLegal, int[] yLegal){
         this.xLegal=xLegal;
         this.yLegal=yLegal;
@@ -111,27 +117,34 @@ public class Plansza {
                     );
                 }
                 //TO BE MOVED TO SERVER or not
-//                if(Pionek.getActivePionek()!=null){
-//                    g.setColor(Color.YELLOW);
-//                    g.fillRect(
-//                            Pionek.getActivePionek().getX()* windowW[0],
-//                            Pionek.getActivePionek().getY()* windowH[0],
-//                            windowW[0],
-//                            windowH[0]
-//                    );
-//                    if(Pionek.getActivePionek().isWhite()){
-//                        g.setColor(Color.WHITE);
-//                    }else{
-//                        g.setColor(Color.BLACK);
-//                    }
-//                    g.fillOval(
-//                            Pionek.getActivePionek().getX()* windowW[0],
-//                            Pionek.getActivePionek().getY()* windowH[0],
-//                            windowW[0],
-//                            windowH[0]
-//                    );
-                    //change is inevitable
-                if(xLegal!=null) {
+                if(xActive!=-1) {
+                    for (int i = 0; i < x.length; i++) {
+                        if(x[i]==xActive && y[i]==yActive) {
+                            g.setColor(Color.YELLOW);
+                            g.fillRect(
+                                    xActive * windowW[0],
+                                    yActive * windowH[0],
+                                    windowW[0],
+                                    windowH[0]
+                            );
+                            if (isWhite[i]) {
+                                g.setColor(Color.WHITE);
+                            } else {
+                                g.setColor(Color.BLACK);
+                            }
+                            g.fillOval(
+                                    xActive * windowW[0],
+                                    yActive * windowH[0],
+                                    windowW[0],
+                                    windowH[0]
+                            );
+                        }
+                    }
+//                    xActive=-1;
+//                    yActive=-1;
+                }
+                //change is inevitable
+                if (xLegal != null) {
                     for (int i = 0; i < xLegal.length; ++i) {
                         g.setColor(Color.green);
                         g.fillRect(
@@ -142,7 +155,8 @@ public class Plansza {
                         );
                     }
                 }
-               // }
+
+
             }
         };
         Gamemain.CheckerBoardHandler CBH= gamemain.new CheckerBoardHandler();

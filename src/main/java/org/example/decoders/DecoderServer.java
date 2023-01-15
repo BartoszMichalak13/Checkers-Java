@@ -61,64 +61,68 @@ public class DecoderServer implements Decoder {
             }
         }
         else if(commands[1].equals("M")){
+            response+="M ";
             boolean validMove=false;
             if(isWhiteTurn==whitePlayer){
-                for(int i = 0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
+                if(Pionek.getActivePionek().legalneKafelki().isEmpty()){
+                    return response+="M I S";
+                }else{
+                    for(int i = 0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
 
-                    if(Pionek.getActivePionek().legalneKafelki().get(i)==x&&
-                            Pionek.getActivePionek().legalneKafelki().get(i+1)==y){
-                        validMove=true;
-                        int amountOfPionki = Pionek.getPionki().size();
-                        Pionek.getActivePionek().move(x,y);
-                        //zakodowac wysylke kordów pionków
-                        response = "A "; //trzeba wyslac kazdemu, nadpisuje zapisanie koloru gracza z zapytaniem.
-                        for(Pionek pionek:Pionek.getPionki()){
-                            if(pionek.isWhite()){
-                                response+="W ";
-                            }else{
-                                response+="B ";
-                            }
-                            if(pionek.isQueen()){
-                                response+="Q ";
-                            }else{
-                                response+="P ";
-                            }
-                            response+=pionek.getX();
-                            response+=" ";
-                            response+=pionek.getY();
-                            response+=" ";
-                        }
-                        boolean isWin=true;
-                        for(Pionek pionek: Pionek.getPionki()){
-                            if(!pionek.legalneKafelki().isEmpty()&&pionek.isWhite()!=isWhiteTurn){
-                                isWin=false;
-                            }
-                        }
-                        if(isWin){
-                            if(isWhiteTurn){
-                                response+="A W WIN";
-                            }else{
-                                response+="A B WIN";
-                            }
-                        }
-
-                        if(amountOfPionki-Pionek.getPionki().size()==1&&
-                                !Pionek.bicia(x,y,Pionek.getActivePionek().isWhite(), Pionek.getActivePionek().isQueen()).isEmpty()){
-                            response += "HIT ";
-                            for(int j=0; j<Pionek.getActivePionek().legalneKafelki().size(); j+=2){
-                                response+=Pionek.getActivePionek().legalneKafelki().get(j).toString();
+                        if(Pionek.getActivePionek().legalneKafelki().get(i)==x&&
+                                Pionek.getActivePionek().legalneKafelki().get(i+1)==y){
+                            validMove=true;
+                            int amountOfPionki = Pionek.getPionki().size();
+                            Pionek.getActivePionek().move(x,y);
+                            //zakodowac wysylke kordów pionków
+                            response = "A "; //trzeba wyslac kazdemu, nadpisuje zapisanie koloru gracza z zapytaniem.
+                            for(Pionek pionek:Pionek.getPionki()){
+                                if(pionek.isWhite()){
+                                    response+="W ";
+                                }else{
+                                    response+="B ";
+                                }
+                                if(pionek.isQueen()){
+                                    response+="Q ";
+                                }else{
+                                    response+="P ";
+                                }
+                                response+=pionek.getX();
                                 response+=" ";
-                                response+=Pionek.getActivePionek().legalneKafelki().get(j+1).toString();
+                                response+=pionek.getY();
                                 response+=" ";
                             }
+                            boolean isWin=true;
+                            for(Pionek pionek: Pionek.getPionki()){
+                                if(!pionek.legalneKafelki().isEmpty()&&pionek.isWhite()!=isWhiteTurn){
+                                    isWin=false;
+                                }
+                            }
+                            if(isWin){
+                                if(isWhiteTurn){
+                                    response+="A W WIN";
+                                }else{
+                                    response+="A B WIN";
+                                }
+                            }
+                            if(amountOfPionki-Pionek.getPionki().size()==1&&
+                                    !Pionek.bicia(x,y,Pionek.getActivePionek().isWhite(), Pionek.getActivePionek().isQueen()).isEmpty()){
+                                response += "HIT ";
+                                for(int j=0; j<Pionek.getActivePionek().legalneKafelki().size(); j+=2){
+                                    response+=Pionek.getActivePionek().legalneKafelki().get(j).toString();
+                                    response+=" ";
+                                    response+=Pionek.getActivePionek().legalneKafelki().get(j+1).toString();
+                                    response+=" ";
+                                }
 
-                        }else{
-                            this.isWhiteTurn=!isWhiteTurn;
+                            }else{
+                                this.isWhiteTurn=!isWhiteTurn;
+                            }
                         }
+                    }if(!validMove){
+                        response +="I S";
+                        Pionek.getActivePionek().setActive(false);
                     }
-                }if(!validMove){
-                    response +="I S";
-                    Pionek.getActivePionek().setActive(false);
                 }
             }else{
                 response+="I S";

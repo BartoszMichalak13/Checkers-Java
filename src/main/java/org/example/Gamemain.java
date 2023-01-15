@@ -78,107 +78,114 @@ public class Gamemain extends JFrame implements Runnable{
     }
     private void receive(){
         try {
-            String str = in.readLine();
-            System.out.println(str);
-            decoderClient.decode(str);
-            String[]s= str.split(" ");
-            if(!str.contains("I")) {
-                if (str.contains("warcaby")) {
-                    gamemain.removebeforethegame();
-                    if (str.contains("warcaby angielskie"))
-                        new EnglishBuilder().build(true, str, player);
-                    else if (str.contains("warcaby polskie"))
-                        new PolishBuilder().build(true, str, player);
-                    else if (str.contains("warcaby brazylijskie"))
-                        new BrazilianBuilder().build(true, str, player);
-                }
-                if (str.contains("C")) {
-                    int var = s.length;
-                    var = var - 3;
-                    int[] xLegal = new int[var/2];
-                    int[] yLegal = new int[var/2];
-                    int Li = 0;
-                    for (int i = 2; i < var + 2; i=i+2) {
-                        xLegal[Li] = Integer.parseInt(s[i]);
-                        yLegal[Li] = Integer.parseInt(s[i+1]);
-                        Li++;
+            boolean wasA=true;
+            while(wasA){
+                String str = in.readLine();
+                System.out.println(str);
+                decoderClient.decode(str);
+                String[] s = str.split(" ");
+                if (!str.contains("I")) {
+                    if (str.contains("warcaby")) {
+                        gamemain.removebeforethegame();
+                        if (str.contains("warcaby angielskie"))
+                            new EnglishBuilder().build(true, str, player);
+                        else if (str.contains("warcaby polskie"))
+                            new PolishBuilder().build(true, str, player);
+                        else if (str.contains("warcaby brazylijskie"))
+                            new BrazilianBuilder().build(true, str, player);
+                        wasA=false;
                     }
-                    //siema plansza mam legalne kafelki
-                    pl.getLegalKaf(xLegal,yLegal);
-                    gamemain.repaint();
-
-                } else if (str.contains("A")) {
-                    //mozna ustalic legal kafelki na puste
-
-                    int var = s.length;
-                    var = var - 1;
-                    System.out.println(var);
-                    System.out.println(var/4);
-                    boolean[] isWhite = new boolean[var / 4];
-                    boolean[] isDamka = new boolean[var / 4];
-                    int[] x = new int[var / 4];
-                    int[] y = new int[var / 4];
-                    int Li=0;
-                    for(int i = 1; i < var + 1; i = i + 4){
-                        if(s[i].equals("W")){
-                            isWhite[Li] = true;
-                        }else{
-                            isWhite[Li] = false;
+                    if (str.contains("C")) {
+                        int var = s.length;
+                        var = var - 3;
+                        int[] xLegal = new int[var / 2];
+                        int[] yLegal = new int[var / 2];
+                        int Li = 0;
+                        for (int i = 2; i < var + 2; i = i + 2) {
+                            xLegal[Li] = Integer.parseInt(s[i]);
+                            yLegal[Li] = Integer.parseInt(s[i + 1]);
+                            Li++;
                         }
-                        if(s[i + 1].equals("P")){
-                            isDamka[Li]=false;
-                        }else{
-                            isDamka[Li]=true;
+                        //siema plansza mam legalne kafelki
+                        pl.getLegalKaf(xLegal, yLegal);
+                        gamemain.repaint();
+                        wasA=false;
+                    } else if (str.contains("A")) {
+                        //mozna ustalic legal kafelki na puste
+
+                        int var = s.length;
+                        var = var - 1;
+                        System.out.println(var);
+                        System.out.println(var / 4);
+                        boolean[] isWhite = new boolean[var / 4];
+                        boolean[] isDamka = new boolean[var / 4];
+                        int[] x = new int[var / 4];
+                        int[] y = new int[var / 4];
+                        int Li = 0;
+                        for (int i = 1; i < var + 1; i = i + 4) {
+                            if (s[i].equals("W")) {
+                                isWhite[Li] = true;
+                            } else {
+                                isWhite[Li] = false;
+                            }
+                            if (s[i + 1].equals("P")) {
+                                isDamka[Li] = false;
+                            } else {
+                                isDamka[Li] = true;
+                            }
+                            x[Li] = Integer.parseInt(s[i + 2]);
+                            y[Li] = Integer.parseInt(s[i + 3]);
+                            ++Li;
                         }
-                        x[Li] = Integer.parseInt(s[i+2]);
-                        y[Li] = Integer.parseInt(s[i+3]);
-                        ++Li;
+                        pl.getMove(isWhite, isDamka, x, y, null, null);
+                        pl.getActive(-1,-1);
+                        gamemain.repaint();
+
+                        //showing = ACTIVE;
                     }
-                    pl.getMove(isWhite,isDamka,x,y,null,null);
+                    if (str.contains("Leca")) {
+                        double v = s.length;
+                        int offset;
+                        if (player == 2) {
+                            offset = 8;
+                            v = (v - 8) / 3;
+                        } else {
+                            offset = 2;
+                            v = (v - 2) / 3;
+                        }
+                        //REPAINT JPANEL?
+                        int[] x = new int[pawnnumber];
+                        int[] y = new int[pawnnumber];
+                        boolean[] isWhite = new boolean[pawnnumber];
+
+                        for (int i = 0; i < v; i++) {
+                            System.out.println(s.length);
+                            System.out.println(pawnnumber);
+                            System.out.println(v);
+                            String s1 = s[(i * 3) + offset];
+                            System.out.println(s1);
+                            String s2 = s[(i * 3) + offset + 1];
+                            System.out.println(s2);
+                            String s3 = s[(i * 3) + offset + 2];
+                            System.out.println(s3);
+                            isWhite[i] = Boolean.parseBoolean(s1);
+                            System.out.println("HEJ");
+                            x[i] = Integer.parseInt(s2);
+                            System.out.println("HEJ");
+                            y[i] = Integer.parseInt(s3);
+                            System.out.println("HEJ");
+                        }
+                        pl = new Plansza(size, x, y, isWhite, pawnnumber);
+                        pl.boardbuilder();
+                        wasA=false;
+                    }
+                } else {
+                    //usuwamy legalne kafelki
+                    pl.getLegalKaf(null, null);
                     gamemain.repaint();
-
-                    //showing = ACTIVE;
+                    wasA=false;
+                    //No nie wiem. Ruch byl niepoprawny, a to są warcaby... Może warto się nad sobą zastanowić?
                 }
-                if (str.contains("Leca")) {
-                    double v = s.length;
-                    int offset;
-                    if (player == 2) {
-                        offset = 8;
-                        v = (v - 8) / 3;
-                    } else {
-                        offset = 2;
-                        v = (v - 2) / 3;
-                    }
-                    //REPAINT JPANEL?
-                    int[] x = new int[pawnnumber];
-                    int[] y = new int[pawnnumber];
-                    boolean[] isWhite = new boolean[pawnnumber];
-
-                    for (int i = 0; i < v; i++) {
-                        System.out.println(s.length);
-                        System.out.println(pawnnumber);
-                        System.out.println(v);
-                        String s1 = s[(i * 3) + offset];
-                        System.out.println(s1);
-                        String s2 = s[(i * 3) + offset + 1];
-                        System.out.println(s2);
-                        String s3 = s[(i * 3) + offset + 2];
-                        System.out.println(s3);
-                        isWhite[i] = Boolean.parseBoolean(s1);
-                        System.out.println("HEJ");
-                        x[i] = Integer.parseInt(s2);
-                        System.out.println("HEJ");
-                        y[i] = Integer.parseInt(s3);
-                        System.out.println("HEJ");
-                    }
-                    pl = new Plansza(size, x, y, isWhite, pawnnumber);
-                    pl.boardbuilder();
-                }
-            }else{
-                //usuwamy legalne kafelki
-                pl.getLegalKaf(null,null);
-                gamemain.repaint();
-                //No nie wiem. Ruch byl niepoprawny, a to są warcaby... Może warto się nad sobą zastanowić?
             }
         }
         //catch (IOException e) {
@@ -253,6 +260,7 @@ public class Gamemain extends JFrame implements Runnable{
                 if (actualPlayer== PLAYER1) {
                     try {
                         wait(10);
+                        //receive();
                     } catch (InterruptedException e) {
                     }
                 }
@@ -275,6 +283,7 @@ public class Gamemain extends JFrame implements Runnable{
                 if (actualPlayer== PLAYER2) {
                     try {
                         wait(10);
+                        //receive();
                     } catch (InterruptedException e) {
                     }
                 }
@@ -294,20 +303,12 @@ public class Gamemain extends JFrame implements Runnable{
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Klik");
-            //String act="Active ";
             String act="";
-//            if(wasclicked==false) {
-//                act = "C ";//later change to W
-//                wasclicked=true;
-//            }else {
-//                act = "M ";
-//                wasclicked=false;
-//            }
-            act += decoderClient.encrypt(e.getX()/pl.getwindowW(),e.getY()/ pl.getwindowH());
-//            act+=e.getX()/pl.getwindowW();
-//            act+=" ";
-//            act+=e.getY()/ pl.getwindowH();
-//            act+=" ";
+            int x=e.getX()/pl.getwindowW();
+            int y=e.getY()/ pl.getwindowH();
+            act += decoderClient.encrypt(x,y);
+            pl.getActive(x,y);
+            gamemain.repaint();
             gamemain.send(act);
             //wysylamy zapytanie czy pionek
 
