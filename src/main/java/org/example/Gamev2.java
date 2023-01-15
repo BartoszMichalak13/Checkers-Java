@@ -66,10 +66,14 @@ public class Gamev2 implements Runnable {
             outF.println("1");
             outS.println("2");
             DecoderServer decoderServer = new DecoderServer();
+            String message="";
             String line;
             do {
 
                 if (turn == SECOND) {
+                    long time= System.currentTimeMillis();
+                    System.out.println("HI 2");
+
                     boolean GO=true;
                     String s="";
 
@@ -77,15 +81,34 @@ public class Gamev2 implements Runnable {
                     boolean isWhite;
                     while(GO) {
                         line = inS.readLine();
+                        System.out.println(message);
+                        if(!message.isEmpty()){
+                            outS.println(message);
+                            System.out.println("2");
+                        }
+                        message="";
                         System.out.println(line);
-                            s=decoderServer.decode(line);
-                            String[] str= s.split(" ");
-                            if (str[0].equals("A")){
-                                outF.println(s);
+                        String[] str = line.split(" ");
+                        if(!(Long.parseLong(str[0]) <= time)){
+                            line = "";
+                            for(int i = 0; i+1 < str.length; i++){
+                                line = line + str[i+1];
+                                line = line + " ";
+                            }
+                            s = decoderServer.decode(line);
+                            str = s.split(" ");
+                            if (str[0].equals("A")) {
+                                message=s;
+                                System.out.println(message);
+
+
+                                //outF.println(s);
                             }
                             outS.println(s);
-                        if(decoderServer.isWhiteTurn()){
-                            GO=false;
+                            if (decoderServer.isWhiteTurn()) {
+                                GO = false;
+                                System.out.println("GO 2");
+                            }
                         }
                     }
 
@@ -93,25 +116,38 @@ public class Gamev2 implements Runnable {
                 }
 //DODAC DO KONSTRUKTORA SIZE I IS POLISH
                 if (turn == FIRST) {
+                    long time= System.currentTimeMillis();
+
+                    System.out.println("HI 1");
 //ZAGLEBIMY SIE I DODAMY WIECEJ INF OUTF DLA RUCHU
+                    int whichtime=0;
                     boolean GO=true;
                     String s="";
                     int x, y;
                     boolean isWhite;
                     while(GO) {
                         line = inF.readLine();
+                        System.out.println(message);
+                        if(!message.isEmpty()){
+                            outF.println(message);
+                            System.out.println("2");
+                        }
+                        message="";
                         System.out.println(line);
                         if (line.contains("warcaby")) {
                             werecreated = true;
-                            System.out.println("Jest1");
                             if (line.contains("Stworz Pionki")) {
                                 String[] str= line.split(" ");
+                                line = "";
+                                for(int i = 0; i+1 < str.length; i++){
+                                    line = line + str[i+1];
+                                    line = line + " ";
+                                }
+                                str=line.split(" ");
                                 size1=Integer.parseInt(str[4]);
                                 isPolish=Boolean.parseBoolean(str[5]);
                                 for (int i = 0; i < size1 / 2 - 1; ++i) {
                                     fillrow(i, size1, isPolish);
-                                    System.out.println("Halo"+i);
-
                                 }
                             }
 
@@ -130,16 +166,28 @@ public class Gamev2 implements Runnable {
                             outF.println(s);
                             outS.println(line+s);
                         }else {
-
-                            s=decoderServer.decode(line);
-                            String[] str= s.split(" ");
-                            if (str[0].equals("A")){
-                                outS.println(s);
+                            String[] str = line.split(" ");
+                            if(!(Long.parseLong(str[0]) <= time)) {
+                                line = "";
+                                for (int i = 0; i + 1 < str.length; i++) {
+                                    line = line + str[i + 1];
+                                    line = line + " ";
+                                }
+                                //str = line.split(" ");
+                                System.out.println(line);
+                                s = decoderServer.decode(line);
+                                str = s.split(" ");
+                                if (str[0].equals("A")) {
+                                    //outS.println(s);
+                                    message=s;
+                                    System.out.println(message);
+                                }
+                                outF.println(s);
                             }
-                            outF.println(s);
                         }
                         if(!decoderServer.isWhiteTurn()){
                             GO=false;
+                            System.out.println("GO 1");
                         }
                     }
                     turn = SECOND;

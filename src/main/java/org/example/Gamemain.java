@@ -70,8 +70,19 @@ public class Gamemain extends JFrame implements Runnable{
     public void removebeforethegame(){
         gamemain.remove(beforethegame);
     }
+    public void ismyturn(){
+        try {
+            String str = in.readLine();
+            if(str.equals(null)){
+
+            }
+        }catch (IOException e){}
+
+    }
 
     public void send(String s){
+        s= System.currentTimeMillis() +" "+ s;
+        System.out.println(s);
         out.println(s);
         showing = ACTIVE;
         actualPlayer = player;
@@ -115,14 +126,17 @@ public class Gamemain extends JFrame implements Runnable{
 
                         int var = s.length;
                         var = var - 1;
-                        System.out.println(var);
-                        System.out.println(var / 4);
                         boolean[] isWhite = new boolean[var / 4];
                         boolean[] isDamka = new boolean[var / 4];
                         int[] x = new int[var / 4];
                         int[] y = new int[var / 4];
                         int Li = 0;
+                        int hit=0;
                         for (int i = 1; i < var + 1; i = i + 4) {
+                            if(s[i].equals("HIT")){
+                                hit=i;
+                                break;
+                            }
                             if (s[i].equals("W")) {
                                 isWhite[Li] = true;
                             } else {
@@ -137,7 +151,22 @@ public class Gamemain extends JFrame implements Runnable{
                             y[Li] = Integer.parseInt(s[i + 3]);
                             ++Li;
                         }
+                        int[] xLegal=null;
+                        int[] yLegal=null;
+                        if(hit!=0) {
+                            xLegal = new int[var / 2];
+                            yLegal = new int[var / 2];
+                            int i=hit;
+                            int j=0;
+                            while (!s[i].equals("S")) {
+                                xLegal[j]= Integer.parseInt(s[i]);
+                                yLegal[j]= Integer.parseInt(s[i+1]);
+                                j++;
+                                i=i+2;
+                            }
+                        }
                         pl.getMove(isWhite, isDamka, x, y, null, null);
+                        pl.getLegalKaf(xLegal,yLegal);
                         pl.getActive(-1,-1);
                         gamemain.repaint();
 
@@ -159,21 +188,12 @@ public class Gamemain extends JFrame implements Runnable{
                         boolean[] isWhite = new boolean[pawnnumber];
 
                         for (int i = 0; i < v; i++) {
-                            System.out.println(s.length);
-                            System.out.println(pawnnumber);
-                            System.out.println(v);
                             String s1 = s[(i * 3) + offset];
-                            System.out.println(s1);
                             String s2 = s[(i * 3) + offset + 1];
-                            System.out.println(s2);
                             String s3 = s[(i * 3) + offset + 2];
-                            System.out.println(s3);
                             isWhite[i] = Boolean.parseBoolean(s1);
-                            System.out.println("HEJ");
                             x[i] = Integer.parseInt(s2);
-                            System.out.println("HEJ");
                             y[i] = Integer.parseInt(s3);
-                            System.out.println("HEJ");
                         }
                         pl = new Plansza(size, x, y, isWhite, pawnnumber);
                         pl.boardbuilder();
@@ -309,7 +329,12 @@ public class Gamemain extends JFrame implements Runnable{
             act += decoderClient.encrypt(x,y);
             pl.getActive(x,y);
             gamemain.repaint();
+            System.out.println(actualPlayer);
+//            if((actualPlayer==PLAYER2 && act.contains("B"))||(actualPlayer==PLAYER1 && act.contains("W"))) {
+//                System.out.println("hej tu " + player);
+//                System.out.println(actualPlayer);
             gamemain.send(act);
+
             //wysylamy zapytanie czy pionek
 
         }
