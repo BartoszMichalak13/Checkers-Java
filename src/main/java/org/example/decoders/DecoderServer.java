@@ -101,10 +101,12 @@ public class DecoderServer implements Decoder {
                                 response+="A B WIN";
                             }
                         }
-
+                        boolean wasHit=false;
                         if(amountOfPionki-Pionek.getPionki().size()==1&&
                                 !Pionek.bicia(x,y,Pionek.getActivePionek().isWhite(), Pionek.getActivePionek().isQueen()).isEmpty()){
                             response += "HIT ";
+                            wasHit=true;
+
                             for(int j=0; j<Pionek.getActivePionek().legalneKafelki().size(); j+=2){
                                 response+=Pionek.getActivePionek().legalneKafelki().get(j).toString();
                                 response+=" ";
@@ -114,6 +116,10 @@ public class DecoderServer implements Decoder {
 
                         }else{
                             this.isWhiteTurn=!isWhiteTurn;
+                            Pionek.getActivePionek().setActive(false);
+                        }
+                        if(!wasHit){
+                            Pionek.getActivePionek().setActive(false);
                         }
                     }
                 }if(!validMove){
