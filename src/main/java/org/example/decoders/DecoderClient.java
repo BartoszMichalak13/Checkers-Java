@@ -7,11 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DecoderClient implements Decoder {
+
     boolean ask;
     boolean isWhite;
     ArrayList<Integer> bicia;
 
     //gdy tworzymy klientowi dekoder, musimy okreslic czy dekoder jest do gry bialymi czy czarnymi.
+
+    /**
+     * constructor of clients decoder
+     * @param isWhite if client plays with whites true, false elsewhere
+     */
     public DecoderClient(boolean isWhite) {
         this.ask=true; //domyslnie najpierw zadajemy pytanie
         this.isWhite = isWhite;
@@ -21,7 +27,7 @@ public class DecoderClient implements Decoder {
 
 
 
-    /////Gracz będzie wysyłał wiadomości: wyglądające tak: "W C 08 09 S" -  "im White, check x - 8, y - 9, stop."
+    //////Gracz będzie wysyłał wiadomości: wyglądające tak: "W C 08 09 S" -  "im White, check x - 8, y - 9, stop."
     /////Gdy wiadomość bedzie wyglądała "W M 08 09 S" - im white, move active pionek to x08 y09, stop.
 
     /////Serwer bedzie wysylal wiadomosci wygladajace tak "W C 07 10 08 10 09 08 09 11 S"
@@ -40,6 +46,13 @@ public class DecoderClient implements Decoder {
 
 
     //x,y, wspolrzedne kafelkow na ktore sie kliknie
+
+    /**
+     * encryptor of clients request
+     * @param x x coordinate of field that was pressed by mouse
+     * @param y y coordinate of field that was pressed by mouse
+     * @return string of characters that server's decoder can interpret
+     */
     public String encrypt(int x, int y) {
         String encryption = "";
         if (isWhite) {
@@ -71,17 +84,21 @@ public class DecoderClient implements Decoder {
     }
 
 
+    /**
+     * decoder of servers reply to set flags to adequate states
+     * @param message servers reply
+     * @return the same message to be used in client's application to repaint panel
+     */
     @Override
     public String decode(String message) {
         String[] commands = message.split(" ");
-        if(commands[0].equals("A")) {
-            ask=true;
+        if(commands[0].equals("A")){
+            ask = true;
         }
         if((isWhite&&commands[0].equals("W"))||(!isWhite&&commands[0].equals("B"))) {
             if ((commands[1].equals("C") && Arrays.asList(commands).contains("I"))||commands[1].equals("M")) {
                 ask = true;
             }
-
             if (Arrays.asList(commands).contains("HIT")) {
                 int hitIndex = 0;
                 for(int i=0; i<commands.length; i++){
@@ -99,9 +116,5 @@ public class DecoderClient implements Decoder {
         }
         return message;
     }
-
-    //TODO: zroic tak, zeby po wyslaniu zlego zapytania, np klikniecia w zly kafelek dezaktywowac pionek i nie podsiwtlac
-    // tego kafelka, generalnei pomyslec co moze klient zrobic i to uwzglednic. ja lece spac, powodzenia
-
 }
 
