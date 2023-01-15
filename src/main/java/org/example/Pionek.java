@@ -262,6 +262,7 @@ public class Pionek {
                     xandy.add(x + 2);
                     xandy.add(y - 2);
                 }
+                //naprawa
                 }else if(getPionekByCords(x-1, y-1)!=null) {
                     if (Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite != isWhite &&
                             getPionekByCords(x - 2, y - 2) == null &&
