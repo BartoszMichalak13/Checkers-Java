@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.builders.*;
+import org.example.decoders.DecoderServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -84,7 +85,10 @@ public class Gamev2 implements Runnable {
                 if (turn == FIRST) {
 //ZAGLEBIMY SIE I DODAMY WIECEJ INF OUTF DLA RUCHU
                     Boolean GO=true;
-                   // while(GO) {
+                    String s="";
+                    int x, y;
+                    boolean isWhite;
+                    while(GO) {
                         line = inF.readLine();
                         System.out.println(line);
                         if (line.contains("warcaby")) {
@@ -92,8 +96,8 @@ public class Gamev2 implements Runnable {
                             System.out.println("Jest1");
                             if (line.contains("Stworz Pionki")) {
                                 String[] str= line.split(" ");
-                                size1=Integer.parseInt(str[4]);
-                                isPolish=Boolean.parseBoolean(str[5]);
+                                size1=Integer.parseInt(str[5]);
+                                isPolish=Boolean.parseBoolean(str[6]);
                                 for (int i = 0; i < size1 / 2 - 1; ++i) {
                                     fillrow(i, size1, isPolish);
                                     System.out.println("Halo"+i);
@@ -101,43 +105,89 @@ public class Gamev2 implements Runnable {
                                 }
                                 System.out.println("Jest2");
                             }
+                            s="Leca pionki ";
+                            //int x, y;
+                            //boolean isWhite;
+                            for (Pionek pionek : Pionek.getPionki()) {
+                                isWhite=pionek.isWhite();
+                                x = pionek.getX();
+                                y = pionek.getY();
+                                s += isWhite;
+                                s += " ";
+                                s += Integer.toString(x);
+                                s += " ";
+                                s += Integer.toString(y);
+                                s += " ";
+                                System.out.println("Jest5");
+
+                            }
+                            outF.println(s);
+                            outS.println(line+s);
+                        }else {
+                            DecoderServer decoderServer = new DecoderServer();
+                            s=decoderServer.decode(line);
+                            outF.println(s);
                         }
+//                        if(line.contains("Active")){
+//                            String[]str= line.split(" ");
+//                            int s1=Integer.parseInt(str[1]);
+//                            int s2=Integer.parseInt(str[2]);
+//                            //TODO: Dorobic przesylanie danych na plansze (tj wspolrzedne pionkow, czy active, czy damka, czy white)
+//                            for (Pionek pion : Pionek.getPionki()) {
+//                                if (pion.isActive()) {
+//                                    pion.move(s1, s2);
+//                                    pion.setActive(false);
+//                                    //wyslij wiadomosc o repaincie
+//                                    //heh nie tak prosto info tez musimy wyslac odnosnie podswietlenia pionka
+//                                    /////tu wysylamy pionki jeszcze raz
+//                                    s="R ";
+//                                    for (Pionek pionek : Pionek.getPionki()) {
+//                                        isWhite=pionek.isWhite();
+//                                        x = pionek.getX();
+//                                        y = pionek.getY();
+//                                        s += isWhite;
+//                                        s += " ";
+//                                        s += Integer.toString(x);
+//                                        s += " ";
+//                                        s += Integer.toString(y);
+//                                        s += " ";
+//                                        System.out.println("Jest5");
+//
+//                                    }
+//                                    outF.println(s);
+//                                    //gamemain.repaint();
+//                                    return;
+//                                }
+//                            }
+//                            if (Pionek.getPionekByCords(s1, s2) != null) {
+//
+//                                for (Pionek pion : Pionek.getPionki()) {
+//                                    pion.setActive(false);
+//                                }
+//
+//                                Pionek.getPionekByCords(s1, s2).setActive(true);
+//                                ///wysylamy ze jest active
+//
+//                                outF.println("R");
+//                                //gamemain.repaint();
+//                            }
+//                        }
 
                         System.out.println("Jest3");
                         //outS.println(line);
                         System.out.println("Jest4");
                         //Pionek pionek = null;
                         //pionek.getpionki();
-                        String s="Leca pionki ";
-                        int x, y;
-                        boolean isWhite;
-                        for (Pionek pionek : Pionek.getPionki()) {
-                            isWhite=pionek.isWhite();
-                            x = pionek.getX();
-                            y = pionek.getY();
-                            s += isWhite;
-                            s += " ";
-                            s += Integer.toString(x);
-                            s += " ";
-                            s += Integer.toString(y);
-                            s += " ";
-                            System.out.println("Jest5");
 
-                        }
-                        //SZKIC - WYSYLAM COORDYNATY PIONKOW,
-                        // MALUJE PIONKI, JAK KLIKNIE POLE WYSYLAM POLE NA SERVER
-                        //SPRAWDZAM AKTIVE ITD
-                        //O BOZZE JA UMRE
+
                     System.out.println("Jest6");
 
-                        outF.println(s);
-                        outS.println(line+s);
+
                     System.out.println("Jest7");
 
-                        //String[] pawns = x,y,iswhite,isdamka;
-                        // Wypisywanie na serwerze
-                        System.out.println(line);
-                   // }
+
+                        //System.out.println(line);
+                    }
                     turn = SECOND;
                 }
             } while (true);

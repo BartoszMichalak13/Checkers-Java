@@ -14,42 +14,44 @@ public class Plansza {
     private int size;
     int pawnnumber;
 
-    int[] x= new int[pawnnumber];;
-    int[] y= new int[pawnnumber];;
-    boolean[] isWhite= new boolean[pawnnumber];;
+    int[] x= new int[pawnnumber];
+    int[] y= new int[pawnnumber];
+    boolean[] isWhite= new boolean[pawnnumber];
+    boolean[] isActive= new boolean[pawnnumber];
+    boolean[] isDamka= new boolean[pawnnumber];
+
+    int[] xLegal;
+    int[] yLegal;
 
     Gamemain gamemain;
     final Dimension[] size_of_window = new Dimension[1];
     final static int[] windowH = new int[1];
     final static int[] windowW = new int[1];
+    public void getLegalKaf(int[] xLegal, int[] yLegal){
+        this.xLegal=xLegal;
+        this.yLegal=yLegal;
+    }
+    public void getMove(boolean[] isWhite, boolean[] isDamka, int[] x, int[] y){
+        this.isWhite=isWhite;
+        this.isDamka=isDamka;
+        this.x=x;
+        this.y=y;
+    }
+    public void getvariables(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber,boolean[] isActive, boolean[] isDamka) {
+        this.size = size;
+        this.pawnnumber = pawnnumber;
+        this.isWhite = isWhite;
+        this.x = x;
+        this.y = y;
+        this.isActive=isActive;
+        this.isDamka=isDamka;
+    }
     public Plansza(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber) {
-        System.out.println("TEST1");
         this.size=size;
         this.pawnnumber=pawnnumber;
-        System.out.println("TEST2");
-        //this.isWhite = new boolean[pawnnumber];
-        //this.x= new int[pawnnumber];
-        //this.y= new int[pawnnumber];
-//        for(int i=0; i<x.length; i++){
-//            System.out.println("TEST3");
-//            this.isWhite[i]=isWhite[i];
-//            System.out.println("TEST4");
-//
-//            this.x[i] = x[i];
-//            System.out.println("TEST5");
-//
-//            this.y[i] = y[i];
-//            System.out.println("TEST6");
-//
-//        }
-        System.out.println("TEST7");
-
         this.isWhite=isWhite;
-        System.out.println("TEST8");
         this.x = x;
-        System.out.println("TEST9");
         this.y = y;
-        System.out.println("TEST10");
     }
     public Plansza(int size) {
         this.size=size;
@@ -107,35 +109,38 @@ public class Plansza {
                     );
                 }
                 //TO BE MOVED TO SERVER or not
-                if(Pionek.getActivePionek()!=null){
-                    g.setColor(Color.YELLOW);
-                    g.fillRect(
-                            Pionek.getActivePionek().getX()* windowW[0],
-                            Pionek.getActivePionek().getY()* windowH[0],
-                            windowW[0],
-                            windowH[0]
-                    );
-                    if(Pionek.getActivePionek().isWhite()){
-                        g.setColor(Color.WHITE);
-                    }else{
-                        g.setColor(Color.BLACK);
-                    }
-                    g.fillOval(
-                            Pionek.getActivePionek().getX()* windowW[0],
-                            Pionek.getActivePionek().getY()* windowH[0],
-                            windowW[0],
-                            windowH[0]
-                    );
-                    for(int i=0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
+//                if(Pionek.getActivePionek()!=null){
+//                    g.setColor(Color.YELLOW);
+//                    g.fillRect(
+//                            Pionek.getActivePionek().getX()* windowW[0],
+//                            Pionek.getActivePionek().getY()* windowH[0],
+//                            windowW[0],
+//                            windowH[0]
+//                    );
+//                    if(Pionek.getActivePionek().isWhite()){
+//                        g.setColor(Color.WHITE);
+//                    }else{
+//                        g.setColor(Color.BLACK);
+//                    }
+//                    g.fillOval(
+//                            Pionek.getActivePionek().getX()* windowW[0],
+//                            Pionek.getActivePionek().getY()* windowH[0],
+//                            windowW[0],
+//                            windowH[0]
+//                    );
+                    //change is inevitable
+                if(xLegal!=null) {
+                    for (int i = 0; i < xLegal.length; i += 2) {
                         g.setColor(Color.green);
                         g.fillRect(
-                                Pionek.getActivePionek().legalneKafelki().get(i)*windowW[0],
-                                Pionek.getActivePionek().legalneKafelki().get(i+1)* windowH[0],
+                                xLegal[i] * windowW[0],
+                                yLegal[i] * windowH[0],
                                 windowW[0],
                                 windowH[0]
                         );
                     }
                 }
+               // }
             }
         };
         Gamemain.CheckerBoardHandler CBH= gamemain.new CheckerBoardHandler();
