@@ -54,14 +54,6 @@ public class DecoderClient implements Decoder {
             } else {
                 encryption = encryption + "M " + x + " " + y + " ";
             }
-
-            encryption += "B ";
-            if (ask) {
-                encryption = encryption + "C " + x + " " + y + " ";
-                ask = false;
-            } else {
-                encryption = encryption + "M " + x + " " + y + " ";
-            }
         }else{
             boolean validMoveHit=false;
             for(int i =0; i<bicia.size(); i+=2){
@@ -82,11 +74,13 @@ public class DecoderClient implements Decoder {
     @Override
     public String decode(String message) {
         String[] commands = message.split(" ");
+        if(commands[0].equals("A")){
+            ask = true;
+        }
         if((isWhite&&commands[0].equals("W"))||(!isWhite&&commands[0].equals("B"))) {
             if ((commands[1].equals("C") && Arrays.asList(commands).contains("I"))||commands[1].equals("M")) {
                 ask = true;
             }
-
             if (Arrays.asList(commands).contains("HIT")) {
                 int hitIndex = 0;
                 for(int i=0; i<commands.length; i++){
