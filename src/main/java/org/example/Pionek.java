@@ -24,6 +24,11 @@ public class Pionek {
     }
 
     public void setActive(boolean active) {
+        if(active){
+            for(Pionek pion:pionki){
+                pion.isActive = false;
+            }
+        }
         this.isActive = active;
     }
     //jezeli biale sa na dole (na odwrot), podswitlanie/logika nie dziala

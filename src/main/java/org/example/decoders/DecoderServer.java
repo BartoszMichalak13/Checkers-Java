@@ -37,7 +37,7 @@ public class DecoderServer implements Decoder {
             response+="B ";
         }
         int x = Integer.parseInt(commands[2]), y = Integer.parseInt(commands[3]);
-        if(commands[1]=="C"){
+        if(commands[1].equals("C")){
             response+="C ";
             if(Pionek.getPionekByCords(x,y)!=null) {
                 if (isWhiteTurn == Pionek.getPionekByCords(x, y).isWhite() && isWhiteTurn == whitePlayer) {
@@ -60,9 +60,13 @@ public class DecoderServer implements Decoder {
                 return response;
             }
         }
-        else if(commands[1]=="M"){
+        else if(commands[1].equals("M")){
+            response+="M ";
             boolean validMove=false;
             if(isWhiteTurn==whitePlayer){
+                if(Pionek.getActivePionek().legalneKafelki().isEmpty()){
+                    return response+="M I S";
+                }else{
                 for(int i = 0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
 
                     if(Pionek.getActivePionek().legalneKafelki().get(i)==x&&
@@ -101,12 +105,9 @@ public class DecoderServer implements Decoder {
                                 response+="A B WIN";
                             }
                         }
-                        boolean wasHit=false;
                         if(amountOfPionki-Pionek.getPionki().size()==1&&
                                 !Pionek.bicia(x,y,Pionek.getActivePionek().isWhite(), Pionek.getActivePionek().isQueen()).isEmpty()){
                             response += "HIT ";
-                            wasHit=true;
-
                             for(int j=0; j<Pionek.getActivePionek().legalneKafelki().size(); j+=2){
                                 response+=Pionek.getActivePionek().legalneKafelki().get(j).toString();
                                 response+=" ";
@@ -116,15 +117,12 @@ public class DecoderServer implements Decoder {
 
                         }else{
                             this.isWhiteTurn=!isWhiteTurn;
-                            Pionek.getActivePionek().setActive(false);
-                        }
-                        if(!wasHit){
-                            Pionek.getActivePionek().setActive(false);
                         }
                     }
                 }if(!validMove){
                     response +="I S";
                     Pionek.getActivePionek().setActive(false);
+                }
                 }
             }else{
                 response+="I S";
