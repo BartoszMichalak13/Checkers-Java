@@ -250,25 +250,25 @@ public class Pionek {
                     }
                 } else if (getPionekByCords(x - 1, y + 1) != null) {
                     if (Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite != isWhite &&
-                            getPionekByCords(x - 2, y + 2) == null &&
-                            x - 2 >= 0 && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
+                        getPionekByCords(x - 2, y + 2) == null &&
+                        x - 2 >= 0 && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
                         xandy.add(x - 2);
                         xandy.add(y + 2);
-                    }
-                }else if(getPionekByCords(x+1, y-1)!=null){
-                    if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
-                            getPionekByCords(x+2, y-2)==null&&
-                            x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
-                        xandy.add(x + 2);
-                        xandy.add(y - 2);
-                    }
-                    //naprawa
+                }
+            }else if(getPionekByCords(x+1, y-1)!=null){
+                if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
+                        getPionekByCords(x+2, y-2)==null&&
+                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
+                    xandy.add(x + 2);
+                    xandy.add(y - 2);
+                }
+                //naprawa
                 }else if(getPionekByCords(x-1, y-1)!=null) {
                     if (Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite != isWhite &&
                             getPionekByCords(x - 2, y - 2) == null &&
                             x - 2 >= 0 && y - 2 >= 0) {
                         xandy.add(x - 2);
-                        xandy.add(y - 2);
+                        xandy.add(x - 2);
                     }
                 }
             }
@@ -335,26 +335,26 @@ public class Pionek {
                 }
             }else{
                 if(getPionekByCords(x+1, y+1)!=null){
-                    if(Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite!=isWhite&&
-                            getPionekByCords(x+2, x+2)==null&&
-                            x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
-                        xandy.add(x + 2);
-                        xandy.add(y + 2);
-                    }
+                if(Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite!=isWhite&&
+                        getPionekByCords(x+2, x+2)==null&&
+                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
+                    xandy.add(x + 2);
+                    xandy.add(y + 2);
+                }
                 }else if(getPionekByCords(x-1, y+1)!=null){
                     if(Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite!=isWhite&&
-                            getPionekByCords(x-2, x+2)==null&&
-                            x-2>=0&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
-                        xandy.add(x - 2);
-                        xandy.add(y + 2);
-                    }
+                        getPionekByCords(x-2, x+2)==null&&
+                        x-2>=0&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
+                    xandy.add(x - 2);
+                    xandy.add(y + 2);
+                }
                 }else if(getPionekByCords(x+1, y-1)!=null){
                     if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
-                            getPionekByCords(x+2, x-2)==null&&
-                            x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
-                        xandy.add(x + 2);
-                        xandy.add(y - 2);
-                    }
+                        getPionekByCords(x+2, x-2)==null&&
+                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
+                    xandy.add(x + 2);
+                    xandy.add(y - 2);
+                }
                 }else if(getPionekByCords(x-1, y-1)!=null){
                     if(Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite!=isWhite&&
                             getPionekByCords(x-2, x-2)==null&&
