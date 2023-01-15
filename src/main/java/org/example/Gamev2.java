@@ -65,19 +65,29 @@ public class Gamev2 implements Runnable {
 
             outF.println("1");
             outS.println("2");
+            DecoderServer decoderServer = new DecoderServer();
             String line;
             do {
 
                 if (turn == SECOND) {
-                    System.out.println("Jest DUZO");
+                    Boolean GO=true;
+                    String s="";
 
-                    line = inS.readLine();
-                    System.out.println("Jest B DUZO");
-
-
-                    System.out.println(line);
-
-                    outF.println(line);
+                    int x, y;
+                    boolean isWhite;
+                    while(GO) {
+                        line = inS.readLine();
+                        System.out.println(line);
+                            s=decoderServer.decode(line);
+                            String[] str= s.split(" ");
+                            if (str[0].equals("A")){
+                                outF.println(s);
+                            }
+                            outS.println(s);
+                        if(decoderServer.isWhiteTurn()){
+                            GO=false;
+                        }
+                    }
 
                     turn = FIRST;
                 }
@@ -96,18 +106,16 @@ public class Gamev2 implements Runnable {
                             System.out.println("Jest1");
                             if (line.contains("Stworz Pionki")) {
                                 String[] str= line.split(" ");
-                                size1=Integer.parseInt(str[5]);
-                                isPolish=Boolean.parseBoolean(str[6]);
+                                size1=Integer.parseInt(str[4]);
+                                isPolish=Boolean.parseBoolean(str[5]);
                                 for (int i = 0; i < size1 / 2 - 1; ++i) {
                                     fillrow(i, size1, isPolish);
                                     System.out.println("Halo"+i);
 
                                 }
-                                System.out.println("Jest2");
                             }
+
                             s="Leca pionki ";
-                            //int x, y;
-                            //boolean isWhite;
                             for (Pionek pionek : Pionek.getPionki()) {
                                 isWhite=pionek.isWhite();
                                 x = pionek.getX();
@@ -118,75 +126,21 @@ public class Gamev2 implements Runnable {
                                 s += " ";
                                 s += Integer.toString(y);
                                 s += " ";
-                                System.out.println("Jest5");
-
                             }
                             outF.println(s);
                             outS.println(line+s);
                         }else {
-                            DecoderServer decoderServer = new DecoderServer();
+
                             s=decoderServer.decode(line);
+                            String[] str= s.split(" ");
+                            if (str[0].equals("A")){
+                                outS.println(s);
+                            }
                             outF.println(s);
                         }
-//                        if(line.contains("Active")){
-//                            String[]str= line.split(" ");
-//                            int s1=Integer.parseInt(str[1]);
-//                            int s2=Integer.parseInt(str[2]);
-//                            //TODO: Dorobic przesylanie danych na plansze (tj wspolrzedne pionkow, czy active, czy damka, czy white)
-//                            for (Pionek pion : Pionek.getPionki()) {
-//                                if (pion.isActive()) {
-//                                    pion.move(s1, s2);
-//                                    pion.setActive(false);
-//                                    //wyslij wiadomosc o repaincie
-//                                    //heh nie tak prosto info tez musimy wyslac odnosnie podswietlenia pionka
-//                                    /////tu wysylamy pionki jeszcze raz
-//                                    s="R ";
-//                                    for (Pionek pionek : Pionek.getPionki()) {
-//                                        isWhite=pionek.isWhite();
-//                                        x = pionek.getX();
-//                                        y = pionek.getY();
-//                                        s += isWhite;
-//                                        s += " ";
-//                                        s += Integer.toString(x);
-//                                        s += " ";
-//                                        s += Integer.toString(y);
-//                                        s += " ";
-//                                        System.out.println("Jest5");
-//
-//                                    }
-//                                    outF.println(s);
-//                                    //gamemain.repaint();
-//                                    return;
-//                                }
-//                            }
-//                            if (Pionek.getPionekByCords(s1, s2) != null) {
-//
-//                                for (Pionek pion : Pionek.getPionki()) {
-//                                    pion.setActive(false);
-//                                }
-//
-//                                Pionek.getPionekByCords(s1, s2).setActive(true);
-//                                ///wysylamy ze jest active
-//
-//                                outF.println("R");
-//                                //gamemain.repaint();
-//                            }
-//                        }
-
-                        System.out.println("Jest3");
-                        //outS.println(line);
-                        System.out.println("Jest4");
-                        //Pionek pionek = null;
-                        //pionek.getpionki();
-
-
-                    System.out.println("Jest6");
-
-
-                    System.out.println("Jest7");
-
-
-                        //System.out.println(line);
+                        if(!decoderServer.isWhiteTurn()){
+                            GO=false;
+                        }
                     }
                     turn = SECOND;
                 }

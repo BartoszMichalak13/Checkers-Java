@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.builders.*;
+import org.example.decoders.DecoderClient;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -22,6 +24,7 @@ public class Gamemain extends JFrame implements Runnable{
     //REMOVE THIS VARIABLE LATER
     boolean wasclicked=false;
     int size;
+    Plansza pl;
     int pawnnumber;
     Boolean werecreated=false;
     public Boolean setWerecreated(){
@@ -45,6 +48,7 @@ public class Gamemain extends JFrame implements Runnable{
     public final static int PLAYER1 = 1;
     public final static int PLAYER2 = 2;
 
+    DecoderClient decoderClient;
     public final static int ACTIVE = 0;
     public final static int NONACTIVE = 1;
     private  static int actualPlayer = PLAYER1;
@@ -68,26 +72,19 @@ public class Gamemain extends JFrame implements Runnable{
     }
 
     public void send(String s){
-        // Wysylanie do serwera
-        if(player==1){
-            s = "W " + s;
-        }else{
-            s = "B " + s;
-        }
         out.println(s);
         showing = ACTIVE;
         actualPlayer = player;
     }
     private void receive(){
         try {
-            //MAYBE DEPRECATED
             String str = in.readLine();
             System.out.println(str);
+            decoderClient.decode(str);
             String[]s= str.split(" ");
             if(!str.contains("I")) {
                 if (str.contains("warcaby")) {
                     gamemain.removebeforethegame();
-                    //IDEA: BUILDERY ZAWIERAJA INFO O GRACZU ZEBY NIE WYSYLAC DO SERWERA INFO O TWORZENIU PIONKOW DLA GRACZA 2
                     if (str.contains("warcaby angielskie"))
                         new EnglishBuilder().build(true, str, player);
                     else if (str.contains("warcaby polskie"))
@@ -107,42 +104,45 @@ public class Gamemain extends JFrame implements Runnable{
                         Li++;
                     }
                     //siema plansza mam legalne kafelki
-                    Plansza pl = new Plansza();
                     pl.getLegalKaf(xLegal,yLegal);
                     gamemain.repaint();
 
                 } else if (str.contains("A")) {
+                    //mozna ustalic legal kafelki na puste
+
                     int var = s.length;
-                    var = var - 3;
+                    var = var - 1;
+                    System.out.println(var);
+                    System.out.println(var/4);
                     boolean[] isWhite = new boolean[var / 4];
                     boolean[] isDamka = new boolean[var / 4];
                     int[] x = new int[var / 4];
                     int[] y = new int[var / 4];
-                    for(int i = 2; i < var + 2; i = i + 4){
-                        isWhite[i] = Boolean.parseBoolean(s[i]);
-                        isDamka[i] = Boolean.parseBoolean(s[i + 1]);
-                        x[i] = Integer.parseInt(s[i+2]);
-                        y[i] = Integer.parseInt(s[i+3]);
+                    int Li=0;
+                    for(int i = 1; i < var + 1; i = i + 4){
+                        if(s[i].equals("W")){
+                            isWhite[Li] = true;
+                        }else{
+                            isWhite[Li] = false;
+                        }
+                        if(s[i + 1].equals("P")){
+                            isDamka[Li]=false;
+                        }else{
+                            isDamka[Li]=true;
+                        }
+                        x[Li] = Integer.parseInt(s[i+2]);
+                        y[Li] = Integer.parseInt(s[i+3]);
+                        ++Li;
                     }
-                    Plansza pl = new Plansza();
-                    pl.getMove(isWhite,isDamka,x,y);
+                    pl.getMove(isWhite,isDamka,x,y,null,null);
                     gamemain.repaint();
                 }
-//                if (str.equals("R")) {
-//                    gamemain.repaint();
-//                }
-                //String[]s= str.split(" ");
-
-                //System.out.println(str);
-                //System.out.println(str.contains("[a-zA-Z]+"));
-                //if(str.matches(".*\\d.*")){
-                //if(str.contains("[a-zA-Z]+")){
                 if (str.contains("Leca")) {
                     double v = s.length;
                     int offset;
                     if (player == 2) {
-                        offset = 9;
-                        v = (v - 9) / 3;
+                        offset = 8;
+                        v = (v - 8) / 3;
                     } else {
                         offset = 2;
                         v = (v - 2) / 3;
@@ -169,10 +169,13 @@ public class Gamemain extends JFrame implements Runnable{
                         y[i] = Integer.parseInt(s3);
                         System.out.println("HEJ");
                     }
-                    Plansza pl = new Plansza(size, x, y, isWhite, pawnnumber);
+                    pl = new Plansza(size, x, y, isWhite, pawnnumber);
                     pl.boardbuilder();
                 }
             }else{
+                //usuwamy legalne kafelki
+                pl.getLegalKaf(null,null);
+                gamemain.repaint();
                 //No nie wiem. Ruch byl niepoprawny, a to są warcaby... Może warto się nad sobą zastanowić?
             }
         }
@@ -218,10 +221,12 @@ public class Gamemain extends JFrame implements Runnable{
                 System.out.println("player");
                 System.out.println(player);
                 msg.setText("My Turn");
+                decoderClient= new DecoderClient(true);
             } else {
                 System.out.println("player");
                 System.out.println(player);
                 msg.setText("Opposite turn");
+                decoderClient= new DecoderClient(false);
                 //send.setEnabled(false);
             }
         } catch (IOException e) {
@@ -283,23 +288,23 @@ public class Gamemain extends JFrame implements Runnable{
     }
     ///CHWILA CHWILA A TO NIE WYSTARCZY PRZED RUCHEM REPAINT ZROBIC?
     class CheckerBoardHandler implements MouseListener {
-        Plansza pl= new Plansza();
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Klik");
             //String act="Active ";
-            String act;
-            if(wasclicked==false) {
-                act = "C ";//later change to W
-                wasclicked=true;
-            }else {
-                act = "M ";
-                wasclicked=false;
-            }
-            act+=e.getX()/pl.getwindowW();
-            act+=" ";
-            act+=e.getY()/ pl.getwindowH();
-            act+=" ";
+            String act="";
+//            if(wasclicked==false) {
+//                act = "C ";//later change to W
+//                wasclicked=true;
+//            }else {
+//                act = "M ";
+//                wasclicked=false;
+//            }
+            act += decoderClient.encrypt(e.getX()/pl.getwindowW(),e.getY()/ pl.getwindowH());
+//            act+=e.getX()/pl.getwindowW();
+//            act+=" ";
+//            act+=e.getY()/ pl.getwindowH();
+//            act+=" ";
             gamemain.send(act);
             //wysylamy zapytanie czy pionek
 

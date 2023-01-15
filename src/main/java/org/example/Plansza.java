@@ -31,11 +31,13 @@ public class Plansza {
         this.xLegal=xLegal;
         this.yLegal=yLegal;
     }
-    public void getMove(boolean[] isWhite, boolean[] isDamka, int[] x, int[] y){
+    public void getMove(boolean[] isWhite, boolean[] isDamka, int[] x, int[] y, int[] xLegal, int[] yLegal){
         this.isWhite=isWhite;
         this.isDamka=isDamka;
         this.x=x;
         this.y=y;
+        this.xLegal=xLegal;
+        this.yLegal=yLegal;
     }
     public void getvariables(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber,boolean[] isActive, boolean[] isDamka) {
         this.size = size;
@@ -130,7 +132,7 @@ public class Plansza {
 //                    );
                     //change is inevitable
                 if(xLegal!=null) {
-                    for (int i = 0; i < xLegal.length; i += 2) {
+                    for (int i = 0; i < xLegal.length; ++i) {
                         g.setColor(Color.green);
                         g.fillRect(
                                 xLegal[i] * windowW[0],
