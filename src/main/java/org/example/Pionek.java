@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pionek {
+
     final boolean isWhite;
     boolean isQueen;
     boolean isActive;
@@ -15,15 +16,26 @@ public class Pionek {
     final int sizeOfPlansza;
     static List<Pionek> pionki = new ArrayList();
 
+    /**
+     * getter of pawns colour
+     * @return true if pawn is white, fals elsewhere.
+     */
     public boolean isWhite() {
         return this.isWhite;
     }
 
-
+    /**
+     * getter of pawns activeness
+     * @return true if pawn is active, fals elsewhere.
+     */
     public boolean isActive() {
         return this.isActive;
     }
 
+    /**
+     * setter of pawns activeness. If it sets pawn to be active, it disactivates every other pawn.
+     * @param active
+     */
     public void setActive(boolean active) {
         if(active){
             for(Pionek pion:pionki){
@@ -32,8 +44,15 @@ public class Pionek {
         }
         this.isActive = active;
     }
-    //jezeli biale sa na dole (na odwrot), podswitlanie/logika nie dziala
-    //trzeba zmienic construktor zeby logika dzialala dla roznych trybow
+
+    /**
+     * Pawn's constructor, it's setting flags of pawns and adding each one to list of pawns on which logic will be operated
+     * @param isWhite
+     * @param x
+     * @param y
+     * @param sizeOfPlansza
+     * @param isPolish
+     */
 
     public Pionek(boolean isWhite, int x, int y, int sizeOfPlansza, boolean isPolish) {
         this.isWhite = isWhite;
@@ -49,6 +68,12 @@ public class Pionek {
     //ta metoda działa i dla polskich damek i angielskich
     //w polskich damka porusza się po przekątnej i gdy znajdzie pionek przeciwnika, za którym na tej przekątnej jest pusto
     //to go zbije, i wyląduje za nim.
+
+    /**
+     * sets coordinates of pawn. Also deletes enemy if enemy was captured during move and sets pawn to become a queen
+     * @param x coordinate of targeting field
+     * @param y coordinate of targeting field
+     */
     public void move(int x, int y) {
         if(x>this.x){
             if(y>this.y){
@@ -82,40 +107,66 @@ public class Pionek {
         }
     }
 
-//    public void zbij(int x, int y){
-//        if(this.x<x){
-//            if(this.y<y){
-//
-//            }
-//        }
-//    }
-
+    /**
+     * getter of static pawns list
+     * @return list of existing pawns in game
+     */
     public static List<Pionek> getPionki() {
         return pionki;
     }
 
+    /**
+     * getter of whether the pawn is queen
+     * @return true if pawn is queen, false elsewhere
+     */
     public boolean isQueen() {
         return this.isQueen;
     }
 
+    /**
+     * setter of queen status
+     * @param queen boolean status if pawn is queen
+     */
     public void setQueen(boolean queen) {this.isQueen = queen;}
 
+    /**
+     * getter of x coordinate of pawn
+     * @return x coordinate of pawn
+     */
     public int getX() {
         return this.x;
     }
 
+    /**
+     * setter of x coordinate of pawn
+     * @param x targeting x coordinate of pawn
+     */
     public void setX(int x) {
         this.x = x;
     }
 
+    /**
+     * getter of y coordinate of pawn
+     * @return y coordinate of pawn
+     */
     public int getY() {
         return this.y;
     }
 
+    /**
+     * setter of y coordinate of pawn
+     * @param y targeting y coordinate of pawn
+     */
     public void setY(int y) {
         this.y = y;
     }
 
+    /**
+     * getter of pawn at specific coordinates
+     * @param x targeting x coordinate
+     * @param y targeting y coordinate
+     * @return pawn at this coordinates
+     */
     public static Pionek getPionekByCords(int x, int y) {
         Iterator var2 = pionki.iterator();
 
@@ -146,6 +197,14 @@ public class Pionek {
         return pion;
     }
 
+    /**
+     * searches for legal captures of pawn of specific type
+     * @param x x coordinate of pawn
+     * @param y y coordinate of pawn
+     * @param isWhite if pawn is white
+     * @param isQueen if pawn is queen
+     * @return array of coordinates of fields pawn can go to make a capture
+     */
     public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
         ArrayList<Integer> xandy = new ArrayList();
         if (!isQueen) {
@@ -308,6 +367,10 @@ public class Pionek {
         return xandy;
     }
 
+    /**
+     * searches for fields pawn can go without violating rules of checkers
+     * @return array of coordinates of fields
+     */
     public ArrayList<Integer> legalneKafelki(){
         boolean isBicie=false;
         for(Pionek pionek:pionki){
@@ -405,5 +468,4 @@ public class Pionek {
         }
         return legalneKafelki;
     }
-
 }

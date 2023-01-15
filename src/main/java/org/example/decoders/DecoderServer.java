@@ -5,7 +5,6 @@ import org.example.decoders.Decoder;
 
 public class DecoderServer implements Decoder {
     boolean isWhiteTurn=true;
-    boolean wasBicie=false;
 
     /////Gracz będzie wysyłał wiadomości: wyglądające tak: "W C 08 09 S" -  "im White, check x - 8, y - 9, stop."
     ////Jeśli jest tura gracza białego, serwer bedzie dalej sprawdzal, jeśli nie, to zignoruje zapytanie.
@@ -24,6 +23,12 @@ public class DecoderServer implements Decoder {
 
     // "I" - invalid action. Klient odbierze "W C I" znaczy - biały, nieprawidłowa akcja sprawdzania możliwych ruchów
 
+    /**
+     * decoder of clients request. This method also knows which player should be playing at the moment
+     * this decoder is also an encryptor
+     * @param message client requests
+     * @return response to client
+     */
     @Override
     public String decode(String message) {
         String[] commands = message.split(" ");
