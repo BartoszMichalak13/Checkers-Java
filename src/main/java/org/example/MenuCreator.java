@@ -14,11 +14,17 @@ public class MenuCreator {
     static JMenuBar menuBar;
     JRadioButtonMenuItem rbMenuItem;
 
+    /**
+     * gets menu bar from gamemain
+     * @return
+     */
     public JMenuBar getMenuBar(){
         return this.menuBar;
     }
 
-    public JMenu getMenu(){return this.menu;}
+    /**
+     * creats menu for players
+     */
     public void createmenu() {
 //Create the menu bar.
         menuBar = new JMenuBar();
@@ -33,6 +39,11 @@ public class MenuCreator {
 
         class ActionHandler implements ActionListener {
             String s;
+
+            /**
+             * handles action on menu
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 s = e.getActionCommand();

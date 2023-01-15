@@ -29,14 +29,36 @@ public class Plansza {
     final static int[] windowW = new int[1];
     int xActive=-1;
     int yActive=-1;
+
+    /**
+     *  Gets Active pionek
+     * @param xActive x of pionek
+     * @param yActive y of pionek
+     */
     public void getActive(int xActive, int yActive){
         this.xActive=xActive;
         this.yActive=yActive;
     }
+
+    /**
+     *  Gets Legalkafelki
+     * @param xLegal x of kafelka
+     * @param yLegal y of kafelka
+     */
     public void getLegalKaf(int[] xLegal, int[] yLegal){
         this.xLegal=xLegal;
         this.yLegal=yLegal;
     }
+
+    /**
+     * Gets info to move the Pionek
+     * @param isWhite is Pionek White
+     * @param isDamka is Pionek Damka
+     * @param x Pionek's x
+     * @param y Pionek's y
+     * @param xLegal Legal kafelek's x
+     * @param yLegal Legal kafelek's x
+     */
     public void getMove(boolean[] isWhite, boolean[] isDamka, int[] x, int[] y, int[] xLegal, int[] yLegal){
         this.isWhite=isWhite;
         this.isDamka=isDamka;
@@ -45,32 +67,40 @@ public class Plansza {
         this.xLegal=xLegal;
         this.yLegal=yLegal;
     }
-    public void getvariables(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber,boolean[] isActive, boolean[] isDamka) {
-        this.size = size;
-        this.pawnnumber = pawnnumber;
-        this.isWhite = isWhite;
-        this.x = x;
-        this.y = y;
-        this.isActive=isActive;
-        this.isDamka=isDamka;
-    }
-    public Plansza(int size, int[] x, int[] y,boolean[] isWhite, int pawnnumber) {
+
+    /**
+     * Plansza constructor
+     * @param size size of plansza
+     * @param x x of pionek
+     * @param y y of pionek
+     * @param isWhite is Pionek White
+     * @param isDamka is Pionek Damka
+     * @param pawnnumber number of pawns
+     */
+    public Plansza(int size, int[] x, int[] y,boolean[] isWhite, boolean[] isDamka, int pawnnumber) {
         this.size=size;
         this.pawnnumber=pawnnumber;
         this.isWhite=isWhite;
+        this.isDamka=isDamka;
         this.x = x;
         this.y = y;
     }
-    public Plansza(int size) {
-        this.size=size;
-        this.pawnnumber=size*(size/2-1);
-        //this.x=x;
-        //this.y=y;
-    }
-    public Plansza(){}
+
+    /**
+     *  gets width of window
+     * @return windowW
+     */
     public int getwindowW(){return this.windowW[0];}
+
+    /**
+     * gets height of window
+     * @return windowH
+     */
     public int getwindowH(){return this.windowH[0];}
 
+    /**
+     *  builds checker board
+     */
     public void boardbuilder() {
         //System.out.println(x[9]);
         Gamemain main =  new Gamemain();
@@ -81,6 +111,10 @@ public class Plansza {
         gamemain.setBounds(10, 10, 1024, 720);
         //gamemain.setsize(size);
          jPanel = new JPanel() {
+             /**
+              *  Paints our checkerboard (colors, pawns and stuff)
+              * @param g  the <code>Graphics</code> context in which to paint
+              */
             public void paint(Graphics g) {
                 size_of_window[0] = gamemain.getContentPane().getSize();
                 windowH[0] = (int) (size_of_window[0].getHeight() / size);
@@ -106,9 +140,17 @@ public class Plansza {
                 for(int i=0; i<x.length;i++){
                     //System.out.println(pion);
                     if(isWhite[i]){
-                        g.setColor(Color.WHITE);
+                        if(isDamka[i]){
+                            g.setColor(Color.LIGHT_GRAY);
+                        }else{
+                            g.setColor(Color.WHITE);
+                        }
                     }else{
-                        g.setColor(Color.BLACK);
+                        if(isDamka[i]){
+                            g.setColor(Color.DARK_GRAY);
+                        }else {
+                            g.setColor(Color.BLACK);
+                        }
                     }
                     g.fillOval(
                             x[i]* windowW[0],
@@ -165,25 +207,4 @@ public class Plansza {
         gamemain.repaint();
         gamemain.setVisible(true);
     }
-    //Wysylam i maluje Pionki
-    //LATER aktywny pionek + legale kafelki
-//    public void pionekpainter(){
-//        jPanel {
-//            public void paint(Graphics g) {
-//                for (Pionek pion : Pionek.getPionki()) {
-//                    //System.out.println(pion);
-//                    if (pion.isWhite()) {
-//                        g.setColor(Color.WHITE);
-//                    } else {
-//                        g.setColor(Color.BLACK);
-//                    }
-//                    g.fillOval(
-//                            pion.getX() * windowW[0],
-//                            pion.getY() * windowH[0],
-//                            windowW[0], windowH[0]
-//                    );
-//                }
-//            }
-//        }
-//    }
 }

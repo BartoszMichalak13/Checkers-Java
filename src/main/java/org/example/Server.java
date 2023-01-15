@@ -13,6 +13,11 @@ public class Server {
 //        gameCreator.setjFrame();
 //        jFrame=gameCreator.getFrame();
 //    }
+
+    /**
+     * Creates serwer for players
+     * @param args
+     */
     public static void main(String[] args) {
 
         try (ServerSocket serverSocket = new ServerSocket(4444)) {

@@ -12,30 +12,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-//SEND I RECEIVE NIE DO KONCA TAK JAKBYM CHCIAL
-//ZROB MENU W CONSTRUKTORZE + NAPRAWIC
-
-//ZAMIAST TWORZYC PIONKI W BUILDERZE ROB TO NA SERWERZE, TJ WYSLIJ WIADOMOSC NA SERWER I NIECH ON STWORZY PIONKI
-
 
 public class Gamemain extends JFrame implements Runnable{
 
 
-    //REMOVE THIS VARIABLE LATER
-    boolean wasclicked=false;
     int size;
     Plansza pl;
     int pawnnumber;
-    Boolean werecreated=false;
-    public Boolean setWerecreated(){
-        this.werecreated= new Gamev2().getWerecreated();
-        return this.werecreated;
-    }
     static Gamemain gamemain = new Gamemain();
     static JLabel beforethegame;
     static JMenuBar menuBar;
-
-    //public JFrame getFrame() {return this.jFrame;}
 
     JLabel msg;
 
@@ -54,32 +40,50 @@ public class Gamemain extends JFrame implements Runnable{
     private  static int actualPlayer = PLAYER1;
 
     private static int showing = ACTIVE;
+
+    /**
+     * gets Player number
+     * @return player number
+     */
     public int getPlayer(){
         return this.player;
     }
+
+    /**
+     * builder
+     */
     public Gamemain(){
 
     }
+
+    /**
+     * sets plansza size and pawnnumber
+     * @param size size of plansza
+     */
     public void setsize(int size){
         this.size=size;
         this.pawnnumber=size*(size/2-1);
     }
+
+    /**
+     * gets this class object
+     * @return gamemain
+     */
     public Gamemain getGamemain(){
         return this.gamemain;
     }
+
+    /**
+     *  removes "wybierz gre"
+     */
     public void removebeforethegame(){
         gamemain.remove(beforethegame);
     }
-    public void ismyturn(){
-        try {
-            String str = in.readLine();
-            if(str.equals(null)){
 
-            }
-        }catch (IOException e){}
-
-    }
-
+    /**
+     * Send message to server
+     * @param s message
+     */
     public void send(String s){
         s= System.currentTimeMillis() +" "+ s;
         System.out.println(s);
@@ -87,6 +91,10 @@ public class Gamemain extends JFrame implements Runnable{
         showing = ACTIVE;
         actualPlayer = player;
     }
+
+    /**
+     * receives and handles message from server
+     */
     private void receive(){
         try {
             boolean wasA=true;
@@ -177,25 +185,27 @@ public class Gamemain extends JFrame implements Runnable{
                         int offset;
                         if (player == 2) {
                             offset = 8;
-                            v = (v - 8) / 3;
+                            v = (v - 8) / 4;
                         } else {
                             offset = 2;
-                            v = (v - 2) / 3;
+                            v = (v - 2) / 4;
                         }
                         //REPAINT JPANEL?
                         int[] x = new int[pawnnumber];
                         int[] y = new int[pawnnumber];
                         boolean[] isWhite = new boolean[pawnnumber];
-
+                        boolean[] isDamka = new boolean[pawnnumber];
                         for (int i = 0; i < v; i++) {
-                            String s1 = s[(i * 3) + offset];
-                            String s2 = s[(i * 3) + offset + 1];
-                            String s3 = s[(i * 3) + offset + 2];
+                            String s1 = s[(i * 4) + offset];
+                            String s2 = s[(i * 4) + offset + 1];
+                            String s3 = s[(i * 4) + offset + 2];
+                            String s4 = s[(i * 4) + offset + 3];
                             isWhite[i] = Boolean.parseBoolean(s1);
-                            x[i] = Integer.parseInt(s2);
-                            y[i] = Integer.parseInt(s3);
+                            isDamka[i] = Boolean.parseBoolean(s2);
+                            x[i] = Integer.parseInt(s3);
+                            y[i] = Integer.parseInt(s4);
                         }
-                        pl = new Plansza(size, x, y, isWhite, pawnnumber);
+                        pl = new Plansza(size, x, y, isWhite, isDamka, pawnnumber);
                         pl.boardbuilder();
                         wasA=false;
                     }
@@ -208,7 +218,6 @@ public class Gamemain extends JFrame implements Runnable{
                 }
             }
         }
-        //catch (IOException e) {
         catch (IOException e) {
             System.out.println("Read failed"); System.exit(1);
         }
@@ -216,6 +225,10 @@ public class Gamemain extends JFrame implements Runnable{
 
     /*
     Połaczenie z socketem
+     */
+
+    /**
+     * Connects with socket
      */
     public void listenSocket() {
         try {
@@ -236,10 +249,18 @@ public class Gamemain extends JFrame implements Runnable{
     /*
         Poczatkowe ustawienia klienta. Ustalenie ktory socket jest ktorym kliente
     */
+
+    /**
+     * starts thread
+     */
     private void startThread() {
         Thread gTh = new Thread(this);
         gTh.start();
     }
+
+    /**
+     * receives init from server
+     */
     private void receiveInitFromServer() {
         //jFrame.a
         msg=new JLabel("Status");
@@ -264,6 +285,9 @@ public class Gamemain extends JFrame implements Runnable{
         }
     }
 
+    /**
+     * runs multithreading
+     */
     @Override
     public void run() {
         if (player==PLAYER1) {
@@ -273,6 +297,10 @@ public class Gamemain extends JFrame implements Runnable{
             f2();
         }
     }
+
+    /**
+     * function to run for player1
+     */
     void f1(){
         while(true) {
             synchronized (this) {
@@ -297,6 +325,9 @@ public class Gamemain extends JFrame implements Runnable{
     }
 
     /// Metoda uruchamiana w run dla PLAYER2
+    /**
+     * function to run for player1
+     */
     void f2(){
         while(true) {
             synchronized (this) {
@@ -319,7 +350,15 @@ public class Gamemain extends JFrame implements Runnable{
         }
     }
     ///CHWILA CHWILA A TO NIE WYSTARCZY PRZED RUCHEM REPAINT ZROBIC?
+
+    /**
+     * this is listenr of our moves on the checkerboard
+     */
     class CheckerBoardHandler implements MouseListener {
+        /**
+         * checks if mouse was clicked
+         * @param e the event to be processed
+         */
         @Override
         public void mouseClicked(MouseEvent e) {
             System.out.println("Klik");
@@ -349,6 +388,10 @@ public class Gamemain extends JFrame implements Runnable{
     }
 
 
+    /**
+     * it runs the show, creats menu etc
+     * @param args arguments
+     */
     public static void main(String[] args) {
         //Gamemain gamemain= new Gamemain();
         //jFrame = new JFrame();
