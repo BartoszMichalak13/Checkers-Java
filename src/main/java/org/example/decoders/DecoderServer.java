@@ -29,7 +29,7 @@ public class DecoderServer implements Decoder {
         String[] commands = message.split(" ");
         String response="";
         boolean whitePlayer;
-        if(commands[0]=="W"){
+        if(commands[0].equals("W")){
             whitePlayer=true;
             response+="W ";
         }else{
