@@ -37,7 +37,7 @@ public class DecoderServer implements Decoder {
             response+="B ";
         }
         int x = Integer.parseInt(commands[2]), y = Integer.parseInt(commands[3]);
-        if(commands[1]=="C"){
+        if(commands[1].equals("C")){
             response+="C ";
             if(Pionek.getPionekByCords(x,y)!=null) {
                 if (isWhiteTurn == Pionek.getPionekByCords(x, y).isWhite() && isWhiteTurn == whitePlayer) {
@@ -60,7 +60,8 @@ public class DecoderServer implements Decoder {
                 return response;
             }
         }
-        else if(commands[1]=="M"){
+        else if(commands[1].equals("M")
+        ){
             boolean validMove=false;
             if(isWhiteTurn==whitePlayer){
                 for(int i = 0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){
