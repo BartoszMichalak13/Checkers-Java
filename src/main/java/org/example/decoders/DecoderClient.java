@@ -71,6 +71,7 @@ public class DecoderClient implements Decoder {
             }
             if(validMoveHit){
                 encryption = encryption + "M " + x + " " + y + " ";
+                bicia.removeAll(bicia);
             }else{
                 return"INVALID HIT";
             }
