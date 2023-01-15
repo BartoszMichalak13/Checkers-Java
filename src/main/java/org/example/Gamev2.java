@@ -70,7 +70,7 @@ public class Gamev2 implements Runnable {
             do {
 
                 if (turn == SECOND) {
-                    Boolean GO=true;
+                    boolean GO=true;
                     String s="";
 
                     int x, y;
@@ -94,7 +94,7 @@ public class Gamev2 implements Runnable {
 //DODAC DO KONSTRUKTORA SIZE I IS POLISH
                 if (turn == FIRST) {
 //ZAGLEBIMY SIE I DODAMY WIECEJ INF OUTF DLA RUCHU
-                    Boolean GO=true;
+                    boolean GO=true;
                     String s="";
                     int x, y;
                     boolean isWhite;

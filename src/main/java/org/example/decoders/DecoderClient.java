@@ -83,7 +83,7 @@ public class DecoderClient implements Decoder {
     public String decode(String message) {
         String[] commands = message.split(" ");
         if((isWhite&&commands[0].equals("W"))||(!isWhite&&commands[0].equals("B"))) {
-            if ((commands[1] == "C" && Arrays.asList(commands).contains("I"))||commands[1]=="M") {
+            if ((commands[1].equals("C") && Arrays.asList(commands).contains("I"))||commands[1].equals("M")) {
                 ask = true;
             }
 
@@ -95,7 +95,7 @@ public class DecoderClient implements Decoder {
                     }
                 }
                 while(hitIndex<commands.length){
-                    if(commands[hitIndex]!="S") {
+                    if(commands[hitIndex].equals("S")) {
                         bicia.add(Integer.parseInt(commands[hitIndex]));
                         hitIndex++;
                     }

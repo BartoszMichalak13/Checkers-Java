@@ -60,8 +60,7 @@ public class DecoderServer implements Decoder {
                 return response;
             }
         }
-        else if(commands[1].equals("M")
-        ){
+        else if(commands[1].equals("M")){
             boolean validMove=false;
             if(isWhiteTurn==whitePlayer){
                 for(int i = 0; i<Pionek.getActivePionek().legalneKafelki().size(); i+=2){

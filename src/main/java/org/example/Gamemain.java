@@ -136,6 +136,8 @@ public class Gamemain extends JFrame implements Runnable{
                     }
                     pl.getMove(isWhite,isDamka,x,y,null,null);
                     gamemain.repaint();
+
+                    //showing = ACTIVE;
                 }
                 if (str.contains("Leca")) {
                     double v = s.length;
@@ -247,6 +249,7 @@ public class Gamemain extends JFrame implements Runnable{
     void f1(){
         while(true) {
             synchronized (this) {
+                //showing=ACTIVE;
                 if (actualPlayer== PLAYER1) {
                     try {
                         wait(10);

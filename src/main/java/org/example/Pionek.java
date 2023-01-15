@@ -12,7 +12,7 @@ public class Pionek {
     int y;
     final boolean isPolish;
     final int sizeOfPlansza;
-    static List<Pionek> pionki = new ArrayList();
+    static List<Pionek> pionki = new ArrayList<>();
 
     public boolean isWhite() {
         return this.isWhite;
@@ -111,7 +111,7 @@ public class Pionek {
     }
 
     public static Pionek getPionekByCords(int x, int y) {
-        Iterator var2 = pionki.iterator();
+        Iterator<Pionek> var2 = pionki.iterator();
 
         Pionek pion;
         do {
@@ -126,7 +126,7 @@ public class Pionek {
     }
 
     public static Pionek getActivePionek() {
-        Iterator var0 = pionki.iterator();
+        Iterator<Pionek> var0 = pionki.iterator();
 
         Pionek pion;
         do {
@@ -141,7 +141,7 @@ public class Pionek {
     }
 
     public static ArrayList<Integer> bicia(int x, int y, boolean isWhite, boolean isQueen) {
-        ArrayList<Integer> xandy = new ArrayList();
+        ArrayList<Integer> xandy = new ArrayList<>();
             if (!isQueen) {
                 int i;
 
