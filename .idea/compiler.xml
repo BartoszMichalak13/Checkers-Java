@@ -9,5 +9,8 @@
         <module name="Checkers" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Checkers" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
