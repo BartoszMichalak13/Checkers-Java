@@ -209,7 +209,7 @@ public class Pionek {
         ArrayList<Integer> xandy = new ArrayList();
         if (!isQueen) {
             int i;
-
+            //BICIA ANGIELSKICH PIONKOW
             if(!getPionekByCords(x, y).isPolish){
                 if (isWhite) {
                     for (i = 0; i < pionki.size(); ++i) {
@@ -240,42 +240,71 @@ public class Pionek {
                         }
                     }
                 }
-            }else {
-                if (getPionekByCords(x + 1, y + 1) != null) {
-                    if (Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite != isWhite &&
-                            getPionekByCords(x + 2, y + 2) == null &&
-                            x + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
-                        xandy.add(x + 2);
-                        xandy.add(y + 2);
-                    }
-                } else if (getPionekByCords(x - 1, y + 1) != null) {
-                    if (Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite != isWhite &&
-                        getPionekByCords(x - 2, y + 2) == null &&
-                        x - 2 >= 0 && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
-                        xandy.add(x - 2);
-                        xandy.add(y + 2);
-                }
-            }else if(getPionekByCords(x+1, y-1)!=null){
-                if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
-                        getPionekByCords(x+2, y-2)==null&&
-                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
-                    xandy.add(x + 2);
-                    xandy.add(y - 2);
-                }
-                //naprawa
-                }else if(getPionekByCords(x-1, y-1)!=null) {
-                    if (Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite != isWhite &&
-                            getPionekByCords(x - 2, y - 2) == null &&
-                            x - 2 >= 0 && y - 2 >= 0) {
-                        xandy.add(x - 2);
-                        xandy.add(x - 2);
-                    }
-                }
             }
-        }else{
+            // BICIA POLSKICH PIONKOW
+            else {
+                for(i=0;i<pionki.size(); i++){
+                    if(pionki.get(i).getX()==x+1&&pionki.get(i).getY()==y+1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x+2, y+2)==null&&x+2<pionki.get(i).sizeOfPlansza&&y+2<pionki.get(i).sizeOfPlansza){
+                            xandy.add(x+2);
+                            xandy.add(y+2);
+                        }
+                    }else if(pionki.get(i).getX()==x+1&&pionki.get(i).getY()==y-1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x+2, y-2)==null&&x+2<pionki.get(i).sizeOfPlansza&&y-2>=0){
+                            xandy.add(x+2);
+                            xandy.add(y-2);
+                        }
+                    }else if(pionki.get(i).getX()==x-1&&pionki.get(i).getY()==y+1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x-2, y+2)==null&&x-2>=0&&y+2<pionki.get(i).sizeOfPlansza){
+                            xandy.add(x-2);
+                            xandy.add(y+2);
+                        }
+                    }else if(pionki.get(i).getX()==x-1&&pionki.get(i).getY()==y-1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x-2, y-2)==null&&x-2>=0&&y-2>=0){
+                            xandy.add(x-2);
+                            xandy.add(y-2);
+                        }
+                    }
+                }
+//                if (getPionekByCords(x + 1, y + 1) != null) {
+//                    if (Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite != isWhite &&
+//                            getPionekByCords(x + 2, y + 2) == null &&
+//                            x + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
+//                        xandy.add(x + 2);
+//                        xandy.add(y + 2);
+//                    }
+//                } else if (getPionekByCords(x - 1, y + 1) != null) {
+//                    if (Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite != isWhite &&
+//                        getPionekByCords(x - 2, y + 2) == null &&
+//                        x - 2 >= 0 && y + 2 < Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza) {
+//                        xandy.add(x - 2);
+//                        xandy.add(y + 2);
+//                }
+//                }else if(getPionekByCords(x+1, y-1)!=null){
+//                      if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
+//                          getPionekByCords(x+2, y-2)==null&&
+//                          x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
+//                      xandy.add(x + 2);
+//                      xandy.add(y - 2);
+//                  }
+//                //naprawa
+//                }else if(getPionekByCords(x-1, y-1)!=null) {
+//                    if (Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite != isWhite &&
+//                            getPionekByCords(x - 2, y - 2) == null &&
+//                            x - 2 >= 0 && y - 2 >= 0) {
+//                        xandy.add(x - 2);
+//                        xandy.add(y - 2);
+//                    }
+//                }
+            }
+        }
+
+        else{
+            //BICIA POLSKICH DAMEK
             if(Objects.requireNonNull(getPionekByCords(x, y)).isPolish){
                 int xk = x, yk = y;
-                while(xk< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&yk< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza){
+                while(xk< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&
+                        yk< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza){
                     xk++;
                     yk++;
                     if(getPionekByCords(xk,yk)!=null) {
@@ -333,36 +362,62 @@ public class Pionek {
                         }
                     }
                 }
-            }else{
-                if(getPionekByCords(x+1, y+1)!=null){
-                if(Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite!=isWhite&&
-                        getPionekByCords(x+2, x+2)==null&&
-                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
-                    xandy.add(x + 2);
-                    xandy.add(y + 2);
-                }
-                }else if(getPionekByCords(x-1, y+1)!=null){
-                    if(Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite!=isWhite&&
-                        getPionekByCords(x-2, x+2)==null&&
-                        x-2>=0&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
-                    xandy.add(x - 2);
-                    xandy.add(y + 2);
-                }
-                }else if(getPionekByCords(x+1, y-1)!=null){
-                    if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
-                        getPionekByCords(x+2, x-2)==null&&
-                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
-                    xandy.add(x + 2);
-                    xandy.add(y - 2);
-                }
-                }else if(getPionekByCords(x-1, y-1)!=null){
-                    if(Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite!=isWhite&&
-                            getPionekByCords(x-2, x-2)==null&&
-                            x-2>=0&&y-2>=0 ){
-                        xandy.add(x-2);
-                        xandy.add(x-2);
+            }
+            //BICIA ANGIELSKICH DAMEK
+            else{
+                int i;
+                for(i=0;i<pionki.size(); i++){
+                    if(pionki.get(i).getX()==x+1&&pionki.get(i).getY()==y+1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x+2, y+2)==null&&x+2<pionki.get(i).sizeOfPlansza&&y+2<pionki.get(i).sizeOfPlansza){
+                            xandy.add(x+2);
+                            xandy.add(y+2);
+                        }
+                    }else if(pionki.get(i).getX()==x+1&&pionki.get(i).getY()==y-1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x+2, y-2)==null&&x+2<pionki.get(i).sizeOfPlansza&&y-2>=0){
+                            xandy.add(x+2);
+                            xandy.add(y-2);
+                        }
+                    }else if(pionki.get(i).getX()==x-1&&pionki.get(i).getY()==y+1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x-2, y+2)==null&&x-2>=0&&y+2<pionki.get(i).sizeOfPlansza){
+                            xandy.add(x-2);
+                            xandy.add(y+2);
+                        }
+                    }else if(pionki.get(i).getX()==x-1&&pionki.get(i).getY()==y-1&&isWhite!=pionki.get(i).isWhite()){
+                        if(getPionekByCords(x-2, y-2)==null&&x-2>=0&&y-2>=0){
+                            xandy.add(x-2);
+                            xandy.add(y-2);
+                        }
                     }
                 }
+//                if(getPionekByCords(x+1, y+1)!=null){
+//                if(Objects.requireNonNull(getPionekByCords(x + 1, y + 1)).isWhite!=isWhite&&
+//                        getPionekByCords(x+2, y+2)==null&&
+//                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
+//                    xandy.add(x + 2);
+//                    xandy.add(y + 2);
+//                }
+//                }else if(getPionekByCords(x-1, y+1)!=null){
+//                    if(Objects.requireNonNull(getPionekByCords(x - 1, y + 1)).isWhite!=isWhite&&
+//                        getPionekByCords(x-2, y+2)==null&&
+//                        x-2>=0&&y+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza ) {
+//                    xandy.add(x - 2);
+//                    xandy.add(y + 2);
+//                }
+//                }else if(getPionekByCords(x+1, y-1)!=null){
+//                    if(Objects.requireNonNull(getPionekByCords(x + 1, y - 1)).isWhite!=isWhite&&
+//                        getPionekByCords(x+2, y-2)==null&&
+//                        x+2< Objects.requireNonNull(getPionekByCords(x, y)).sizeOfPlansza&&y-2>=0 ) {
+//                    xandy.add(x + 2);
+//                    xandy.add(y - 2);
+//                }
+//                }else if(getPionekByCords(x-1, y-1)!=null){
+//                    if(Objects.requireNonNull(getPionekByCords(x - 1, y - 1)).isWhite!=isWhite&&
+//                            getPionekByCords(x-2, y-2)==null&&
+//                            x-2>=0&&y-2>=0 ){
+//                        xandy.add(x-2);
+//                        xandy.add(y-2);
+//                    }
+//                }
             }
         }
         return xandy;
