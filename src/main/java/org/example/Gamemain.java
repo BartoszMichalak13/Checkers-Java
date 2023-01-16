@@ -271,12 +271,12 @@ public class Gamemain extends JFrame implements Runnable{
                 decoderClient = new DecoderClient(true);
                 System.out.println("player");
                 System.out.println(player);
-                msg.setText("My Turn");
+                msg.setText("Player1");
             } else {
                 decoderClient = new DecoderClient(false);
                 System.out.println("player");
                 System.out.println(player);
-                msg.setText("Opposite turn");
+                msg.setText("Player2");
                 //send.setEnabled(false);
             }
         } catch (IOException e) {
