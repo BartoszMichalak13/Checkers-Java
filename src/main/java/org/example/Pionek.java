@@ -100,7 +100,7 @@ public class Pionek {
         this.x = x;
         this.y = y;
 
-        if(this.isWhite()&&y==this.sizeOfPlansza){
+        if(this.isWhite()&&y==this.sizeOfPlansza-1){
             this.setQueen(true);
         }else if((!this.isWhite())&&y==0){
             this.setQueen(true);
