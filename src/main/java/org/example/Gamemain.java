@@ -13,29 +13,72 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * Client application
+ */
 public class Gamemain extends JFrame implements Runnable{
 
 
+    /**
+     * size of plansza
+     */
     int size;
+    /**
+     * instance of plansza
+     */
     Plansza pl;
+    /**
+     * number of pawns
+     */
     int pawnnumber;
     static Gamemain gamemain = new Gamemain();
     static JLabel beforethegame;
     static JMenuBar menuBar;
 
+    /**
+     * which player are we?
+     */
     JLabel msg;
 
+    /**
+     * our socket
+     */
     Socket socket;
+    /**
+     * our printwriter
+     */
     PrintWriter out;
+    /**
+     * our bufferedreader
+     */
     BufferedReader in;
 
+    /**
+     * what player are we
+     */
     private int player;
 
+    /**
+     * number for player 1
+     */
     public final static int PLAYER1 = 1;
+    /**
+     * number for player 2
+     */
     public final static int PLAYER2 = 2;
 
+    /**
+     * instance of client decoder
+     */
     DecoderClient decoderClient;
+    /**
+     * State of being active
+     */
     public final static int ACTIVE = 0;
+    /**
+     * State of being nonactive
+     */
+
     public final static int NONACTIVE = 1;
     private  static int actualPlayer = PLAYER1;
 

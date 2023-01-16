@@ -10,6 +10,9 @@ import java.io.*;
 import java.net.Socket;
 //ZROB TWORZENIE PIONKOW NA SERWERZE, DASZ RADE
 
+/**
+ * Class that implements game on server side
+ */
 public class Gamev2 implements Runnable {
      static Gamev2 gamev2 = new Gamev2();
      Boolean isPolish;

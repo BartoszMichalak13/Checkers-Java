@@ -4,6 +4,9 @@ import org.example.Gamemain;
 import org.example.Gamev2;
 import org.example.Plansza;
 
+/**
+ * This class is responsible for building brazilian checkers
+ */
 public class BrazilianBuilder {
     boolean isPolish=true;
     int size = 8;

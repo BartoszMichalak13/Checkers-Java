@@ -7,6 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 //IF PIONKI WHERE CREATED, DONT DO IT AGAIN
+
+/**
+ * Class that creates menu for players
+ */
 public class MenuCreator {
     Boolean werecreated=false;
     Gamemain gamemain= new Gamemain().getGamemain();
@@ -16,7 +20,7 @@ public class MenuCreator {
 
     /**
      * gets menu bar from gamemain
-     * @return
+     * @return menubar
      */
     public JMenuBar getMenuBar(){
         return this.menuBar;

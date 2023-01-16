@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * It contains both pawns and their logic
+ */
 public class Pionek {
 
     final boolean isWhite;
@@ -47,11 +50,11 @@ public class Pionek {
 
     /**
      * Pawn's constructor, it's setting flags of pawns and adding each one to list of pawns on which logic will be operated
-     * @param isWhite
-     * @param x
-     * @param y
-     * @param sizeOfPlansza
-     * @param isPolish
+     * @param isWhite table of colors of pawns
+     * @param x table of xs of pawns
+     * @param y table of ys of pawns
+     * @param sizeOfPlansza size of plansza
+     * @param isPolish are these polish checkers or not
      */
 
     public Pionek(boolean isWhite, int x, int y, int sizeOfPlansza, boolean isPolish) {
@@ -181,6 +184,11 @@ public class Pionek {
 
         return pion;
     }
+
+    /**
+     * returns active pionek if such existst
+     * @return active pionek
+     */
 
     public static Pionek getActivePionek() {
         Iterator var0 = pionki.iterator();

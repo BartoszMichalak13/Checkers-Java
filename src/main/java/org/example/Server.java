@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Class from which all starts
+ */
 public class Server {
 //    public JFrame jFrame;
 //
@@ -16,7 +19,7 @@ public class Server {
 
     /**
      * Creates serwer for players
-     * @param args
+     * @param args arguments
      */
     public static void main(String[] args) {
 

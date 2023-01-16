@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Decoder class for client
+ */
 public class DecoderClient implements Decoder {
 
     boolean ask;

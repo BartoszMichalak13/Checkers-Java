@@ -3,7 +3,9 @@ package org.example.builders;
 import org.example.Gamemain;
 import org.example.Gamev2;
 import org.example.Plansza;
-
+/**
+ * This class is responsible for building Polish checkers
+ */
 public class PolishBuilder{
     boolean isPolish=true;
 

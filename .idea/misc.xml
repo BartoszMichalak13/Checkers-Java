@@ -19,6 +19,9 @@
     <option name="pathToUserRulesConfiguration" value="" />
     <option name="pathToJarWithRules" value="" />
   </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/Documentation" />
+  </component>
   <component name="PDMPlugin">
     <option name="skipTestSources" value="false" />
   </component>

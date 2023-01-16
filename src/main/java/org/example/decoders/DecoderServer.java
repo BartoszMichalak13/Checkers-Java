@@ -3,6 +3,9 @@ package org.example.decoders;
 import org.example.Pionek;
 import org.example.decoders.Decoder;
 
+/**
+ * Decoder class for server
+ */
 public class DecoderServer implements Decoder {
     boolean isWhiteTurn=true;
 
@@ -135,6 +138,11 @@ public class DecoderServer implements Decoder {
         }
         return response;
     }
+
+    /**
+     * returns whose turn is it
+     * @return whose turn is it
+     */
 
     public boolean isWhiteTurn() {
         return isWhiteTurn;
