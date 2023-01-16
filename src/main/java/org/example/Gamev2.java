@@ -15,32 +15,51 @@ public class Gamev2 implements Runnable {
      Boolean isPolish;
     Boolean werecreated;
 
+    /**
+     * sets variable that checks if we already made pawns
+     * @param wc were pawns created?
+     */
     public void setWerecreated(Boolean wc){
         this.werecreated=wc;
         System.out.println(werecreated);
     }
-    public Boolean getWerecreated(){
-        return werecreated;
-    }
     private Socket firstPlayer;
     private Socket secondPlayer;
 
-    public static JFrame jFrame;
 
     private final static int FIRST = 1;
     private final static int SECOND = 2;
     private static int turn = FIRST;
     int size1=0;
+
+    /**
+     * constructor
+     */
     public Gamev2() {
     }
+
+    /**
+     *  Initial constructor
+     * @param firstPlayer socket of the first player
+     * @param secondPlayer socket of the second player
+     */
     public Gamev2(Socket firstPlayer, Socket secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
     }
     //DOEST WORK
+
+    /**
+     * assigns size of plansza
+     * @param size size of plansza
+     */
     public void assignvalues( int size){
         this.size1=size;
     }
+
+    /**
+     * runs the show
+     */
     @Override
     public void run() {
         //int i,
@@ -125,6 +144,7 @@ public class Gamev2 implements Runnable {
                     String s="";
                     int x, y;
                     boolean isWhite;
+                    boolean isDamka;
                     while(GO) {
                         line = inF.readLine();
                         System.out.println(message);
@@ -154,9 +174,12 @@ public class Gamev2 implements Runnable {
                             s="Leca pionki ";
                             for (Pionek pionek : Pionek.getPionki()) {
                                 isWhite=pionek.isWhite();
+                                isDamka=pionek.isQueen();
                                 x = pionek.getX();
                                 y = pionek.getY();
                                 s += isWhite;
+                                s += " ";
+                                s += isDamka;
                                 s += " ";
                                 s += Integer.toString(x);
                                 s += " ";
@@ -199,10 +222,12 @@ public class Gamev2 implements Runnable {
         }
     }
 
-    private void sendMove(DataOutputStream out, String text) throws IOException {
-        out.writeChars(text);
-
-    }
+    /**
+     * fills rows with pawns
+     * @param i coords of pawn
+     * @param size size of plansza
+     * @param isPolish whether these are polish checkers
+     */
     public void fillrow(int i, int size, boolean isPolish){
         System.out.println("Am I here?");
             for(int j=0; j<size;j++){

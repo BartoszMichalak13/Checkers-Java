@@ -8,6 +8,13 @@ public class EnglishBuilder {
     boolean isPolish=false;
 
     int size = 8;
+
+    /**
+     * Build English checkers
+     * @param werecreated if pawns werecreated
+     * @param s message to server
+     * @param player which player is it
+     */
     public void build(Boolean werecreated, String s,int player){
         Gamemain gamemain = new Gamemain().getGamemain();
         if(!werecreated) {

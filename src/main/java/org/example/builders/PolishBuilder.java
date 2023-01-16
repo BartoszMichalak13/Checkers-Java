@@ -8,6 +8,12 @@ public class PolishBuilder{
     boolean isPolish=true;
 
     int size = 10;
+    /**
+     * Build Polish checkers
+     * @param werecreated if pawns werecreated
+     * @param s message to server
+     * @param player which player is it
+     */
     public void build(Boolean werecreated, String s, int player){
         Gamemain gamemain = new Gamemain().getGamemain();
         if(!werecreated) {
